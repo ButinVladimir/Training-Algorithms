@@ -10,22 +10,29 @@ namespace Algorithms
     {
         static void Main(string[] args)
         {
-            int n = Int32.Parse(System.Console.ReadLine());
+            string[] coordsTokens;
 
-            int[,] a = new int[n, n];
-            for (int y = 0; y < n; y++)
+            int n = Int32.Parse(System.Console.ReadLine());
+            Point[] lamps = new Point[n];
+            for (int i = 0; i < n; i++)
             {
-               String [] tokens = System.Console.ReadLine().Split(new char[] { ' ' });
-               for (int x = 0; x < n; x++)
-                {
-                    a[y, x] = Int32.Parse(tokens[x]);
-                }
+                coordsTokens = System.Console.ReadLine().Split(new char[] { ' ' });
+                lamps[i] = new Point { X = Int32.Parse(coordsTokens[0]), Y = Int32.Parse(coordsTokens[1]) };
             }
 
-            int[] result = Set54Spiral.Iterate(a);
-            for (int i = 0, l = n * n; i < l; i++)
+            int m = Int32.Parse(System.Console.ReadLine());
+            Point[] coords = new Point[m];
+            for (int i = 0; i < m; i++)
             {
-                System.Console.Write(result[i].ToString() + ' ');
+                coordsTokens = System.Console.ReadLine().Split(new char[] { ' ' });
+                coords[i] = new Point { X = Int32.Parse(coordsTokens[0]), Y = Int32.Parse(coordsTokens[1]) };
+            }
+
+            bool[] result = Set54Lamps.Solve(lamps, coords);
+
+            for (int i = 0; i < m; i++)
+            {
+                System.Console.WriteLine(result[i]);
             }
         }
     }
