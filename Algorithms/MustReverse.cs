@@ -3,12 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MustReverse;
 
-namespace Algorithms
+namespace MustReverse
 {
-    class Program
+    class ListNode
     {
+        public int Value { get; set; }
+        public ListNode Next { get; set; }
+    }
+
+    class MustReverse
+    {
+        public static void reverse(ref ListNode first)
+        {
+            if (first == null)
+            {
+                return;
+            }
+
+            ListNode resultFirst = null, current = first, next;
+
+            while (current != null)
+            {
+                next = current.Next;
+                current.Next = resultFirst;
+                resultFirst = current;
+                current = next;
+            }
+
+            first = resultFirst;
+        }
+    }
+}
+
+
+/*
+ *     How to use
+ *         
+ *         
         static void Main(string[] args)
         {
             int n = Int32.Parse(System.Console.ReadLine()), value;
@@ -39,5 +71,6 @@ namespace Algorithms
                 current = current.Next;
             }
         }
-    }
-}
+
+    *
+    */
