@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="MustCommon.cs" />
     <Compile Include="MustEven.cs" />
+    <Compile Include="MustLoop.cs" />
     <Compile Include="MustNth.cs" />
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />

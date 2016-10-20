@@ -3,49 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MustNth;
+using MustLoop;
 
 namespace Algorithms
 {
     class Program
     {
-        private static ListNode LoadList()
-        {
-            int n = Int32.Parse(System.Console.ReadLine()), value;
-            ListNode first = null, current = null, next = null;
-
-            for (int i = 0;i<n;i++)
-            {
-                value = Int32.Parse(System.Console.ReadLine());
-                next = new ListNode(value);
-
-                if (current == null)
-                {
-                    first = current = next;
-                } else
-                {
-                    current = current.Next = next;
-                }
-            }
-
-            return first;
-        }
-
         static void Main(string[] args)
         {
-            ListNode list = Program.LoadList();
-            int n = Int32.Parse(Console.ReadLine());
-            Console.WriteLine("-----------------------------------------------------");
 
+            ListNode badNode = new ListNode(6);
+            ListNode first = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, badNode)))));
+            badNode.Next = first;
+            ListNode start = new ListNode(10, new ListNode(11, new ListNode(12, first)));
 
-            ListNode result = MustNth.MustNth.GetNth(list, n);
-            if  (result == null)
-            {
-                Console.WriteLine("Invalid n value");
-            } else
-            {
-                Console.WriteLine(result.Value);
-            }
+            bool result;
+            result = MustLoop.MustLoop.CheckLoop(start);
+            Console.WriteLine(result);
         }
     }
 }
