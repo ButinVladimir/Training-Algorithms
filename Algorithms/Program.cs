@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MustLoop;
+using MustBST;
 
 namespace Algorithms
 {
@@ -11,14 +11,13 @@ namespace Algorithms
     {
         static void Main(string[] args)
         {
-
-            ListNode badNode = new ListNode(6);
-            ListNode first = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, badNode)))));
-            badNode.Next = first;
-            ListNode start = new ListNode(10, new ListNode(11, new ListNode(12, first)));
+            TreeNode root = new TreeNode(5,
+                new TreeNode(6, new TreeNode(3), new TreeNode(7)),
+                new TreeNode(7, new TreeNode(6), new TreeNode(9))
+            );
 
             bool result;
-            result = MustLoop.MustLoop.CheckLoop(start);
+            result = root.CheckNode();
             Console.WriteLine(result);
         }
     }
