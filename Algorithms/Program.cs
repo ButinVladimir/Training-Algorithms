@@ -3,41 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MustReverse;
+using MustCommon;
 
 namespace Algorithms
 {
     class Program
     {
-        static void Main(string[] args)
+        private static ListNode LoadList()
         {
             int n = Int32.Parse(System.Console.ReadLine()), value;
-            ListNode first = null, current = null, next;
+            ListNode first = null, current = null, next = null;
 
-            for (int i = 0; i < n; i++)
+            for (int i = 0;i<n;i++)
             {
                 value = Int32.Parse(System.Console.ReadLine());
-                next = new ListNode() { Value = value };
+                next = new ListNode(value);
 
                 if (current == null)
                 {
                     first = current = next;
-                }
-                else
+                } else
                 {
-                    current.Next = next;
-                    current = next;
+                    current = current.Next = next;
                 }
             }
 
-            MustReverse.MustReverse.reverse(ref first);
-            current = first;
+            return first;
+        }
 
-            while (current != null)
-            {
-                Console.Write("{0} ", current.Value);
-                current = current.Next;
-            }
+        static void Main(string[] args)
+        {
+            ListNode a = Program.LoadList()
+                , b = Program.LoadList();
+
+            Console.WriteLine(MustCommon.MustCommon.HaveCommon(a, b));
         }
     }
 }
