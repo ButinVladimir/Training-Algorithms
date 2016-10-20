@@ -3,12 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MustEven;
 
-namespace Algorithms
+namespace MustEven
 {
-    class Program
+    public class ListNode
     {
+        public int Value { get; set; }
+        public ListNode Next { get; set; }
+
+        public ListNode(int value)
+        {
+            this.Value = value;
+        }
+    }
+
+    class MustEven
+    {
+        public static void DeleteEven(ListNode first)
+        {
+            ListNode prev, current, next;
+            bool even = false;
+
+            for (prev = null, current = first, next = current.Next; current != null; prev = current, current = next, next = current != null ? current.Next : null, even = !even)
+            {
+                if (even)
+                {
+                    current = prev;
+                    current.Next = next;
+                }
+            }
+        }
+    }
+}
+
+/*
+ * 
+ * Usage
         private static ListNode LoadList()
         {
             int n = Int32.Parse(System.Console.ReadLine()), value;
@@ -44,5 +74,4 @@ namespace Algorithms
                 Console.WriteLine(current.Value);
             }
         }
-    }
-}
+ */
