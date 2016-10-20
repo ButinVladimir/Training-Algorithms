@@ -21,6 +21,11 @@ namespace MustEven
     {
         public static void DeleteEven(ListNode first)
         {
+            if (first == null)
+            {
+                return;
+            }
+
             ListNode prev, current, next;
             bool even = false;
 
