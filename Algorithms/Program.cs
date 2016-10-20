@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MustEven;
+using MustNth;
 
 namespace Algorithms
 {
@@ -34,14 +34,17 @@ namespace Algorithms
         static void Main(string[] args)
         {
             ListNode list = Program.LoadList();
-
+            int n = Int32.Parse(Console.ReadLine());
             Console.WriteLine("-----------------------------------------------------");
 
-            MustEven.MustEven.DeleteEven(list);
 
-            for (ListNode current = list; current != null; current = current.Next)
+            ListNode result = MustNth.MustNth.GetNth(list, n);
+            if  (result == null)
             {
-                Console.WriteLine(current.Value);
+                Console.WriteLine("Invalid n value");
+            } else
+            {
+                Console.WriteLine(result.Value);
             }
         }
     }
