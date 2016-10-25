@@ -43,16 +43,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fun\Pond.cs" />
+    <Compile Include="MustBST.cs" />
+    <Compile Include="MustCommon.cs" />
+    <Compile Include="MustEven.cs" />
+    <Compile Include="MustLoop.cs" />
+    <Compile Include="MustNth.cs" />
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Set54Lamps.cs" />
     <Compile Include="Set54Spiral.cs" />
+	<Compile Include="Fun\Pond.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
