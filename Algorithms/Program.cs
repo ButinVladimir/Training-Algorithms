@@ -12,6 +12,8 @@ namespace Algorithms
     {
         static void Main(string[] args)
         {
+            Console.WriteLine(NumberConstruction.Construct(23));
+            /*
             int n = 5, startX = 0, startY = 0, targetX = 2, targetY = 2, value = 2;
             int[] numbers = new int[6] { 1, 2, 3, 4, 5, 6 };
 
@@ -30,6 +32,7 @@ namespace Algorithms
                     Console.WriteLine(path[i]);
                 }
             }
+            */
         }
     }
 }
