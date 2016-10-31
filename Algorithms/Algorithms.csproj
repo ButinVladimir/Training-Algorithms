@@ -51,6 +51,7 @@
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Set 47\MinStack.cs" />
     <Compile Include="Set 55\Cube.cs" />
     <Compile Include="Set 55\NumberConstruction.cs" />
     <Compile Include="Set54Lamps.cs" />

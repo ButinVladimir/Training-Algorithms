@@ -4,13 +4,80 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Algorithms
+namespace Algorithms.Set_47
 {
-    using Set_47;
-
-    class Program
+    class MinStack
     {
-        static private void Push(MinStack stack, int val)
+        protected class Node
+        {
+            public int Value { get; set; }
+            public int Min { get; set; }
+            public Node Next { get; set; }
+
+            public Node (int value, Node next)
+            {
+                this.Value = this.Min = value;
+                this.Next = next;
+                if (next != null && next.Min < this.Min)
+                {
+                    this.Min = next.Min;
+                }
+            }
+        }
+
+        private Node root;
+
+        public bool IsEmpty()
+        {
+            return this.root == null;
+        }
+
+        public void Pop()
+        {
+            if (!this.IsEmpty())
+            {
+                this.root = this.root.Next;
+            }
+        }
+
+        public void Push(int value)
+        {
+            Node node = new Node(value, this.root);
+            this.root = node;
+        }
+
+        public bool TryGetValue(out int value)
+        {
+            if (!this.IsEmpty())
+            {
+                value = this.root.Value;
+                return true;
+            }
+
+            value = 0;
+            return false;
+        }
+
+        public bool TryGetMin(out int min)
+        {
+            if (!this.IsEmpty())
+            {
+                min = this.root.Min;
+                return true;
+            }
+
+            min = 0;
+            return false;
+        }
+    }
+}
+
+
+/*
+ * 
+ * Usage
+ 
+ static private void Push(MinStack stack, int val)
         {
             Console.WriteLine("Before");
             Output(stack);
@@ -73,5 +140,4 @@ namespace Algorithms
             Pop(stack);
             Pop(stack);
         }
-    }
-}
+        */
