@@ -1,34 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
+using System.Net.Mail;
 
-namespace Algorithms
+
+public class Program
 {
-    using Set_47;
-
-    class Program
+    public static bool Solve(int n, int[] a)
     {
-        static void PrintList(LinkedList <int> list)
+        bool[] was = new bool[n];
+        was[a[n - 1]] = true;
+
+        int c;
+
+        for (int i = n - 2; i >= 0; i--)
         {
-            foreach (int value in list)
+            for (int j = 0; j < i; j++)
             {
-                Console.Write("{0} ", value);
+                c = a[i] + a[i] - a[j];
+                if (c >= 0 && c < n && was[c])
+                {
+                    return true;
+                }
             }
-            Console.WriteLine();
+
+            was[a[i]] = true;
         }
 
-        static void Main(string[] args)
+        return false;
+    }
+
+    public static void Main()
+    {
+        string s;
+        while (true)
         {
-            Factorizations factorizations = new Factorizations();
-
-            int n = Convert.ToInt32(Console.ReadLine());
-            LinkedList <LinkedList <int> > result = factorizations.Solve(n);
-
-            foreach (LinkedList<int> list in result)
+            s = Console.ReadLine().Trim();
+            if (s == "0")
             {
-                PrintList(list);
+                return;
+            }
+
+            int[] a = s.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Skip(1).Select(x => Convert.ToInt32(x)).ToArray();
+            if (Solve(a.Length, a) == true)
+            {
+                Console.WriteLine("no");
+            }
+            else
+            {
+                Console.WriteLine("yes");
             }
         }
     }

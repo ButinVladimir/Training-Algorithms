@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fun\Pond2.cs" />
+    <Compile Include="Fun\Pronunciation.cs" />
+    <Compile Include="Fun\ThreeNumbers.cs" />
+    <Compile Include="Fun\TreeConverter.cs" />
     <Compile Include="MustBST.cs" />
     <Compile Include="MustCommon.cs" />
     <Compile Include="MustEven.cs" />
