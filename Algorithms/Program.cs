@@ -6,50 +6,58 @@ using System.Net.Mail;
 
 public class Program
 {
-    public static bool Solve(int n, int[] a)
+    public static UInt64 Power(UInt64 a, UInt64 b, ref UInt64 mod)
     {
-        bool[] was = new bool[n];
-        was[a[n - 1]] = true;
-
-        int c;
-
-        for (int i = n - 2; i >= 0; i--)
+        if (b == 0)
         {
-            for (int j = 0; j < i; j++)
-            {
-                c = a[i] + a[i] - a[j];
-                if (c >= 0 && c < n && was[c])
-                {
-                    return true;
-                }
-            }
-
-            was[a[i]] = true;
+            return 1;
         }
 
-        return false;
+        if (b == 1)
+        {
+            return a % mod;
+        }
+
+        UInt64 c = Power(a, b / 2, ref mod);
+        c = (c * c) % mod;
+        if (b % 2 == 1)
+        {
+            c = (c * a) % mod;
+        }
+
+        return c;
     }
 
     public static void Main()
     {
         string s;
-        while (true)
-        {
-            s = Console.ReadLine().Trim();
-            if (s == "0")
-            {
-                return;
-            }
+        string[] words;
+        char[] delimiters = new char[] { ' ' };
 
-            int[] a = s.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Skip(1).Select(x => Convert.ToInt32(x)).ToArray();
-            if (Solve(a.Length, a) == true)
+        UInt64 a, b, c, mod = 10000;
+        while ((s = Console.ReadLine()) != null)
+        {
+            s = s.Trim();
+            words = s.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
+            a = Convert.ToUInt64(words[0]);
+            b = Convert.ToUInt64(words[2]);
+
+            switch (words[1][0])
             {
-                Console.WriteLine("no");
+                case '+':
+                    c = (a + b) % mod;
+                    break;
+                case '*':
+                    c = (a * b) % mod;
+                    break;
+                case '^':
+                    c = Power(a, b, ref mod);
+                    break;
+                default:
+                    c = 0;
+                    break;
             }
-            else
-            {
-                Console.WriteLine("yes");
-            }
+            Console.WriteLine(c);
         }
     }
 }
