@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
-//using Algorithms.Set_60;
+using System.Text;
+using System.Threading.Tasks;
 
-public class Program
+namespace Algorithms.Set_60
 {
     class COINS
     {
@@ -35,19 +34,6 @@ public class Program
             calculatedValues[value] = result;
 
             return result;
-        }
-    }
-
-    public static void Main()
-    {
-        COINS coins = new COINS();
-        UInt64 value;
-        string input;
-
-        while ((input = Console.ReadLine()) != null)
-        {
-            value = Convert.ToUInt64(input.Trim());
-            Console.WriteLine(coins.Solve(value));
         }
     }
 }
