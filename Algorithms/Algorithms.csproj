@@ -59,6 +59,7 @@
     <Compile Include="Set 47\MinStack.cs" />
     <Compile Include="Set 55\Cube.cs" />
     <Compile Include="Set 55\NumberConstruction.cs" />
+    <Compile Include="Set 60\LASTDIG.cs" />
     <Compile Include="Set 60\MSTRMND.cs" />
     <Compile Include="Set54Lamps.cs" />
     <Compile Include="Set54Spiral.cs" />
