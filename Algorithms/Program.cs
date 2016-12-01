@@ -2,62 +2,56 @@
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+//using Algorithms.Set_60;
 
+class MSTRMND
+{
+    const int LENGTH = 4;
+    const int CORRECT = 1;
+    const int INCORRECT = -1;
+    const int NUMBER_MIN = 1;
+    const int NUMBER_MAX = 6;
+    const string SEPARATOR = " ";
+    private static char[] separatorArray = { ' ' };
+
+    public static void Solve()
+    {
+        int[] guess = new int[LENGTH], answers = new int[LENGTH];
+        bool correct;
+
+        for (int i = 0; i < LENGTH; i++)
+        {
+            answers[i] = INCORRECT;
+        }
+
+        for (int number = NUMBER_MIN; number <= NUMBER_MAX; number++)
+        {
+            correct = true;
+            for (int i = 0; i < LENGTH; i++)
+            {
+                if (answers[i] != CORRECT)
+                {
+                    guess[i] = number;
+                    correct = false;
+                }
+            }
+            if (correct)
+            {
+                return;
+            }
+
+            Console.WriteLine(string.Join(SEPARATOR, guess.Select(x => x.ToString()).ToArray()));
+            Console.Out.Flush();
+
+            answers = Console.ReadLine().Split(separatorArray).Select(x => Convert.ToInt32(x.Trim())).ToArray();
+        }
+    }
+}
 
 public class Program
 {
-    public static UInt64 Power(UInt64 a, UInt64 b, ref UInt64 mod)
-    {
-        if (b == 0)
-        {
-            return 1;
-        }
-
-        if (b == 1)
-        {
-            return a % mod;
-        }
-
-        UInt64 c = Power(a, b / 2, ref mod);
-        c = (c * c) % mod;
-        if (b % 2 == 1)
-        {
-            c = (c * a) % mod;
-        }
-
-        return c;
-    }
-
     public static void Main()
     {
-        string s;
-        string[] words;
-        char[] delimiters = new char[] { ' ' };
-
-        UInt64 a, b, c, mod = 10000;
-        while ((s = Console.ReadLine()) != null)
-        {
-            s = s.Trim();
-            words = s.Split(delimiters, StringSplitOptions.RemoveEmptyEntries);
-            a = Convert.ToUInt64(words[0]);
-            b = Convert.ToUInt64(words[2]);
-
-            switch (words[1][0])
-            {
-                case '+':
-                    c = (a + b) % mod;
-                    break;
-                case '*':
-                    c = (a * b) % mod;
-                    break;
-                case '^':
-                    c = Power(a, b, ref mod);
-                    break;
-                default:
-                    c = 0;
-                    break;
-            }
-            Console.WriteLine(c);
-        }
+        MSTRMND.Solve();
     }
 }
