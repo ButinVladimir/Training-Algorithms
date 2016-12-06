@@ -62,6 +62,9 @@
     <Compile Include="Set 60\COINS.cs" />
     <Compile Include="Set 60\LASTDIG.cs" />
     <Compile Include="Set 60\MSTRMND.cs" />
+    <Compile Include="Set 61\ABCPATH.cs" />
+    <Compile Include="Set 61\CANDY.cs" />
+    <Compile Include="Set 61\CPCRC1.cs" />
     <Compile Include="Set54Lamps.cs" />
     <Compile Include="Set54Spiral.cs" />
     <Compile Include="Fun\Pond.cs" />
