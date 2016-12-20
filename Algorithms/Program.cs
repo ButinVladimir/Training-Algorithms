@@ -3,72 +3,118 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+//using Algorithms.Set_62;
 
-public class CPCRC1
+class SquareBrackets
 {
-    private const long TEN = 10;
-    private const long DIGITS_SUM = 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9;
+    public int[] OpenedPositions { get; set; }
+    public int N { get; set; }
 
-    public static long Solve(long number)
+
+    public int Solve()
     {
-        if (number == 0)
+        int n2 = N * 2;
+        int[,] result = new int[n2 + 1, N + 1];
+
+        for (int i = 1; i <= N; i++)
         {
-            return 0;
+            result[n2, i] = 0;
+        }
+        result[n2, 0] = 1;
+
+        for (int position = n2 - 1; position >= 0; position--)
+        {
+            for (int opened = 0; opened <= N; opened++)
+            {
+                result[position, opened] = 0;
+
+                if (opened > 0 && !OpenedPositions.Contains(position))
+                {
+                    result[position, opened] += result[position + 1, opened - 1];
+                }
+
+                if (opened < N)
+                {
+                    result[position, opened] += result[position + 1, opened + 1];
+                }
+            }
         }
 
-        long multiplier = 1;
-        long rightPart = 0;
-        long result = 0;
-        long digit;
-
-        while (number > 0)
-        {
-            digit = number % TEN;
-            number /= TEN;
-
-            if (number > 0)
-            {
-                result += DIGITS_SUM * number * multiplier;
-            }
-
-            for (long i = 0; i < digit; i++)
-            {
-                result += i * multiplier;
-            }
-
-            result += digit * (rightPart + 1);
-
-            rightPart += multiplier * digit;
-            multiplier *= TEN;
-        }
-
-        return result;
+        return result[0, 0];
     }
 }
 
 public class Program
 {
+    private class Tokenizer
+    {
+        private string currentString = null;
+        private string[] tokens;
+        private int tokenNumber;
+        private char[] separators;
+
+        public Tokenizer()
+        {
+            currentString = null;
+            tokens = null;
+            tokenNumber = 0;
+            separators = new char[] { ' ' };
+        }
+
+        private string GetNextString()
+        {
+            string content = Console.ReadLine();
+            if (content == null)
+            {
+                return null;
+            }
+
+            return content.Trim();
+        }
+
+        public string NextToken()
+        {
+            if (currentString == null || tokenNumber == tokens.Length)
+            {
+                currentString = GetNextString();
+                while (currentString != null && currentString.Equals(string.Empty))
+                {
+                    currentString = GetNextString();
+                }
+
+                if (currentString == null)
+                {
+                    return null;
+                }
+
+                tokens = currentString.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                tokenNumber = 0;
+            }
+
+            return tokens[tokenNumber++];
+        }
+    }
+
     public static void Main()
     {
-        long[] numbers;
-        char[] delimiters = new char[] { ' ' };
-        long result;
+        Tokenizer tokenizer = new Tokenizer();
 
-        while (true)
+        int testCount = Convert.ToInt32(tokenizer.NextToken());
+        for (int t = 0; t < testCount; t++)
         {
-            numbers = Console.ReadLine().Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Select(x => Convert.ToInt64(x)).ToArray();
-            if (numbers[0] == -1 && numbers[1] == -1)
+            int n = Convert.ToInt32(tokenizer.NextToken());
+            int k = Convert.ToInt32(tokenizer.NextToken());
+            int[] openedPositions = new int[k];
+
+            for (int i = 0; i < k; i++)
             {
-                break;
+                openedPositions[i] = Convert.ToInt32(tokenizer.NextToken()) - 1;
             }
 
-            result = CPCRC1.Solve(numbers[1]);
-            if (numbers[0] > 0)
-            {
-                result -= CPCRC1.Solve(numbers[0] - 1);
-            }
-
-            Console.WriteLine("{0}", result);
+            SquareBrackets brackets = new SquareBrackets();
+            brackets.N = n;
+            brackets.OpenedPositions = openedPositions;
+            Console.WriteLine(brackets.Solve());
         }
     }
 }
