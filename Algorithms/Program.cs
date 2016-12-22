@@ -6,128 +6,147 @@ using System.Net;
 using System.Net.Mail;
 //using Algorithms.Set_62;
 
-class TreeNode
+public class Dfloor
 {
-    public int Value { get; set; }
-    public TreeNode Left { get; set; }
-    public TreeNode Right { get; set; }
-    public int Count { get; set; }
+    private const int D = 5;
+    private static int[] dx;
+    private static int[] dy;
 
-    public TreeNode()
+    static Dfloor()
     {
-        Count = 1;
-        Left = Right = null;
+        dx = new int[D] { 0, -1, 1, 0, 0 };
+        dy = new int[D] { 0, 0, 0, -1, 1 };
     }
 
-    public static TreeNode Add(TreeNode rootNode, TreeNode node)
+    public static List<Tuple<int, int>> Solve(int x, int y, char[,] arr)
     {
-        if (rootNode == null)
+        int xy = x * y;
+        int[,] vars = new int[xy, xy];
+        int[] vals = new int[xy];
+
+        for (int j = 0; j < y; j++)
         {
-            rootNode = node;
-            return rootNode;
+            for (int i = 0; i < x; i++)
+            {
+                for (int k = 0; k < D; k++)
+                {
+                    int xpos = i + dx[k];
+                    int ypos = j + dy[k];
+
+                    if (xpos >= 0 && xpos < x && ypos >= 0 && ypos < y)
+                    {
+                        vars[EncodeCoords(i, j, x), EncodeCoords(xpos, ypos, x)] = 1;
+                    }
+                }
+
+                vals[EncodeCoords(i, j, x)] = arr[j, i] == '1' ? 0 : 1;
+            }
         }
 
-        TreeNode currentNode = rootNode;
+        bool[] used = new bool[xy];
 
-        while (true)
+        int?[] result = new int?[xy];
+        for (int i = 0; i < xy; i++)
         {
-            currentNode.Count++;
+            result[i] = null;
+        }
 
-            if (node.Value > currentNode.Value)
+        for (int i = 0; i < xy; i++)
+        {
+            int next;
+            for (next = 0; next < xy && (used[next] || vars[next, i] == 0); next++) ;
+
+            if (next == xy)
             {
-                if (currentNode.Right != null)
-                {
-                    currentNode = currentNode.Right;
-                }
-                else
-                {
-                    currentNode.Right = node;
-                    return rootNode;
-                }
+                result[i] = 0;
             }
             else
             {
-                if (currentNode.Left != null)
+                used[next] = true;
+
+                for (int j = 0; j < xy; j++)
                 {
-                    currentNode = currentNode.Left;
-                }
-                else
-                {
-                    currentNode.Left = node;
-                    return rootNode;
+                    if (j == next || vars[j, i] == 0)
+                    {
+                        continue;
+                    }
+
+                    for (int k = 0; k < xy; k++)
+                    {
+                        vars[j, k] = Sum(vars[j, k], vars[next, k]);
+                    }
+
+                    vals[j] = Sum(vals[j], vals[next]);
                 }
             }
         }
-    }
-}
 
-class PrecalcMatrix
-{
-    const int N = 31;
-    private BigInteger[,] value;
-
-    public PrecalcMatrix()
-    {
-        value = new BigInteger[N, N];
-        Precalc();
-    }
-
-    private void Precalc()
-    {
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i < xy; i++)
         {
-            value[0, i] = value[i, 0] = BigInteger.One;
-        }
-
-        for (int i = 1; i < N; i++)
-        {
-            for (int j = 1; j < N; j++)
+            for (int j = 0; j < xy; j++)
             {
-                value[i, j] = value[i - 1, j] + value[i, j - 1];
+                if (vars[i, j] == 1 && result[j] == null)
+                {
+                    result[j] = vals[i];
+                }
             }
         }
-    }
 
-    public BigInteger Get(int x, int y)
-    {
-        return value[x, y];
-    }
-}
-
-class Tree1
-{
-    private static PrecalcMatrix precalcMatrix;
-
-    static Tree1()
-    {
-        precalcMatrix = new PrecalcMatrix();
-    }
-
-    private static BigInteger GetValue(TreeNode rootNode)
-    {
-        if (rootNode == null)
+        List<Tuple<int, int>> answer = new List<Tuple<int, int>>();
+        for (int i = 0; i < xy; i++)
         {
-            return BigInteger.One;
+            if (result[i] == 1)
+            {
+                int xpos, ypos;
+                DecodeCoords(i, x, out xpos, out ypos);
+                answer.Add(new Tuple<int, int>(xpos, ypos));
+
+                for (int j = 0; j < D; j++)
+                {
+                    int xp = xpos + dx[j];
+                    int yp = ypos + dy[j];
+
+                    if (xp >= 0 && xp < x && yp >= 0 && yp < y)
+                    {
+                        arr[yp, xp] = arr[yp, xp] == '1' ? '0' : '1';
+                    }
+                }
+            }
         }
 
-        int x = rootNode.Left != null ? rootNode.Left.Count : 0;
-        int y = rootNode.Right != null ? rootNode.Right.Count : 0;
-
-        return precalcMatrix.Get(x, y) * GetValue(rootNode.Left) * GetValue(rootNode.Right);
-    }
-
-    public static BigInteger Solve(int[] arr)
-    {
-        int n = arr.Length;
-        TreeNode rootNode = null;
-
-        for (int i = 0; i < n; i++)
+        for (int j = 0; j < y; j++)
         {
-            TreeNode currentNode = new TreeNode() { Value = arr[i] };
-            rootNode = TreeNode.Add(rootNode, currentNode);
+            for (int i = 0; i < x; i++)
+            {
+                if (arr[j, i] == '0')
+                {
+                    return null;
+                }
+            }
         }
 
-        return GetValue(rootNode);
+        return answer;
+    }
+
+    private static int EncodeCoords(int xpos, int ypos, int x)
+    {
+        return ypos * x + xpos;
+    }
+
+    private static void DecodeCoords(int coords, int x, out int xpos, out int ypos)
+    {
+        xpos = coords % x;
+        ypos = coords / x;
+    }
+
+    private static int Sum(int x, int y)
+    {
+        if (x == 1 && y == 1)
+        {
+            return 0;
+        }
+
+        return x + y;
     }
 }
 
@@ -186,18 +205,44 @@ public class Program
     {
         Tokenizer tokenizer = new Tokenizer();
 
-        int testCount = Convert.ToInt32(tokenizer.NextToken());
-        for (int t = 0; t < testCount; t++)
+        int x, y;
+        while (true)
         {
-            int n = Convert.ToInt32(tokenizer.NextToken());
-            int[] a = new int[n];
-
-            for (int i = 0; i < n; i++)
+            x = Convert.ToInt32(tokenizer.NextToken());
+            y = Convert.ToInt32(tokenizer.NextToken());
+            if (x == 0 || y == 0)
             {
-                a[i] = Convert.ToInt32(tokenizer.NextToken());
+                break;
             }
 
-            Console.WriteLine(Tree1.Solve(a));
+            string[] a = new string[y];
+
+            for (int i = 0; i < y; i++)
+            {
+                a[i] = tokenizer.NextToken();
+            }
+            char[,] arr = new char[y, x];
+            for (int j = 0; j < y; j++)
+            {
+                for (int i = 0; i < x; i++)
+                {
+                    arr[j, i] = a[j][i];
+                }
+            }
+
+            List<Tuple<int, int>> ans = Dfloor.Solve(x, y, arr);
+            if (ans == null)
+            {
+                Console.WriteLine("-1");
+            }
+            else
+            {
+                Console.WriteLine("{0}", ans.Count);
+                foreach (var step in ans)
+                {
+                    Console.WriteLine("{0} {1}", step.Item1 + 1, step.Item2 + 1);
+                }
+            }
         }
     }
 }
