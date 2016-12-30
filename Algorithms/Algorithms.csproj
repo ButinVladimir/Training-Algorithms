@@ -56,6 +56,8 @@
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Set 42\Anagram.cs" />
+    <Compile Include="Set 42\CountingWords.cs" />
     <Compile Include="Set 46\Chemical.cs" />
     <Compile Include="Set 46\Deck.cs" />
     <Compile Include="Set 47\Factorizations.cs" />
