@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using Algorithms.Set_42;
+using Algorithms.Set_51;
 
 public class Program
 {
@@ -61,34 +61,14 @@ public class Program
     {
         Tokenizer tokenizer = new Tokenizer();
 
-        Dictionary<int, string> words = new Dictionary<int, string>();
-        words.Add(0, "aca");
-        words.Add(1, "ac");
-        words.Add(2, "ca");
-        words.Add(3, "a");
-        words.Add(4, "a");
-        words.Add(5, "c");
-        words.Add(6, "c");
-        words.Add(7, "cat");
-        words.Add(8, "hello");
-        words.Add(9, "world");
+        string input = "<<BP<A>>Cd-----ASB<A>AA<<Q----------";
 
-        CountingWords problem = new CountingWords();
-        foreach (var word in words)
+        KeyLogger logger = new KeyLogger();
+        for (int i = 0; i < input.Length; i++)
         {
-            problem.AddWord(word.Key, word.Value);
+            logger.NextCharacter(input[i]);
         }
 
-        string text = "acacabcatghhellomvnsdb";
-        for (int i = 0; i < text.Length; i++)
-        {
-            problem.AddCharacter(text[i]);
-        }
-
-        foreach(var word in problem.Counts)
-        {
-            Console.WriteLine("Word: '{0}' - Count: {1}", words[word.Key], word.Value);
-        }
-
+        Console.WriteLine(logger.ToString());
     }
 }
