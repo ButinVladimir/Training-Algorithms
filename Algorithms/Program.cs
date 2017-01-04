@@ -61,7 +61,7 @@ public class Program
     {
         Tokenizer tokenizer = new Tokenizer();
 
-        string input = "<<BP<A>>Cd-----ASB<A>AA<<Q----------";
+        string input = "------A<B<D>><S---";
 
         KeyLogger logger = new KeyLogger();
         for (int i = 0; i < input.Length; i++)

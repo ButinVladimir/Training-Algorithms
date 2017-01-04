@@ -79,17 +79,8 @@ namespace Algorithms.Set_56
             else
             {
                 oneZero = true;
-
-                if (currentLength > 0)
-                {
-                    prevLength = currentLength;
-                    currentLength = 0;
-                }
-                else
-                {
-                    prevLength = 0;
-                    currentLength = 0;
-                }
+                prevLength = currentLength;
+                currentLength = 0;
             }
 
             if (oneZero)

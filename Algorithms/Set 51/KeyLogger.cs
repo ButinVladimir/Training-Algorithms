@@ -12,11 +12,17 @@ namespace Algorithms.Set_51
         const char NEXT = '>';
         const char DEL = '-';
 
-        private int count = 0;
-        private int position = 0;
-        private Node first = null;
-        private Node last = null;
-        private Node current = null;
+        private Node first;
+        private Node last;
+        private Node current;
+
+        public KeyLogger()
+        {
+            this.first = new Node();
+            this.current = this.last = new Node();
+            this.first.Next = this.last;
+            this.last.Prev = this.first;
+        }
 
         public void NextCharacter(char c)
         {
@@ -39,10 +45,10 @@ namespace Algorithms.Set_51
 
         public override string ToString()
         {
-            Node node = this.first;
+            Node node = this.first.Next;
             StringBuilder sb = new StringBuilder();
 
-            while (node != null)
+            while (node != this.last)
             {
                 sb.Append(node.Character);
                 node = node.Next;
@@ -53,88 +59,40 @@ namespace Algorithms.Set_51
 
         private void Prev()
         {
-            if (this.position > 0)
+            if (this.current.Prev != this.first)
             {
-                this.position--;
+                this.current = this.current.Prev;
             }
         }
 
         private void Next()
         {
-            if (this.position < this.count)
+            if (this.current != this.last)
             {
-                this.position++;
+                this.current = this.current.Next;
             }
         }
 
         private void AddCharacter(char c)
         {
-            Node node = new Node() { Character = c };
+            Node node = new Node()
+            {
+                Character = c
+            };
 
-            if (this.count == 0)
-            {
-                this.first = this.last = this.current = node;
-                this.position = 0;
-            }
-            else if (this.position == 0)
-            {
-                this.first.Prev = node;
-                node.Next = this.first;
-                this.first = node;
-            }
-            else if (this.position == this.count)
-            {
-                this.last.Next = node;
-                node.Prev = this.last;
-                this.last = node;
-            }
-            else
-            {
-                node.Next = this.current;
-                node.Prev = this.current.Prev;
-                this.current.Prev = node;
-                node.Prev.Next = node;
-            }
-
-            this.current = node;
-            this.position++;
-            this.count++;
+            node.Prev = this.current.Prev;
+            this.current.Prev.Next = node;
+            node.Next = this.current;
+            this.current.Prev = node;
         }
 
         private void DeleteCharacter()
         {
-            if (this.position == 0 || this.count == 0)
+            if (this.current.Prev != this.first)
             {
-                return;
-            }
-
-            if (this.count == 1)
-            {
-                if (this.position == 1)
-                {
-                    this.first = this.last = this.current = null;
-                    this.position = 0;
-                    this.count = 0;
-                }
-            } else
-            {
-                if (this.position == 1)
-                {
-                    this.current.Prev = null;
-                    this.first = this.current;
-                }
-                else if (this.position == this.count)
-                {
-                    this.last.Prev.Next = null;
-                    this.last = this.current = this.last.Prev;
-                } else
-                {
-                    this.current.Prev.Prev.Next = this.current;
-                    this.current.Prev = this.current.Prev.Prev;
-                }
-
-                this.position--;
-                this.count--;
+                Node node = this.current.Prev;
+                this.current.Prev = node.Prev;
+                node.Prev.Next = this.current;
             }
         }
 

@@ -10,7 +10,6 @@ namespace Algorithms.Set_62
     {
         public static ulong? Solve(int weight, int n, int[] coinsWeight, ulong[] coinsValue)
         {
-            ulong? a;
             ulong[] result = new ulong[weight + 1];
 
             for (int i = 1; i <= weight; i++)
