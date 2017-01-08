@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using Algorithms.Set_51;
+using Algorithms.Set_47;
 
 public class Program
 {
@@ -59,16 +59,13 @@ public class Program
 
     public static void Main()
     {
-        Tokenizer tokenizer = new Tokenizer();
-
-        string input = "------A<B<D>><S---";
-
-        KeyLogger logger = new KeyLogger();
-        for (int i = 0; i < input.Length; i++)
+        int[,] a = new int[,]
         {
-            logger.NextCharacter(input[i]);
-        }
+            { 1, 2, 4,},
+            { 2, 5, 5 },
+            { 5, 6, 8 },
+        };
 
-        Console.WriteLine(logger.ToString());
+        Console.WriteLine(Looking.Solve(a, 8));
     }
 }
