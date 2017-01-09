@@ -61,11 +61,9 @@ public class Program
     {
         int[,] a = new int[,]
         {
-            { 1, 2, 4,},
-            { 2, 5, 5 },
-            { 5, 6, 8 },
+            { 1, 2, 3 },
         };
 
-        Console.WriteLine(Looking.Solve(a, 8));
+        Console.WriteLine(Looking.Solve(a, 2));
     }
 }

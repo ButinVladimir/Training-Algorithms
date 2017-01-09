@@ -43,8 +43,10 @@ namespace Algorithms.Set_47
                 {
                     current = next;
                 }
-
-                step /= 2;
+                else
+                {
+                    step /= 2;
+                }
             }
 
             return current;
