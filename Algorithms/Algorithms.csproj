@@ -81,6 +81,9 @@
     <Compile Include="Set 62\Pigbank.cs" />
     <Compile Include="Set 62\SquareBrackets.cs" />
     <Compile Include="Set 62\Tree1.cs" />
+    <Compile Include="Set 63\Diagonals.cs" />
+    <Compile Include="Set 63\LazyLoading.cs" />
+    <Compile Include="Set 63\Square.cs" />
     <Compile Include="Set54Lamps.cs" />
     <Compile Include="Set54Spiral.cs" />
     <Compile Include="Fun\Pond.cs" />
