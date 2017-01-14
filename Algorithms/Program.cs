@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Numerics;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using Algorithms.Set_63;
+//using Algorithms.Set_58;
 
 public class Program
 {
@@ -57,24 +52,97 @@ public class Program
         }
     }
 
-    public static void Test(int[] items)
+    class Potions
     {
-        int result = LazyLoading.Solve(items);
-        int resultStress = LazyLoading.StressSolve(items);
-        Console.WriteLine(
-            "Result = {0}, Stress test result = {1}, Status = {2}",
-            result, 
-            resultStress, 
-            result == resultStress ? "OK" : "WA");
+        public long N { get; set; } // We need to brew N potions
+        public int M { get; set; } // Amount of spells of first type
+        public int K { get; set; } // Amount of spells of second type
+        public long X { get; set; } // Initial brewing speed
+        public long S { get; set; } // Mana points
+
+        public long[] A { get; set; } // New brewing speed after first type spell was casted
+        public long[] B { get; set; } // Cost of spell of first type
+
+        public long[] C { get; set; } // Amount of potions which will be immediately created
+        public long[] D { get; set; } // Cost of spell of second type
+
+        public long Solve()
+        {
+            long result = Math.Max(0, N - this.FindMaxPotions(S)) * X;
+
+            for (int i = 0; i < M; i++)
+            {
+                if (S >= B[i])
+                {
+                    result = Math.Min(result, Math.Max(0, N - this.FindMaxPotions(S - B[i])) * A[i]);
+                }
+            }
+
+            return result;
+        }
+
+        private long FindMaxPotions(long points)
+        {
+            long result = 0;
+            long current = -1;
+            long step = K;
+            long next;
+
+            while (step > 0)
+            {
+                next = current + step;
+
+                if (next >= 0 && next < K && C[next] >= result && D[next] <= points)
+                {
+                    result = C[next];
+                    current = next;
+                }
+                else
+                {
+                    step /= 2;
+                }
+            }
+
+            return result;
+        }
     }
 
     public static void Main()
     {
-        Test(new int[] { 45, 46, 57, 1, 2, 3, 9, 100, 45, 46, 57, 1, 2, 3, 9, 100 });
-        Test(new int[] { 30, 30, 1, 1 });
-        Test(new int[] { 20, 20, 20 });
-        Test(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 });
-        Test(new int[] { 9, 19, 29, 39, 49, 59 });
-        //Test(new int[] { 32, 56, 76, 8, 44, 60, 47, 85, 71, 91 });
+        Tokenizer tokenizer = new Tokenizer();
+        Potions potions = new Potions();
+
+        potions.N = Convert.ToInt64(tokenizer.NextToken());
+        potions.M = Convert.ToInt32(tokenizer.NextToken());
+        potions.K = Convert.ToInt32(tokenizer.NextToken());
+
+        potions.X = Convert.ToInt64(tokenizer.NextToken());
+        potions.S = Convert.ToInt64(tokenizer.NextToken());
+
+        potions.A = new long[potions.M];
+        for (int i = 0; i < potions.M; i++)
+        {
+            potions.A[i] = Convert.ToInt64(tokenizer.NextToken());
+        }
+
+        potions.B = new long[potions.M];
+        for (int i = 0; i < potions.M; i++)
+        {
+            potions.B[i] = Convert.ToInt64(tokenizer.NextToken());
+        }
+
+        potions.C = new long[potions.K];
+        for (int i = 0; i < potions.K; i++)
+        {
+            potions.C[i] = Convert.ToInt64(tokenizer.NextToken());
+        }
+
+        potions.D = new long[potions.K];
+        for (int i = 0; i < potions.K; i++)
+        {
+            potions.D[i] = Convert.ToInt64(tokenizer.NextToken());
+        }
+
+        Console.WriteLine(potions.Solve());
     }
 }

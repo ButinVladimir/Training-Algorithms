@@ -70,6 +70,10 @@
     <Compile Include="Set 55\Cube.cs" />
     <Compile Include="Set 55\NumberConstruction.cs" />
     <Compile Include="Set 56\Segment.cs" />
+    <Compile Include="Set 58\Amounts.cs" />
+    <Compile Include="Set 58\Duplicate.cs" />
+    <Compile Include="Set 58\Potions.cs" />
+    <Compile Include="Set 58\Traversal.cs" />
     <Compile Include="Set 59\Permutations.cs" />
     <Compile Include="Set 60\COINS.cs" />
     <Compile Include="Set 60\LASTDIG.cs" />
