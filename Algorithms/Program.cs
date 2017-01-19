@@ -1,6 +1,10 @@
 ﻿using System;
-using Algorithms.Set_55;
+using System.Numerics;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using Algorithms.Set_64;
 
 public class Program
 {
@@ -55,60 +59,29 @@ public class Program
 
     public static void Main()
     {
-        Driver driver = new Driver()
-        {
-            N = 3,
-            Start = 0,
-            Finish = 2,
-            Cu = 4,
-            Lu = 5,
-            Roads = new List<Driver.Road>()
-            {
-                new Driver.Road()
-                {
-                    From = 0,
-                    To = 1,
-                    Cost = 1,
-                    Length = 3
-                },
-                new Driver.Road()
-                {
-                    From = 1,
-                    To = 2,
-                    Cost = 4,
-                    Length = 2
-                },
-                new Driver.Road()
-                {
-                    From = 0,
-                    To = 2,
-                    Cost = 4,
-                    Length = 1
-                },
-                new Driver.Road()
-                {
-                    From = 0,
-                    To = 2,
-                    Cost = 2,
-                    Length = 11
-                },
-            }
-        };
+        Tokenizer tokenizer = new Tokenizer();
 
-        Driver.Path result = driver.Solve();
-        if (result == null)
+        int t = Convert.ToInt32(tokenizer.NextToken());
+        int n, m;
+        long[][] costs;
+
+        for (int test = 1; test <= t; test++)
         {
-            Console.WriteLine("Nothing");
-        }
-        else
-        {
-            Console.WriteLine("C = {0}", result.C);
-            Console.WriteLine("L = {0}", result.L);
-            Console.WriteLine("Path: ");
-            foreach(int vertex in result.Roads)
+            n = Convert.ToInt32(tokenizer.NextToken());
+            m = Convert.ToInt32(tokenizer.NextToken());
+
+            costs = new long[n][];
+            for (int i = 0; i < n; i++)
             {
-                Console.WriteLine(" {0} ", vertex);
+                costs[i] = new long[m];
+
+                for (int j = 0; j < m; j++)
+                {
+                    costs[i][j] = Convert.ToInt64(tokenizer.NextToken());
+                }
             }
+
+            Console.WriteLine("Case #{0}: {1}", test, Pies.Solve(n, m, costs));
         }
     }
 }
