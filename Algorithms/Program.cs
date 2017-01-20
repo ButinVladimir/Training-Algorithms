@@ -4,23 +4,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using Algorithms.Set_64;
+using System.Text;
+
+//using Algorithms.Set_52;
+//using Algorithms.Set_53;
 
 public class Program
 {
     private class Tokenizer
     {
         private string currentString = null;
-        private string[] tokens;
-        private int tokenNumber;
-        private char[] separators;
 
-        public Tokenizer()
+        private string[] tokens = null;
+
+        private int tokenNumber = 0;
+
+        private static readonly char[] Separators = { ' ' };
+
+        public T NextToken<T>(Func<string, T> parser)
         {
-            currentString = null;
-            tokens = null;
-            tokenNumber = 0;
-            separators = new char[] { ' ' };
+            return parser(this.GetNextToken());
+        }
+
+        public string NextToken()
+        {
+            return this.GetNextToken();
+        }
+
+        private string GetNextToken()
+        {
+            if (this.currentString == null || this.tokenNumber == this.tokens.Length)
+            {
+                this.currentString = this.GetNextString();
+
+                while (this.currentString != null && this.currentString.Equals(string.Empty))
+                {
+                    this.currentString = this.GetNextString();
+                }
+
+                if (this.currentString == null)
+                {
+                    throw new Exception("End of input");
+                }
+
+                this.tokens = this.currentString.Split(Separators, StringSplitOptions.RemoveEmptyEntries);
+                this.tokenNumber = 0;
+            }
+
+            return this.tokens[this.tokenNumber++];
         }
 
         private string GetNextString()
@@ -33,27 +64,37 @@ public class Program
 
             return content.Trim();
         }
+    }
 
-        public string NextToken()
+    class Washing
+    {
+        public int N { get; set; }
+
+        public int K { get; set; }
+
+        public long[] P { get; set; }
+
+        public long[] D { get; set; }
+
+        public long Solve()
         {
-            if (currentString == null || tokenNumber == tokens.Length)
+            long[] a = new long[this.N];
+            long result = 0;
+
+            for (int i = 0; i < this.N; i++)
             {
-                currentString = GetNextString();
-                while (currentString != null && currentString.Equals(string.Empty))
-                {
-                    currentString = GetNextString();
-                }
-
-                if (currentString == null)
-                {
-                    return null;
-                }
-
-                tokens = currentString.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-                tokenNumber = 0;
+                a[i] = this.P[i] + this.D[i];
+                result -= this.D[i];
             }
 
-            return tokens[tokenNumber++];
+            Array.Sort(a);
+
+            for (int i = this.N - 1; i >= 0 && i >= this.N - this.K; i--)
+            {
+                result += a[i];
+            }
+
+            return result < 0 ? 0 : result;
         }
     }
 
@@ -61,27 +102,26 @@ public class Program
     {
         Tokenizer tokenizer = new Tokenizer();
 
-        int t = Convert.ToInt32(tokenizer.NextToken());
-        int n, m;
-        long[][] costs;
+        int n = tokenizer.NextToken(int.Parse);
+        int k = tokenizer.NextToken(int.Parse);
 
-        for (int test = 1; test <= t; test++)
+        long[] p = new long[n];
+        long[] d = new long[n];
+
+        for (int i = 0; i < n; i++)
         {
-            n = Convert.ToInt32(tokenizer.NextToken());
-            m = Convert.ToInt32(tokenizer.NextToken());
-
-            costs = new long[n][];
-            for (int i = 0; i < n; i++)
-            {
-                costs[i] = new long[m];
-
-                for (int j = 0; j < m; j++)
-                {
-                    costs[i][j] = Convert.ToInt64(tokenizer.NextToken());
-                }
-            }
-
-            Console.WriteLine("Case #{0}: {1}", test, Pies.Solve(n, m, costs));
+            p[i] = tokenizer.NextToken(long.Parse);
+            d[i] = tokenizer.NextToken(long.Parse);
         }
+
+        Washing washing = new Washing()
+            {
+                N = n,
+                K = k,
+                P = p,
+                D = d
+            };
+
+        Console.WriteLine(washing.Solve());
     }
 }

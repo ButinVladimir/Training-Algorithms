@@ -67,6 +67,12 @@
     <Compile Include="Set 48\Union.cs" />
     <Compile Include="Set 51\KeyLogger.cs" />
     <Compile Include="Set 51\ZeroOne.cs" />
+    <Compile Include="Set 52\Washing.cs" />
+    <Compile Include="Set 53\Clock.cs" />
+    <Compile Include="Set 53\LastDigitFactorial.cs" />
+    <Compile Include="Set 53\LastDigitPower.cs" />
+    <Compile Include="Set 53\Merge.cs" />
+    <Compile Include="Set 53\ZeroCount.cs" />
     <Compile Include="Set 55\Cube.cs" />
     <Compile Include="Set 55\Driver.cs" />
     <Compile Include="Set 55\NumberConstruction.cs" />
