@@ -5,9 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-
-//using Algorithms.Set_52;
-//using Algorithms.Set_53;
+//using Algorithms.Set_49;
 
 public class Program
 {
@@ -98,30 +96,137 @@ public class Program
         }
     }
 
+    class NPHard
+    {
+        private const int Pari = 1;
+
+        private const int Arya = -1;
+
+        private const int Neutral = 0;
+
+        public int N { get; set; }
+
+        public int M { get; set; }
+
+        public List<int>[] Ribs { get; set; }
+
+        public List<int> PariVertices { get; private set; }
+
+        public List<int> AryaVertices { get; private set; }
+
+        public bool Solve()
+        {
+            int[] colors = new int[this.N];
+
+            for (int i = 0; i < this.N; i++)
+            {
+                colors[i] = Neutral;
+            }
+
+            Queue<int> queue = new Queue<int>();
+
+            for (int startVertex = 0; startVertex < this.N; startVertex++)
+            {
+                if (!this.BFS(colors, startVertex, queue))
+                {
+                    return false;
+                }
+            }
+
+            this.AryaVertices = new List<int>();
+            this.PariVertices = new List<int>();
+
+            for (int vertex = 0; vertex < this.N; vertex++)
+            {
+                if (colors[vertex] == Arya)
+                {
+                    this.AryaVertices.Add(vertex);
+                }
+                else if (colors[vertex] == Pari)
+                {
+                    this.PariVertices.Add(vertex);
+                }
+            }
+
+            return true;
+        }
+
+        private bool BFS(int[] colors, int startVertex, Queue<int> queue)
+        {
+            if (colors[startVertex] != Neutral)
+            {
+                return true;
+            }
+
+            colors[startVertex] = Arya;
+            queue.Clear();
+            queue.Enqueue(startVertex);
+
+            int currentVertex, nextColor;
+            while (queue.Count > 0)
+            {
+                currentVertex = queue.Dequeue();
+                nextColor = colors[currentVertex] == Arya ? Pari : Arya;
+
+                foreach (int nextVertex in this.Ribs[currentVertex])
+                {
+                    if (colors[nextVertex] == Neutral)
+                    {
+                        colors[nextVertex] = nextColor;
+                        queue.Enqueue(nextVertex);
+                    }
+                    else if (colors[nextVertex] != nextColor)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+    }
+
     public static void Main()
     {
         Tokenizer tokenizer = new Tokenizer();
 
         int n = tokenizer.NextToken(int.Parse);
-        int k = tokenizer.NextToken(int.Parse);
-
-        long[] p = new long[n];
-        long[] d = new long[n];
+        int m = tokenizer.NextToken(int.Parse);
+        List<int>[] ribs = new List<int>[n];
 
         for (int i = 0; i < n; i++)
         {
-            p[i] = tokenizer.NextToken(long.Parse);
-            d[i] = tokenizer.NextToken(long.Parse);
+            ribs[i] = new List<int>();
         }
 
-        Washing washing = new Washing()
-            {
-                N = n,
-                K = k,
-                P = p,
-                D = d
-            };
+        int a, b;
+        for (int i = 0; i < m; i++)
+        {
+            a = tokenizer.NextToken(int.Parse) - 1;
+            b = tokenizer.NextToken(int.Parse) - 1;
+            ribs[a].Add(b);
+            ribs[b].Add(a);
+        }
 
-        Console.WriteLine(washing.Solve());
+        NPHard problem = new NPHard() { N = n, M = m, Ribs = ribs };
+        if (!problem.Solve())
+        {
+            Console.WriteLine("-1");
+            return;
+        }
+
+        Console.WriteLine(problem.AryaVertices.Count);
+        foreach (int vertice in problem.AryaVertices)
+        {
+            Console.Write(string.Format("{0} ", vertice + 1));
+        }
+
+        Console.WriteLine();
+
+        Console.WriteLine(problem.PariVertices.Count);
+        foreach (int vertice in problem.PariVertices)
+        {
+            Console.Write(string.Format("{0} ", vertice + 1));
+        }
     }
 }

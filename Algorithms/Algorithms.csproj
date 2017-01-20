@@ -65,6 +65,7 @@
     <Compile Include="Set 47\MinStack.cs" />
     <Compile Include="Set 48\Prefix.cs" />
     <Compile Include="Set 48\Union.cs" />
+    <Compile Include="Set 49\NPHard.cs" />
     <Compile Include="Set 51\KeyLogger.cs" />
     <Compile Include="Set 51\ZeroOne.cs" />
     <Compile Include="Set 52\Washing.cs" />
