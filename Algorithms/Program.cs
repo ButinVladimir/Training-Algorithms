@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Numerics;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Text;
+using System.IO;
 //using Algorithms.Set_49;
 
 public class Program
@@ -27,6 +22,16 @@ public class Program
         public string NextToken()
         {
             return this.GetNextToken();
+        }
+
+        public int NextInt()
+        {
+            return this.NextToken(int.Parse);
+        }
+
+        public long NextLong()
+        {
+            return this.NextToken(long.Parse);
         }
 
         private string GetNextToken()
@@ -64,169 +69,162 @@ public class Program
         }
     }
 
-    class Washing
+    class Waiting
     {
-        public int N { get; set; }
+        private Tuple<long, long>[] customers;
 
-        public int K { get; set; }
+        public int N { get; private set; }
 
-        public long[] P { get; set; }
+        public Waiting(int n, long[] t, long[] l)
+        {
+            this.N = n;
+            customers = new Tuple<long, long>[this.N];
 
-        public long[] D { get; set; }
+            for (int i = 0; i < this.N; i++)
+            {
+                this.customers[i] = new Tuple<long, long>(t[i], l[i]);
+            }
+
+            Array.Sort(this.customers);
+        }
 
         public long Solve()
         {
-            long[] a = new long[this.N];
+            Heap heap = new Heap(this.N);
+
             long result = 0;
+            long currentMoment = 0;
+            long interval;
+            int currentCustomer = 0;
 
-            for (int i = 0; i < this.N; i++)
+            while (currentCustomer < this.N || heap.Position > 0)
             {
-                a[i] = this.P[i] + this.D[i];
-                result -= this.D[i];
-            }
-
-            Array.Sort(a);
-
-            for (int i = this.N - 1; i >= 0 && i >= this.N - this.K; i--)
-            {
-                result += a[i];
-            }
-
-            return result < 0 ? 0 : result;
-        }
-    }
-
-    class NPHard
-    {
-        private const int Pari = 1;
-
-        private const int Arya = -1;
-
-        private const int Neutral = 0;
-
-        public int N { get; set; }
-
-        public int M { get; set; }
-
-        public List<int>[] Ribs { get; set; }
-
-        public List<int> PariVertices { get; private set; }
-
-        public List<int> AryaVertices { get; private set; }
-
-        public bool Solve()
-        {
-            int[] colors = new int[this.N];
-
-            for (int i = 0; i < this.N; i++)
-            {
-                colors[i] = Neutral;
-            }
-
-            Queue<int> queue = new Queue<int>();
-
-            for (int startVertex = 0; startVertex < this.N; startVertex++)
-            {
-                if (!this.BFS(colors, startVertex, queue))
+                while (currentCustomer < this.N && this.customers[currentCustomer].Item1 <= currentMoment)
                 {
-                    return false;
+                    result -= this.customers[currentCustomer].Item1;
+                    heap.Push(this.customers[currentCustomer].Item2);
+                    currentCustomer++;
                 }
-            }
 
-            this.AryaVertices = new List<int>();
-            this.PariVertices = new List<int>();
-
-            for (int vertex = 0; vertex < this.N; vertex++)
-            {
-                if (colors[vertex] == Arya)
+                if (heap.Position == 0)
                 {
-                    this.AryaVertices.Add(vertex);
-                }
-                else if (colors[vertex] == Pari)
-                {
-                    this.PariVertices.Add(vertex);
-                }
-            }
-
-            return true;
-        }
-
-        private bool BFS(int[] colors, int startVertex, Queue<int> queue)
-        {
-            if (colors[startVertex] != Neutral)
-            {
-                return true;
-            }
-
-            colors[startVertex] = Arya;
-            queue.Clear();
-            queue.Enqueue(startVertex);
-
-            int currentVertex, nextColor;
-            while (queue.Count > 0)
-            {
-                currentVertex = queue.Dequeue();
-                nextColor = colors[currentVertex] == Arya ? Pari : Arya;
-
-                foreach (int nextVertex in this.Ribs[currentVertex])
-                {
-                    if (colors[nextVertex] == Neutral)
+                    if (currentCustomer < this.N && this.customers[currentCustomer].Item1 > currentMoment)
                     {
-                        colors[nextVertex] = nextColor;
-                        queue.Enqueue(nextVertex);
+                        currentMoment = this.customers[currentCustomer].Item1;
                     }
-                    else if (colors[nextVertex] != nextColor)
+
+                    continue;
+                }
+
+                interval = heap.GetHead();
+                heap.Pop();
+                currentMoment += interval;
+                result += currentMoment;
+            }
+
+            return result / this.N;
+        }
+
+        private class Heap
+        {
+            private long[] heap;
+
+            public int Position { get; private set; }
+            public int Size { get; private set; }
+
+            public Heap(int size)
+            {
+                this.Size = size + 1;
+                this.Position = 0;
+                heap = new long[this.Size];
+            }
+
+            public long GetHead()
+            {
+                return heap[1];
+            }
+
+            public void Push(long value)
+            {
+                this.heap[++this.Position] = value;
+
+                int position = this.Position;
+                int nextPosition;
+                while (position > 1)
+                {
+                    nextPosition = position / 2;
+
+                    if (this.heap[nextPosition] > this.heap[position])
                     {
-                        return false;
+                        this.Swap(position, nextPosition);
+                        position = nextPosition;
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
             }
 
-            return true;
+            public void Pop()
+            {
+                Swap(1, this.Position--);
+
+                int currentPosition = 1;
+                int nextPosition;
+
+                while (currentPosition < this.Position)
+                {
+                    nextPosition = currentPosition;
+
+                    if (currentPosition * 2 <= this.Position && this.heap[nextPosition] > this.heap[currentPosition * 2])
+                    {
+                        nextPosition = currentPosition * 2;
+                    }
+
+                    if (currentPosition * 2 + 1 <= this.Position && this.heap[nextPosition] > this.heap[currentPosition * 2 + 1])
+                    {
+                        nextPosition = currentPosition * 2 + 1;
+                    }
+
+                    if (nextPosition != currentPosition)
+                    {
+                        this.Swap(nextPosition, currentPosition);
+                        currentPosition = nextPosition;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            private void Swap(int a, int b)
+            {
+                long c = this.heap[a];
+                this.heap[a] = this.heap[b];
+                this.heap[b] = c;
+            }
         }
     }
 
     public static void Main()
     {
+        //Console.SetIn(new StreamReader(File.Open("input.txt", FileMode.Open)));
+
         Tokenizer tokenizer = new Tokenizer();
 
-        int n = tokenizer.NextToken(int.Parse);
-        int m = tokenizer.NextToken(int.Parse);
-        List<int>[] ribs = new List<int>[n];
+        int n = tokenizer.NextInt();
+        long[] t = new long[n];
+        long[] l = new long[n];
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0;i<n;i++)
         {
-            ribs[i] = new List<int>();
+            t[i] = tokenizer.NextLong();
+            l[i] = tokenizer.NextLong();
         }
 
-        int a, b;
-        for (int i = 0; i < m; i++)
-        {
-            a = tokenizer.NextToken(int.Parse) - 1;
-            b = tokenizer.NextToken(int.Parse) - 1;
-            ribs[a].Add(b);
-            ribs[b].Add(a);
-        }
-
-        NPHard problem = new NPHard() { N = n, M = m, Ribs = ribs };
-        if (!problem.Solve())
-        {
-            Console.WriteLine("-1");
-            return;
-        }
-
-        Console.WriteLine(problem.AryaVertices.Count);
-        foreach (int vertice in problem.AryaVertices)
-        {
-            Console.Write(string.Format("{0} ", vertice + 1));
-        }
-
-        Console.WriteLine();
-
-        Console.WriteLine(problem.PariVertices.Count);
-        foreach (int vertice in problem.PariVertices)
-        {
-            Console.Write(string.Format("{0} ", vertice + 1));
-        }
+        Waiting waiting = new Waiting(n, t, l);
+        Console.WriteLine(waiting.Solve());
     }
 }
