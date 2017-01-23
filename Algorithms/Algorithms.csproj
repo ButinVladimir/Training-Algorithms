@@ -69,6 +69,7 @@
     <Compile Include="Set 49\Waiting.cs" />
     <Compile Include="Set 51\KeyLogger.cs" />
     <Compile Include="Set 51\ZeroOne.cs" />
+    <Compile Include="Set 52\PickASet.cs" />
     <Compile Include="Set 52\Washing.cs" />
     <Compile Include="Set 53\Clock.cs" />
     <Compile Include="Set 53\LastDigitFactorial.cs" />

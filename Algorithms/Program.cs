@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-//using Algorithms.Set_49;
+
+using Algorithms.Set_52;
 
 public class Program
 {
@@ -69,162 +71,58 @@ public class Program
         }
     }
 
-    class Waiting
+    public static void Main()
     {
-        private Tuple<long, long>[] customers;
+/*
+        Console.SetIn(new StreamReader(File.Open("input.txt", FileMode.Open)));
 
-        public int N { get; private set; }
+        Tokenizer tokenizer = new Tokenizer();
+        int n = tokenizer.NextInt();
+        int[] a = new int[n];
 
-        public Waiting(int n, long[] t, long[] l)
+        for (int i = 0; i < n; i++)
         {
-            this.N = n;
-            customers = new Tuple<long, long>[this.N];
-
-            for (int i = 0; i < this.N; i++)
-            {
-                this.customers[i] = new Tuple<long, long>(t[i], l[i]);
-            }
-
-            Array.Sort(this.customers);
+            a[i] = tokenizer.NextInt();
         }
+*/
 
-        public long Solve()
+        for (int test = 0; test < 100; test++)
         {
-            Heap heap = new Heap(this.N);
-
-            long result = 0;
-            long currentMoment = 0;
-            long interval;
-            int currentCustomer = 0;
-
-            while (currentCustomer < this.N || heap.Position > 0)
+            int[] a = TestSetGenerator.Generate(1, 30);
+            Console.WriteLine("Test");
+            Console.WriteLine(a.Length);
+            for (int i = 0; i < a.Length; i++)
             {
-                while (currentCustomer < this.N && this.customers[currentCustomer].Item1 <= currentMoment)
-                {
-                    result -= this.customers[currentCustomer].Item1;
-                    heap.Push(this.customers[currentCustomer].Item2);
-                    currentCustomer++;
-                }
-
-                if (heap.Position == 0)
-                {
-                    if (currentCustomer < this.N && this.customers[currentCustomer].Item1 > currentMoment)
-                    {
-                        currentMoment = this.customers[currentCustomer].Item1;
-                    }
-
-                    continue;
-                }
-
-                interval = heap.GetHead();
-                heap.Pop();
-                currentMoment += interval;
-                result += currentMoment;
+                Console.Write(string.Format("{0} ", a[i]));
             }
+            Console.WriteLine();
 
-            return result / this.N;
-        }
+            List<int> result = PickASet.Solve(a);
+            Console.WriteLine("Result");
+            OutputResult(result);
 
-        private class Heap
-        {
-            private long[] heap;
+            PickASetBrute brute = new PickASetBrute() { A = a };
+            List<int> bruteResult = brute.Solve();
+            Console.WriteLine("Brute force result");
+            OutputResult(bruteResult);
 
-            public int Position { get; private set; }
-            public int Size { get; private set; }
-
-            public Heap(int size)
+            Console.WriteLine(result.Count != bruteResult.Count ? "WA\n" : "OK\n");
+            if (result.Count != bruteResult.Count)
             {
-                this.Size = size + 1;
-                this.Position = 0;
-                heap = new long[this.Size];
-            }
-
-            public long GetHead()
-            {
-                return heap[1];
-            }
-
-            public void Push(long value)
-            {
-                this.heap[++this.Position] = value;
-
-                int position = this.Position;
-                int nextPosition;
-                while (position > 1)
-                {
-                    nextPosition = position / 2;
-
-                    if (this.heap[nextPosition] > this.heap[position])
-                    {
-                        this.Swap(position, nextPosition);
-                        position = nextPosition;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            public void Pop()
-            {
-                Swap(1, this.Position--);
-
-                int currentPosition = 1;
-                int nextPosition;
-
-                while (currentPosition < this.Position)
-                {
-                    nextPosition = currentPosition;
-
-                    if (currentPosition * 2 <= this.Position && this.heap[nextPosition] > this.heap[currentPosition * 2])
-                    {
-                        nextPosition = currentPosition * 2;
-                    }
-
-                    if (currentPosition * 2 + 1 <= this.Position && this.heap[nextPosition] > this.heap[currentPosition * 2 + 1])
-                    {
-                        nextPosition = currentPosition * 2 + 1;
-                    }
-
-                    if (nextPosition != currentPosition)
-                    {
-                        this.Swap(nextPosition, currentPosition);
-                        currentPosition = nextPosition;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            private void Swap(int a, int b)
-            {
-                long c = this.heap[a];
-                this.heap[a] = this.heap[b];
-                this.heap[b] = c;
+                Console.WriteLine("An error found");
+                return;
             }
         }
     }
 
-    public static void Main()
+    private static void OutputResult(List<int> result)
     {
-        //Console.SetIn(new StreamReader(File.Open("input.txt", FileMode.Open)));
-
-        Tokenizer tokenizer = new Tokenizer();
-
-        int n = tokenizer.NextInt();
-        long[] t = new long[n];
-        long[] l = new long[n];
-
-        for (int i = 0;i<n;i++)
+        Console.WriteLine(result.Count);
+        foreach (int position in result)
         {
-            t[i] = tokenizer.NextLong();
-            l[i] = tokenizer.NextLong();
+            Console.Write(string.Format("{0} ", position + 1));
         }
 
-        Waiting waiting = new Waiting(n, t, l);
-        Console.WriteLine(waiting.Solve());
+        Console.WriteLine();
     }
 }
