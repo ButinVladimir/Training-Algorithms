@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-using Algorithms.Set_52;
+using Algorithms.Set_45;
 
 public class Program
 {
@@ -73,56 +73,16 @@ public class Program
 
     public static void Main()
     {
-/*
-        Console.SetIn(new StreamReader(File.Open("input.txt", FileMode.Open)));
-
-        Tokenizer tokenizer = new Tokenizer();
-        int n = tokenizer.NextInt();
-        int[] a = new int[n];
-
-        for (int i = 0; i < n; i++)
+        Concat concat = new Concat();
+        concat.Add(new string[]
         {
-            a[i] = tokenizer.NextInt();
-        }
-*/
+            "bb",
+            "c",
+            "abc",
+            "a",
+            "aaasaa"
+        });
 
-        for (int test = 0; test < 100; test++)
-        {
-            int[] a = TestSetGenerator.Generate(1, 30);
-            Console.WriteLine("Test");
-            Console.WriteLine(a.Length);
-            for (int i = 0; i < a.Length; i++)
-            {
-                Console.Write(string.Format("{0} ", a[i]));
-            }
-            Console.WriteLine();
-
-            List<int> result = PickASet.Solve(a);
-            Console.WriteLine("Result");
-            OutputResult(result);
-
-            PickASetBrute brute = new PickASetBrute() { A = a };
-            List<int> bruteResult = brute.Solve();
-            Console.WriteLine("Brute force result");
-            OutputResult(bruteResult);
-
-            Console.WriteLine(result.Count != bruteResult.Count ? "WA\n" : "OK\n");
-            if (result.Count != bruteResult.Count)
-            {
-                Console.WriteLine("An error found");
-                return;
-            }
-        }
-    }
-
-    private static void OutputResult(List<int> result)
-    {
-        Console.WriteLine(result.Count);
-        foreach (int position in result)
-        {
-            Console.Write(string.Format("{0} ", position + 1));
-        }
-
-        Console.WriteLine();
+        Console.WriteLine(concat.Generate());
     }
 }
