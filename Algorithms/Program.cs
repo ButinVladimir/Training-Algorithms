@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-using Algorithms.Set_45;
+using Algorithms.Set_44;
 
 public class Program
 {
@@ -73,16 +73,32 @@ public class Program
 
     public static void Main()
     {
-        Concat concat = new Concat();
-        concat.Add(new string[]
-        {
-            "bb",
-            "c",
-            "abc",
-            "a",
-            "aaasaa"
-        });
+        Visit visit = new Visit();
+        Console.WriteLine(visit.GetCount());
 
-        Console.WriteLine(concat.Generate());
+        visit.RecordHit();
+        Console.WriteLine(visit.GetCount());
+        Console.WriteLine(visit.Log());
+
+        visit.Wait(2);
+        Console.WriteLine(visit.GetCount());
+        Console.WriteLine(visit.Log());
+
+        visit.RecordHit();
+        Console.WriteLine(visit.Log());
+
+        visit.RecordHit();
+        Console.WriteLine(visit.Log());
+
+        Console.WriteLine(visit.GetCount());
+        Console.WriteLine(visit.Log());
+
+        visit.Wait(600);
+        Console.WriteLine(visit.GetCount());
+        Console.WriteLine(visit.Log());
+
+        visit.RecordHit();
+        Console.WriteLine(visit.Log());
+        Console.WriteLine(visit.GetCount());
     }
 }
