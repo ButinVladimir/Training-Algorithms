@@ -44,8 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fun\DivisibleSubset.cs" />
+    <Compile Include="Fun\Merging.cs" />
     <Compile Include="Fun\Pond2.cs" />
     <Compile Include="Fun\Pronunciation.cs" />
+    <Compile Include="Fun\RunningMedian.cs" />
     <Compile Include="Fun\ThreeNumbers.cs" />
     <Compile Include="Fun\TreeConverter.cs" />
     <Compile Include="MustBST.cs" />
