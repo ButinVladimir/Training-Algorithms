@@ -62,6 +62,7 @@
     <Compile Include="Set 42\Anagram.cs" />
     <Compile Include="Set 42\CountingWords.cs" />
     <Compile Include="Set 43\Anticubism.cs" />
+    <Compile Include="Set 43\Digits.cs" />
     <Compile Include="Set 43\Linguistics.cs" />
     <Compile Include="Set 44\Pies.cs" />
     <Compile Include="Set 44\Sum.cs" />

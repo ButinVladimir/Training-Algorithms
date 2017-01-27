@@ -74,15 +74,19 @@ public class Program
 
     public static void Main()
     {
+        Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
+        StreamWriter writer = new StreamWriter(File.Create("output.txt"));
+        Console.SetOut(writer);
+
         Tokenizer tokenizer = new Tokenizer();
 
-        string s = tokenizer.NextToken();
-
-        List<string> list = Linguistics.Solve(s);
-        Console.WriteLine(list.Count);
-        foreach (string substring in list)
+        int tests = tokenizer.NextInt();
+        string s;
+        for (int test = 1; test <= tests; test++)
         {
-            Console.WriteLine(substring);
+            Console.WriteLine("Case #{0}: {1}", test, Digits.Solve(tokenizer.NextToken()));
         }
+
+        writer.Close();
     }
 }
