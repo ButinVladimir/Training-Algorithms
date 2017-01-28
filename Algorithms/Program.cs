@@ -87,15 +87,15 @@ public class Program
         //    Console.WriteLine("Case #{0}: {1}", test, Pancakes.Solve(tokenizer.NextToken()));
         //}
 
-        int j = 50;
+        int j = 500;
         Console.WriteLine("Case #1:");
         Jam jam = new Jam()
         {
-            N = 16,
+            N = 32,
             J = j
         };
 
-        long[,] result = jam.Solve();
+        string[,] result = jam.Solve();
         for (int i = 0; i < j; i++)
         {
             for (int k = 0; k < 10; k++)

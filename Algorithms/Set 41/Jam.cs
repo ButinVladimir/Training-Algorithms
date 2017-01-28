@@ -3,36 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace Algorithms.Set_41
 {
     class Jam
     {
         private Random random;
-        private long[] values;
-        private long[] divisors;
+        private BigInteger[] values;
+        private string[] divisors;
         private PrimeChecker primeChecker;
-        private HashSet<long> visited;
+        private HashSet<string> visited;
 
         public Jam()
         {
             this.random = new Random();
-            this.primeChecker = new PrimeChecker(1000000);
+            this.primeChecker = new PrimeChecker(100000000);
 
-            this.divisors = new long[10];
+            this.divisors = new string[10];
         }
 
         public int N { get; set; }
 
         public int J { get; set; }
 
-        public long[,] Solve()
+        public string[,] Solve()
         {
-            long[,] result = new long[J, 10];
+            string[,] result = new string[J, 10];
 
-            this.values = new long[N];
+            this.values = new BigInteger[N];
             values[0] = values[N - 1] = 1;
-            this.visited = new HashSet<long>();
+            this.visited = new HashSet<string>();
 
             int counter = 0;
             while (counter < J)
@@ -57,7 +58,7 @@ namespace Algorithms.Set_41
                 this.values[i] = random.Next(0, 2);
             }
 
-            this.divisors[0] = this.Convert(10);
+            this.divisors[0] = this.Convert(10).ToString();
             if (this.visited.Contains(this.divisors[0]))
             {
                 return false;
@@ -66,8 +67,8 @@ namespace Algorithms.Set_41
 
             for (int i = 1; i < 10; i++)
             {
-                this.divisors[i] = this.primeChecker.Check(this.Convert(i + 1));
-                if (this.divisors[i] == 0)
+                this.divisors[i] = this.primeChecker.Check(this.Convert(i + 1)).ToString();
+                if (this.divisors[i].Equals("0"))
                 {
                     return false;
                 }
@@ -76,10 +77,10 @@ namespace Algorithms.Set_41
             return true;
         }
 
-        private long Convert(long mod)
+        private BigInteger Convert(long mod)
         {
-            long result = 0;
-            long mult = 1;
+            BigInteger result = 0;
+            BigInteger mult = 1;
             for (int i = 0; i < this.N; i++)
             {
                 result += mult * values[i];
@@ -105,7 +106,7 @@ namespace Algorithms.Set_41
                 this.Build();
             }
 
-            public long Check(long number)
+            public long Check(BigInteger number)
             {
                 foreach (long prime in this.primes)
                 {
