@@ -59,6 +59,9 @@
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Set 41\Jam.cs" />
+    <Compile Include="Set 41\Pancakes.cs" />
+    <Compile Include="Set 41\Sheep.cs" />
     <Compile Include="Set 42\Anagram.cs" />
     <Compile Include="Set 42\CountingWords.cs" />
     <Compile Include="Set 43\Anticubism.cs" />
