@@ -59,6 +59,8 @@
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Set 40\Game.cs" />
+    <Compile Include="Set 40\Toys.cs" />
     <Compile Include="Set 41\Jam.cs" />
     <Compile Include="Set 41\Pancakes.cs" />
     <Compile Include="Set 41\Sheep.cs" />

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using Algorithms.Set_41;
+using Algorithms.Set_40;
 
 public class Program
 {
@@ -75,36 +75,15 @@ public class Program
     public static void Main()
     {
         //Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
-        StreamWriter writer = new StreamWriter(File.Create("output.txt"));
-        Console.SetOut(writer);
+        //StreamWriter writer = new StreamWriter(File.Create("output.txt"));
+        //Console.SetOut(writer);
 
-        //Tokenizer tokenizer = new Tokenizer();
+        long[] kumarMoves = new long[] { 1, 2, 3 };
+        long[] rajeshMoves = new long[] { 1, 2, 3 };
 
-        //int tests = tokenizer.NextInt();
-        //string s;
-        //for (int test = 1; test <= tests; test++)
-        //{
-        //    Console.WriteLine("Case #{0}: {1}", test, Pancakes.Solve(tokenizer.NextToken()));
-        //}
+        Game game = new Game(kumarMoves, rajeshMoves);
+        Console.WriteLine(game.Solve(1000));
 
-        int j = 500;
-        Console.WriteLine("Case #1:");
-        Jam jam = new Jam()
-        {
-            N = 32,
-            J = j
-        };
-
-        string[,] result = jam.Solve();
-        for (int i = 0; i < j; i++)
-        {
-            for (int k = 0; k < 10; k++)
-            {
-                Console.Write(string.Format("{0} ", result[i, k]));
-            }
-            Console.WriteLine();
-        }
-
-        writer.Close();
+        //writer.Close();
     }
 }
