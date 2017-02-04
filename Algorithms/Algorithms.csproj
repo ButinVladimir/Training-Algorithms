@@ -122,6 +122,7 @@
     <Compile Include="Set 65\Components.cs" />
     <Compile Include="Set 65\Rectangle.cs" />
     <Compile Include="Set 65\Tree.cs" />
+    <Compile Include="Set 66\Truck.cs" />
     <Compile Include="Set54Lamps.cs" />
     <Compile Include="Set54Spiral.cs" />
     <Compile Include="Fun\Pond.cs" />

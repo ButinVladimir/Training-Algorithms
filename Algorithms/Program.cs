@@ -4,9 +4,9 @@ using System.Linq;
 using System.IO;
 using System.Text;
 
-//using Algorithms.Set_65;
+//using Algorithms.Set_66;
 
-public class Program
+class Solution
 {
     private class Tokenizer
     {
@@ -73,245 +73,135 @@ public class Program
         }
     }
 
-    public static void Main()
+    static void Main()
     {
-        //Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
+        Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
         //StreamWriter writer = new StreamWriter(File.Create("output.txt"));
         //Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
 
         int n = tokenizer.NextInt();
-        Tree tree = new Tree(n);
+        long[] petrol = new long[n];
+        long[] distance = new long[n];
 
-        for (int i = 0; i < n - 1; i++)
+        for (int i = 0; i < n; i++)
         {
-            tree.AddRib(
-                tokenizer.NextInt() - 1, 
-                tokenizer.NextInt() - 1, 
-                tokenizer.NextToken()[0] == 'r');
+            petrol[i] = tokenizer.NextLong();
+            distance[i] = tokenizer.NextLong();
         }
 
-        Console.WriteLine(tree.Solve());
+        Truck truck = new Truck()
+        {
+            N = n,
+            Petrol = petrol,
+            Distance = distance
+        };
+
+        Console.WriteLine(truck.Solve());
 
         //writer.Close();
     }
 
-    public class Tree
+    public class Truck
     {
-        private const long Module = 1000000007;
+        private State[] states;
+        private long[] left;
+        private int[] nextPoint;
 
-        private int n;
+        public int N { get; set; }
 
-        private TreeNode[] nodes;
+        public long[] Petrol { get; set; }
 
-        public Tree(int n)
+        public long[] Distance { get; set; }
+
+        public int Solve()
         {
-            this.n = n;
+            this.states = new State[this.N];
+            this.left = new long[this.N];
+            this.nextPoint = new int[this.N];
 
-            this.nodes = new TreeNode[this.n];
-            for (int i = 0; i < this.n; i++)
+            for (int i = 0; i < this.N; i++)
             {
-                this.nodes[i] = new TreeNode();
+                this.states[i] = State.NotVisited;
+                this.nextPoint[i] = i;
+                this.left[i] = this.Petrol[i];
             }
-        }
 
-        public void AddRib(int from, int to, bool red)
-        {
-            this.nodes[from].AddRib(to, red);
-            this.nodes[to].AddRib(from, red);
-        }
-
-        public long Solve()
-        {
-            this.ComputeCounts();
-
-            return this.Calc();
-        }
-
-        private void ComputeCounts()
-        {
-            int[] queue = new int[this.n];
-            bool[] visited = new bool[this.n];
-
-            queue[0] = 0;
-            visited[0] = true;
-
-            int leftBorder = 0;
-            int rightBorder = 0;
-            int from, to;
-            long black, red;
-
-            while (leftBorder <= rightBorder)
+            for (int i = 0; i < this.N; i++)
             {
-                from = queue[leftBorder++];
-
-                foreach (var rib in this.nodes[from].Ribs)
+                if (this.Travel(i))
                 {
-                    to = rib.Item1;
-                    if (visited[to])
-                    {
-                        continue;
-                    }
-
-                    queue[++rightBorder] = to;
-                    visited[to] = true;
+                    return i;
                 }
             }
 
-            while (rightBorder >= 0)
-            {
-                TreeNode node = this.nodes[queue[rightBorder--]];
-
-                node.BlackCount = 1;
-                node.RedCount = 0;
-
-                foreach (var rib in node.Ribs)
-                {
-                    this.GetCount(rib.Item1, rib.Item2, out black, out red);
-
-                    node.RedCount += red;
-                    node.BlackCount += black;
-                }
-            }
+            return -1;
         }
 
-        private void GetCount(int vertex, bool isRibRed, out long black, out long red)
+        private bool Travel(int start)
         {
-            TreeNode node = this.nodes[vertex];
+            if (this.states[start] == State.Visited)
+            {
+                return false;
+            }
 
-            if (isRibRed)
+            Stack<int> positions = new Stack<int>();
+            positions.Push(start);
+
+            this.states[start] = State.Processing;
+
+            int current, next;
+            int prev;
+
+            while (positions.Count > 0)
             {
-                black = 0;
-                red = node.RedCount + node.BlackCount;
+                current = positions.Peek();
+                next = this.nextPoint[current];
+
+                if (this.Distance[next] > this.left[current])
+                {
+                    this.states[current] = State.Visited;
+                    positions.Pop();
+
+                    if (positions.Count > 0)
+                    {
+                        prev = positions.Peek();
+                        this.nextPoint[prev] = this.nextPoint[current];
+                        this.left[prev] += this.left[current];
+                    }
+                }
+                else
+                {
+                    this.left[current] -= this.Distance[next];
+                    this.nextPoint[current] = next = (next + 1) % this.N;
+
+                    if (this.states[next] == State.Processing)
+                    {
+                        return true;
+                    }
+
+                    if (this.states[next] == State.Visited)
+                    {
+                        this.left[current] += this.left[next];
+                        this.nextPoint[current] = this.nextPoint[next];
+                    }
+                    else
+                    {
+                        positions.Push(next);
+                        this.states[next] = State.Processing;
+                    }
+                }
             }
-            else
-            {
-                black = node.BlackCount;
-                red = node.RedCount;
-            }
+
+            return false;
         }
 
-        private long Calc()
+        private enum State
         {
-            Queue<int> queue = new Queue<int>();
-            bool[] visited = new bool[this.n];
-            long[] blackCount = new long[this.n];
-            long[] redCount = new long[this.n];
-
-            queue.Enqueue(0);
-            visited[0] = true;
-            int from, to;
-
-            long result = 0;
-            long localResult;
-            long sumBlack = 0;
-            long sumRed = 0;
-            long red, black;
-            long blackPairs = 0;
-            long redPairs = 0;
-
-            long localRed, localBlack;
-
-            while (queue.Count > 0)
-            {
-                from = queue.Dequeue();
-                blackCount[from]++;
-
-                foreach (var rib in this.nodes[from].Ribs)
-                {
-                    to = rib.Item1;
-                    if (visited[to])
-                    {
-                        continue;
-                    }
-                    this.GetCount(to, rib.Item2, out black, out red);
-
-                    blackPairs = (blackPairs + (red * sumBlack) % Module) % Module;
-                    blackPairs = (blackPairs + (black * sumRed) % Module) % Module;
-                    redPairs = (redPairs + (red * sumRed) % Module) % Module;
-
-                    sumBlack += black;
-                    sumRed += red;
-                }
-
-                localResult = 0;
-                localBlack = sumBlack;
-                localRed = sumRed;
-
-                foreach (var rib in this.nodes[from].Ribs)
-                {
-                    to = rib.Item1;
-                    if (visited[to])
-                    {
-                        continue;
-                    }
-                    this.GetCount(to, rib.Item2, out black, out red);
-
-                    sumBlack -= black;
-                    sumRed -= red;
-
-                    blackPairs = (blackPairs - red * sumBlack % Module + Module) % Module;
-                    blackPairs = (blackPairs - black * sumRed % Module + Module) % Module;
-                    redPairs = (redPairs - red * sumRed % Module + Module) % Module;
-
-                    localResult = (localResult + black * redPairs % Module) % Module;
-                    localResult = (localResult + red * blackPairs % Module) % Module;
-                    localResult = (localResult + red * redPairs % Module) % Module;
-
-                    localResult = (localResult + red * blackCount[from] % Module * sumRed % Module) % Module;
-                    localResult = (localResult + red * redCount[from] % Module * sumBlack % Module) % Module;
-                    localResult = (localResult + red * redCount[from] % Module * sumRed % Module) % Module;
-                    localResult = (localResult + black * redCount[from] % Module * sumRed % Module) % Module;
-
-                    localResult = (localResult + red * redCount[from] % Module) % Module;
-                }
-
-                result = (result + localResult) % Module;
-
-                foreach (var rib in this.nodes[from].Ribs)
-                {
-                    to = rib.Item1;
-                    if (visited[to])
-                    {
-                        continue;
-                    }
-                    this.GetCount(to, rib.Item2, out black, out red);
-
-                    redCount[to] = redCount[from] + localRed - red;
-                    blackCount[to] = blackCount[from] + localBlack - black;
-
-                    if (rib.Item2)
-                    {
-                        redCount[to] += blackCount[to];
-                        blackCount[to] = 0;
-                    }
-
-                    visited[to] = true;
-                    queue.Enqueue(to);
-                }
-            }
-
-            return result;
-        }
-
-        private class TreeNode
-        {
-            public TreeNode()
-            {
-                this.Ribs = new List<Tuple<int, bool>>();
-            }
-
-            public long RedCount { get; set; }
-
-            public long BlackCount { get; set; }
-
-            public List<Tuple<int, bool>> Ribs { get; private set; }
-
-            public void AddRib(int to, bool red)
-            {
-                this.Ribs.Add(new Tuple<int, bool>(to, red));
-            }
+            NotVisited,
+            Processing,
+            Visited
         }
     }
 }
