@@ -75,133 +75,68 @@ class Solution
 
     static void Main()
     {
-        Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
+        //Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
         //StreamWriter writer = new StreamWriter(File.Create("output.txt"));
         //Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
 
         int n = tokenizer.NextInt();
-        long[] petrol = new long[n];
-        long[] distance = new long[n];
+        long[] amount = new long[n];
 
         for (int i = 0; i < n; i++)
         {
-            petrol[i] = tokenizer.NextLong();
-            distance[i] = tokenizer.NextLong();
+            amount[i] = tokenizer.NextLong();
         }
 
-        Truck truck = new Truck()
-        {
-            N = n,
-            Petrol = petrol,
-            Distance = distance
-        };
-
-        Console.WriteLine(truck.Solve());
+        Console.WriteLine(Plants.Solve(amount));
 
         //writer.Close();
     }
 
-    public class Truck
+    class Plants
     {
-        private State[] states;
-        private long[] left;
-        private int[] nextPoint;
-
-        public int N { get; set; }
-
-        public long[] Petrol { get; set; }
-
-        public long[] Distance { get; set; }
-
-        public int Solve()
+        public static int Solve(long[] amount)
         {
-            this.states = new State[this.N];
-            this.left = new long[this.N];
-            this.nextPoint = new int[this.N];
+            int n = amount.Length;
+            int[] link = new int[n];
+            int[] length = new int[n];
 
-            for (int i = 0; i < this.N; i++)
-            {
-                this.states[i] = State.NotVisited;
-                this.nextPoint[i] = i;
-                this.left[i] = this.Petrol[i];
-            }
+            link[0] = -1;
+            length[0] = 0;
 
-            for (int i = 0; i < this.N; i++)
+            int prev, currentLength;
+
+            for (int current = 1; current < n; current++)
             {
-                if (this.Travel(i))
+                prev = current - 1;
+                currentLength = 0;
+                while (prev >= 0 && amount[prev] >= amount[current])
                 {
-                    return i;
+                    currentLength = Math.Max(currentLength, length[prev]);
+                    prev = link[prev];
                 }
-            }
 
-            return -1;
-        }
-
-        private bool Travel(int start)
-        {
-            if (this.states[start] == State.Visited)
-            {
-                return false;
-            }
-
-            Stack<int> positions = new Stack<int>();
-            positions.Push(start);
-
-            this.states[start] = State.Processing;
-
-            int current, next;
-            int prev;
-
-            while (positions.Count > 0)
-            {
-                current = positions.Peek();
-                next = this.nextPoint[current];
-
-                if (this.Distance[next] > this.left[current])
+                if (prev == -1)
                 {
-                    this.states[current] = State.Visited;
-                    positions.Pop();
-
-                    if (positions.Count > 0)
-                    {
-                        prev = positions.Peek();
-                        this.nextPoint[prev] = this.nextPoint[current];
-                        this.left[prev] += this.left[current];
-                    }
+                    currentLength = 0;
                 }
                 else
                 {
-                    this.left[current] -= this.Distance[next];
-                    this.nextPoint[current] = next = (next + 1) % this.N;
-
-                    if (this.states[next] == State.Processing)
-                    {
-                        return true;
-                    }
-
-                    if (this.states[next] == State.Visited)
-                    {
-                        this.left[current] += this.left[next];
-                        this.nextPoint[current] = this.nextPoint[next];
-                    }
-                    else
-                    {
-                        positions.Push(next);
-                        this.states[next] = State.Processing;
-                    }
+                    currentLength++;
                 }
+
+                link[current] = prev;
+                length[current] = currentLength;
             }
 
-            return false;
-        }
+            int result = length[0];
+            for (int i = 0; i < n; i++)
+            {
+                result = Math.Max(result, length[i]);
+            }
 
-        private enum State
-        {
-            NotVisited,
-            Processing,
-            Visited
+            return result;
         }
     }
 }
