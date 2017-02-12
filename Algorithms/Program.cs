@@ -4,7 +4,7 @@ using System.Linq;
 using System.IO;
 using System.Text;
 
-//using Algorithms.Set_66;
+//using Algorithms.Set_67;
 
 class Solution
 {
@@ -81,62 +81,7 @@ class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int n = tokenizer.NextInt();
-        long[] amount = new long[n];
-
-        for (int i = 0; i < n; i++)
-        {
-            amount[i] = tokenizer.NextLong();
-        }
-
-        Console.WriteLine(Plants.Solve(amount));
 
         //writer.Close();
-    }
-
-    class Plants
-    {
-        public static int Solve(long[] amount)
-        {
-            int n = amount.Length;
-            int[] link = new int[n];
-            int[] length = new int[n];
-
-            link[0] = -1;
-            length[0] = 0;
-
-            int prev, currentLength;
-
-            for (int current = 1; current < n; current++)
-            {
-                prev = current - 1;
-                currentLength = 0;
-                while (prev >= 0 && amount[prev] >= amount[current])
-                {
-                    currentLength = Math.Max(currentLength, length[prev]);
-                    prev = link[prev];
-                }
-
-                if (prev == -1)
-                {
-                    currentLength = 0;
-                }
-                else
-                {
-                    currentLength++;
-                }
-
-                link[current] = prev;
-                length[current] = currentLength;
-            }
-
-            int result = length[0];
-            for (int i = 0; i < n; i++)
-            {
-                result = Math.Max(result, length[i]);
-            }
-
-            return result;
-        }
     }
 }

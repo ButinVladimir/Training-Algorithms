@@ -44,7 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fun\Bigger.cs" />
     <Compile Include="Fun\DivisibleSubset.cs" />
+    <Compile Include="Fun\Equal.cs" />
+    <Compile Include="Fun\Flipping.cs" />
     <Compile Include="Fun\Merging.cs" />
     <Compile Include="Fun\Pond2.cs" />
     <Compile Include="Fun\Pronunciation.cs" />
@@ -124,6 +127,11 @@
     <Compile Include="Set 65\Tree.cs" />
     <Compile Include="Set 66\Plants.cs" />
     <Compile Include="Set 66\Truck.cs" />
+    <Compile Include="Set 67\Birds.cs" />
+    <Compile Include="Set 67\Difference.cs" />
+    <Compile Include="Set 67\HackerString.cs" />
+    <Compile Include="Set 67\Knight.cs" />
+    <Compile Include="Set 67\Prefix.cs" />
     <Compile Include="Set54Lamps.cs" />
     <Compile Include="Set54Spiral.cs" />
     <Compile Include="Fun\Pond.cs" />

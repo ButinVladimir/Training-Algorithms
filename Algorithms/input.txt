@@ -1,2 +1,1 @@
-7
-6 5 8 4 7 10 9
+5 A AB ABC ABD ADDD
