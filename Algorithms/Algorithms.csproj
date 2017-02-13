@@ -46,7 +46,9 @@
   <ItemGroup>
     <Compile Include="Fun\Bigger.cs" />
     <Compile Include="Fun\DivisibleSubset.cs" />
+    <Compile Include="Fun\DownToZero.cs" />
     <Compile Include="Fun\Equal.cs" />
+    <Compile Include="Fun\FixedLengthQueries.cs" />
     <Compile Include="Fun\Flipping.cs" />
     <Compile Include="Fun\Merging.cs" />
     <Compile Include="Fun\Pond2.cs" />
