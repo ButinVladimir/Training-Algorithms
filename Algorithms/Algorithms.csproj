@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fun\Bigger.cs" />
+    <Compile Include="Fun\Candies.cs" />
     <Compile Include="Fun\DivisibleSubset.cs" />
     <Compile Include="Fun\Equal.cs" />
     <Compile Include="Fun\Flipping.cs" />
