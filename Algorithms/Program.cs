@@ -4,7 +4,7 @@ using System.Linq;
 using System.IO;
 using System.Text;
 
-//using Algorithms.Fun;
+//using Algorithms.Set_68;
 
 class Solution
 {
@@ -81,6 +81,37 @@ class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
+        int year = tokenizer.NextInt();
+
+        Console.WriteLine(Day.Solve(year));
+
         //writer.Close();
+    }
+
+    public class Day
+    {
+        public static string Solve(int year)
+        {
+            if (year != 1918)
+            {
+                bool learYear = false;
+
+                if (year <= 1917 && year % 4 == 0)
+                {
+                    learYear = true;
+                }
+
+                if (year > 1917 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0))
+                {
+                    learYear = true;
+                }
+
+                int day = learYear ? 12 : 13;
+
+                return string.Format("{0}.09.{1}", day, year);
+            }
+
+            return "26.09.1918";
+        }
     }
 }
