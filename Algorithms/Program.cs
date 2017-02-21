@@ -81,37 +81,48 @@ class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int year = tokenizer.NextInt();
+        int n = tokenizer.NextInt();
+        string[] numbers = new string[n];
 
-        Console.WriteLine(Day.Solve(year));
+        for (int i=0;i<n;i++)
+        {
+            numbers[i] = tokenizer.NextToken();
+        }
+
+        BigSorting.Sort(numbers);
+
+        for (int i=0;i<n;i++)
+        {
+            Console.WriteLine(numbers[i]);
+        }
 
         //writer.Close();
     }
 
-    public class Day
+    public class BigSorting
     {
-        public static string Solve(int year)
+        public static void Sort(string[] numbers)
         {
-            if (year != 1918)
+            Comparer comparer = new Comparer();
+            Array.Sort(numbers, comparer);
+        }
+
+        private class Comparer : IComparer<string>
+        {
+            int IComparer<string>.Compare(string x, string y)
             {
-                bool learYear = false;
-
-                if (year <= 1917 && year % 4 == 0)
+                if (x.Length < y.Length)
                 {
-                    learYear = true;
+                    return -1;
                 }
 
-                if (year > 1917 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0))
+                if (x.Length > y.Length)
                 {
-                    learYear = true;
+                    return 1;
                 }
 
-                int day = learYear ? 12 : 13;
-
-                return string.Format("{0}.09.{1}", day, year);
+                return x.CompareTo(y);
             }
-
-            return "26.09.1918";
         }
     }
 }
