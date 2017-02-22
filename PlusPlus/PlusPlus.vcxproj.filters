@@ -18,7 +18,7 @@
     <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="prefix_neighbourhood.cpp">
+    <ClCompile Include="big_sorting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

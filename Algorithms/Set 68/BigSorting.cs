@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,28 +9,11 @@ namespace Algorithms.Set_68
 {
     public class BigSorting
     {
-        public static void Sort(string[] numbers)
+        public static string[] Sort(string[] strings)
         {
-            Comparer comparer = new Comparer();
-            Array.Sort(numbers, comparer);
-        }
-
-        private class Comparer : IComparer<string>
-        {
-            int IComparer<string>.Compare(string x, string y)
-            {
-                if (x.Length < y.Length)
-                {
-                    return -1;
-                }
-
-                if (x.Length > y.Length)
-                {
-                    return 1;
-                }
-
-                return x.CompareTo(y);
-            }
+            BigInteger[] numbers = strings.Select(x => BigInteger.Parse(x)).ToArray();
+            Array.Sort(numbers);
+            return numbers.Select(x => x.ToString()).ToArray();
         }
     }
 }

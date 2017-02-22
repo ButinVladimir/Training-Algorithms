@@ -68,6 +68,9 @@
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Set 37\Dice.cs" />
+    <Compile Include="Set 37\ShortestPath.cs" />
+    <Compile Include="Set 37\TwoNumbersSum.cs" />
     <Compile Include="Set 38\Compressing.cs" />
     <Compile Include="Set 38\Connecting.cs" />
     <Compile Include="Set 38\ThreeBalls.cs" />
@@ -145,6 +148,7 @@
     <Compile Include="Set 67\Knight.cs" />
     <Compile Include="Set 67\Prefix.cs" />
     <Compile Include="Set 68\BigSorting.cs" />
+    <Compile Include="Set 68\CircleSquare.cs" />
     <Compile Include="Set 68\Day.cs" />
     <Compile Include="Set54Lamps.cs" />
     <Compile Include="Set54Spiral.cs" />
