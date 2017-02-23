@@ -68,6 +68,9 @@
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Set 36\Contacts.cs" />
+    <Compile Include="Set 36\Cookies.cs" />
+    <Compile Include="Set 36\Tree.cs" />
     <Compile Include="Set 37\Dice.cs" />
     <Compile Include="Set 37\ShortestPath.cs" />
     <Compile Include="Set 37\TwoNumbersSum.cs" />
