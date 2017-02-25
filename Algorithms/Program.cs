@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Text;
-using Algorithms.Set_36;
+using Algorithms.Set_35;
 
 class Solution
 {
@@ -75,27 +75,18 @@ class Solution
 
     static void Main()
     {
-        //Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
+        Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
         //StreamWriter writer = new StreamWriter(File.Create("output.txt"));
         //Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int n = tokenizer.NextInt();
-        string[] input = new string[n];
+        string text = Console.ReadLine();
+        List<string> result = Split.SplitMessage(text);
 
-        for (int i=0;i<n;i++)
+        foreach (var s in result)
         {
-            input[i] = tokenizer.NextToken();
-        }
-
-        Tree.TreeNode root = Tree.Parse(input);
-        if (root != null)
-        {
-            root.Walk(x =>
-            {
-                Console.WriteLine(x.Value);
-            });
+            Console.WriteLine(s);
         }
 
         //writer.Close();
