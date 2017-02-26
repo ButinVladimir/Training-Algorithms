@@ -18,7 +18,7 @@
     <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="big_sorting.cpp">
+    <ClCompile Include="megaprime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
