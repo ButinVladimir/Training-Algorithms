@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Text;
-using Algorithms.Set_35;
+using Algorithms.Set_34;
 
 class Solution
 {
@@ -81,12 +81,27 @@ class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        string text = Console.ReadLine();
-        List<string> result = Split.SplitMessage(text);
+        int n1 = tokenizer.NextInt();
+        List<Tuple<int, int>> list1 = new List<Tuple<int, int>>();
 
-        foreach (var s in result)
+        for (int i = 0; i < n1; i++)
         {
-            Console.WriteLine(s);
+            list1.Add(new Tuple<int, int>(tokenizer.NextInt(), tokenizer.NextInt()));
+        }
+
+        int n2 = tokenizer.NextInt();
+        List<Tuple<int, int>> list2 = new List<Tuple<int, int>>();
+
+        for (int i = 0; i < n2; i++)
+        {
+            list2.Add(new Tuple<int, int>(tokenizer.NextInt(), tokenizer.NextInt()));
+        }
+
+        List<Tuple<int, int>> result = Intervals.Solve(list1, list2);
+
+        foreach (var interval in result)
+        {
+            Console.WriteLine("{0} - {1}", interval.Item1, interval.Item2);
         }
 
         //writer.Close();
