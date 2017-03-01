@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Numerics;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
-using System.Text;
-using Algorithms.Set_34;
+
+using Algorithms.Set_33;
 
 class Solution
 {
@@ -75,33 +73,23 @@ class Solution
 
     static void Main()
     {
-        Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
+        //Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
         //StreamWriter writer = new StreamWriter(File.Create("output.txt"));
         //Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
+        int n = tokenizer.NextInt();
+        int[] a = new int[n];
 
-        int n1 = tokenizer.NextInt();
-        List<Tuple<int, int>> list1 = new List<Tuple<int, int>>();
-
-        for (int i = 0; i < n1; i++)
+        for (int i = 0; i < n; i++)
         {
-            list1.Add(new Tuple<int, int>(tokenizer.NextInt(), tokenizer.NextInt()));
+            a[i] = tokenizer.NextInt();
         }
 
-        int n2 = tokenizer.NextInt();
-        List<Tuple<int, int>> list2 = new List<Tuple<int, int>>();
-
-        for (int i = 0; i < n2; i++)
-        {
-            list2.Add(new Tuple<int, int>(tokenizer.NextInt(), tokenizer.NextInt()));
-        }
-
-        List<Tuple<int, int>> result = Intervals.Solve(list1, list2);
-
+        List<Tuple<int, int>> result = Intervals.Solve(a);
         foreach (var interval in result)
         {
-            Console.WriteLine("{0} - {1}", interval.Item1, interval.Item2);
+            Console.WriteLine("[{0}, {1}]", interval.Item1, interval.Item2);
         }
 
         //writer.Close();
