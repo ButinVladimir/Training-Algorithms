@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
-using Algorithms.Set_33;
+using Algorithms.Set_32;
 
 class Solution
 {
@@ -73,24 +74,20 @@ class Solution
 
     static void Main()
     {
-        //Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
+        Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
         //StreamWriter writer = new StreamWriter(File.Create("output.txt"));
         //Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
+
         int n = tokenizer.NextInt();
         int[] a = new int[n];
-
-        for (int i = 0; i < n; i++)
+        for (int i=0;i<n;i++)
         {
             a[i] = tokenizer.NextInt();
         }
 
-        List<Tuple<int, int>> result = Intervals.Solve(a);
-        foreach (var interval in result)
-        {
-            Console.WriteLine("[{0}, {1}]", interval.Item1, interval.Item2);
-        }
+        Console.WriteLine(Frequent.SolveN4(n, a));
 
         //writer.Close();
     }
