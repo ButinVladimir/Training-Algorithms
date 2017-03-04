@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using Algorithms.Set_32;
+using Algorithms.Set_31;
 
 class Solution
 {
@@ -74,21 +74,112 @@ class Solution
 
     static void Main()
     {
-        Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
+        //Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
         //StreamWriter writer = new StreamWriter(File.Create("output.txt"));
         //Console.SetOut(writer);
 
-        Tokenizer tokenizer = new Tokenizer();
-
-        int n = tokenizer.NextInt();
-        int[] a = new int[n];
-        for (int i=0;i<n;i++)
+        TreeNode rootNode = new TreeNode()
         {
-            a[i] = tokenizer.NextInt();
-        }
+            Value = 10,
+            Left = new TreeNode()
+            {
+                Value = 5,
+                Left = new TreeNode()
+                {
+                    Value = 3,
+                    Left = new TreeNode()
+                    {
+                        Value = 1,
+                        Right = new TreeNode()
+                        {
+                            Value = 2
+                        }
+                    },
+                    Right = new TreeNode()
+                    {
+                        Value = 4
+                    },
+                },
+                Right = new TreeNode()
+                {
+                    Value = 8,
+                    Left = new TreeNode()
+                    {
+                        Value = 7,
+                        Left = new TreeNode()
+                        {
+                            Value = 6
+                        }
+                    },
+                    Right = new TreeNode()
+                    {
+                        Value = 9
+                    },
+                }
+            },
+            Right = new TreeNode()
+            {
+                Value = 15,
+                Left = new TreeNode()
+                {
+                    Value = 13,
+                    Left = new TreeNode()
+                    {
+                        Value = 11,
+                        Right = new TreeNode()
+                        {
+                            Value = 12
+                        }
+                    },
+                    Right = new TreeNode()
+                    {
+                        Value = 14
+                    },
+                },
+                Right = new TreeNode()
+                {
+                    Value = 18,
+                    Left = new TreeNode()
+                    {
+                        Value = 17,
+                        Left = new TreeNode()
+                        {
+                            Value = 16
+                        }
+                    },
+                    Right = new TreeNode()
+                    {
+                        Value = 19
+                    },
+                }
+            },
+        };
 
-        Console.WriteLine(Frequent.SolveN4(n, a));
+        TraverseMirroredBST.TraverseType[] types = new TraverseMirroredBST.TraverseType[]
+        {
+            TraverseMirroredBST.TraverseType.Pre,
+            TraverseMirroredBST.TraverseType.In,
+            TraverseMirroredBST.TraverseType.Post,
+            TraverseMirroredBST.TraverseType.Level
+        };
+
+        Traverse(rootNode, types);
+
+        Console.Write("\r\n\r\n\r\n");
+        TraverseMirroredBST.MirrorTree(rootNode);
+
+        Traverse(rootNode, types);
 
         //writer.Close();
+    }
+
+    private static void Traverse(TreeNode rootNode, TraverseMirroredBST.TraverseType[] types)
+    {
+        foreach (var type in types)
+        {
+            Console.Write(string.Format("Order {0}:\t", type));
+            TraverseMirroredBST.Traverse(type, rootNode, x => Console.Write(x.Value + "  "));
+            Console.WriteLine();
+        }
     }
 }

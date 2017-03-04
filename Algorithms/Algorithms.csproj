@@ -84,6 +84,9 @@
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Set 31\Pearls.cs" />
+    <Compile Include="Set 31\Pi.cs" />
+    <Compile Include="Set 31\TraverseMirroredBST.cs" />
     <Compile Include="Set 32\AndValues.cs" />
     <Compile Include="Set 32\Distance.cs" />
     <Compile Include="Set 32\Frequent.cs" />
