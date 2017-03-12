@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
+<<<<<<< HEAD
 //using Algorithms.Fun_2;
 
 public class Solution
+=======
+using Algorithms.Set_30;
+
+public class Test
+>>>>>>> c0dbc640e8b8f6ce6ee5e84a30005612929e72b3
 {
     private class Tokenizer
     {
@@ -74,11 +81,12 @@ public class Solution
 
     public static void Main()
     {
-        //Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
+        Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
         //StreamWriter writer = new StreamWriter(File.Create("output.txt"));
         //Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
+<<<<<<< HEAD
         int t = tokenizer.NextInt();
         for (int test = 0; test < t; test++)
         {
@@ -112,4 +120,17 @@ public class Solution
             return k > 0;
         }
     }
+=======
+
+        int[] values = new int[5];
+        for (int i = 0; i < 5; i++)
+        {
+            values[i] = tokenizer.NextInt();
+        }
+
+        Console.WriteLine(Poker.Check(values));
+
+        //writer.Close();
+    }
+>>>>>>> c0dbc640e8b8f6ce6ee5e84a30005612929e72b3
 }
