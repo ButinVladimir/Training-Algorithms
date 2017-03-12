@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using Algorithms.Set_31;
+//using Algorithms.Fun_2;
 
-class Solution
+public class Solution
 {
     private class Tokenizer
     {
@@ -72,114 +72,44 @@ class Solution
         }
     }
 
-    static void Main()
+    public static void Main()
     {
         //Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
         //StreamWriter writer = new StreamWriter(File.Create("output.txt"));
         //Console.SetOut(writer);
 
-        TreeNode rootNode = new TreeNode()
+        Tokenizer tokenizer = new Tokenizer();
+        int t = tokenizer.NextInt();
+        for (int test = 0; test < t; test++)
         {
-            Value = 10,
-            Left = new TreeNode()
+            int n = tokenizer.NextInt();
+            int k = tokenizer.NextInt();
+
+            int[] a = new int[n];
+            for (int i = 0; i < n; i++)
             {
-                Value = 5,
-                Left = new TreeNode()
-                {
-                    Value = 3,
-                    Left = new TreeNode()
-                    {
-                        Value = 1,
-                        Right = new TreeNode()
-                        {
-                            Value = 2
-                        }
-                    },
-                    Right = new TreeNode()
-                    {
-                        Value = 4
-                    },
-                },
-                Right = new TreeNode()
-                {
-                    Value = 8,
-                    Left = new TreeNode()
-                    {
-                        Value = 7,
-                        Left = new TreeNode()
-                        {
-                            Value = 6
-                        }
-                    },
-                    Right = new TreeNode()
-                    {
-                        Value = 9
-                    },
-                }
-            },
-            Right = new TreeNode()
-            {
-                Value = 15,
-                Left = new TreeNode()
-                {
-                    Value = 13,
-                    Left = new TreeNode()
-                    {
-                        Value = 11,
-                        Right = new TreeNode()
-                        {
-                            Value = 12
-                        }
-                    },
-                    Right = new TreeNode()
-                    {
-                        Value = 14
-                    },
-                },
-                Right = new TreeNode()
-                {
-                    Value = 18,
-                    Left = new TreeNode()
-                    {
-                        Value = 17,
-                        Left = new TreeNode()
-                        {
-                            Value = 16
-                        }
-                    },
-                    Right = new TreeNode()
-                    {
-                        Value = 19
-                    },
-                }
-            },
-        };
+                a[i] = tokenizer.NextInt();
+            }
 
-        TraverseMirroredBST.TraverseType[] types = new TraverseMirroredBST.TraverseType[]
-        {
-            TraverseMirroredBST.TraverseType.Pre,
-            TraverseMirroredBST.TraverseType.In,
-            TraverseMirroredBST.TraverseType.Post,
-            TraverseMirroredBST.TraverseType.Level
-        };
-
-        Traverse(rootNode, types);
-
-        Console.Write("\r\n\r\n\r\n");
-        TraverseMirroredBST.MirrorTree(rootNode);
-
-        Traverse(rootNode, types);
+            Console.WriteLine(Professor.Solve(n, k, a) ? "YES" : "NO");
+        }
 
         //writer.Close();
     }
 
-    private static void Traverse(TreeNode rootNode, TraverseMirroredBST.TraverseType[] types)
+    public class Professor
     {
-        foreach (var type in types)
+        public static bool Solve(int n, int k, int[] a)
         {
-            Console.Write(string.Format("Order {0}:\t", type));
-            TraverseMirroredBST.Traverse(type, rootNode, x => Console.Write(x.Value + "  "));
-            Console.WriteLine();
+            for (int i = 0; i < n; i++)
+            {
+                if (a[i] <= 0)
+                {
+                    k--;
+                }
+            }
+
+            return k > 0;
         }
     }
 }
