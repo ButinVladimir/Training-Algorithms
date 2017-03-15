@@ -18,7 +18,7 @@
     <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="transfer_dem_funds.cpp">
+    <ClCompile Include="melodious_password.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

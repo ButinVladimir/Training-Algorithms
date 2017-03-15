@@ -189,6 +189,9 @@
     <Compile Include="Set 68\BigSorting.cs" />
     <Compile Include="Set 68\CircleSquare.cs" />
     <Compile Include="Set 68\Day.cs" />
+    <Compile Include="Set 69\CandyRobot.cs" />
+    <Compile Include="Set 69\MelodiousPassword.cs" />
+    <Compile Include="Set 69\Min.cs" />
     <Compile Include="Set54Lamps.cs" />
     <Compile Include="Set54Spiral.cs" />
     <Compile Include="Fun\Pond.cs" />
@@ -218,6 +221,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
