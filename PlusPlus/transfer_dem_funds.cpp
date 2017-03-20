@@ -38,180 +38,158 @@ int main() {
 	return 0;
 }
 
-// All global declarations go here
-const double C_PRECISION = 0;
+const double COMPARE_PRECISION = 10E-9;
+const int MAX_N = 1000;
+const int MAX_STEPS = 30;
 
-int c_n;
-vector<pair <int, double> > c_ribs[10000];
-int c_sparse_table[40][20000];
-int c_path[20000];
-int c_path_position;
-double c_prob[10000];
-int c_path_length[10000];
-int c_left_position[10000];
-int c_pred[10000];
-int c_pos[10000];
-
-void c_dfs(int position)
+class csolve
 {
-	forn(i, c_n)
+private:
+	vector<pair<int, double>> ribs[MAX_N];
+	int pred[MAX_N];
+	int tin[MAX_N];
+	int tout[MAX_N];
+	double pwr[MAX_N];
+	int position[MAX_N];
+	int steps[MAX_STEPS][MAX_N];
+
+	bool is_in(int a, int b)
 	{
-		c_pred[i] = -1;
-		c_pos[i] = 0;
+		return this->tin[b] >= this->tin[a] && this->tout[b] <= this->tout[a];
 	}
 
-	stack<int> st;
-	st.push(position);
-	int current, to;
-
-	while (!st.empty())
+	int find_lca(int a, int b)
 	{
-		current = st.top();
-		if (c_pos[current] == 0)
+		if (this->is_in(a, b))
 		{
-			c_left_position[current] = c_path_position;
+			return a;
 		}
 
-		if (c_pos[current] == c_ribs[current].size())
+		if (this->is_in(b, a))
 		{
-			c_path[c_path_position++] = current;
-			st.pop();
-			continue;
+			return b;
 		}
 
-		to = c_ribs[current][c_pos[current]].first;
-		if (to == c_pred[current])
+		int next;
+		rforn(i, MAX_STEPS)
 		{
-			c_pos[current]++;
-			continue;
-		}
-
-		c_path[c_path_position++] = current;
-
-		c_path_length[to] = c_path_length[current] + 1;
-		c_prob[to] = c_prob[current] + c_ribs[current][c_pos[current]].second;
-		c_pred[to] = current;
-		c_pos[current]++;
-
-		st.push(to);
-	}
-}
-
-void c_build()
-{
-	c_path_position = 0;
-	c_path_length[0] = 0;
-	c_prob[0] = 0;
-}
-
-void c_make_table()
-{
-	forn(i, c_path_position)
-	{
-		c_sparse_table[0][i] = c_path[i];
-	}
-
-	int p = 1;
-	int length = 1;
-	int max_length = 2 * c_n - 1;
-	int to;
-
-	while (length * 2 <= max_length)
-	{
-		forn(i, max_length)
-		{
-			c_sparse_table[p][i] = c_sparse_table[p - 1][i];
-
-			to = i + length;
-			if (to < max_length && c_path_length[c_sparse_table[p - 1][to]] < c_path_length[c_sparse_table[p - 1][i]])
+			next = this->steps[i][a];
+			if (!this->is_in(next, b))
 			{
-				c_sparse_table[p][i] = c_sparse_table[p - 1][to];
+				a = next;
 			}
 		}
 
-		p++;
-		length *= 2;
-	}
-}
-
-void c_add_rib(int a, int b, double v)
-{
-	a--;
-	b--;
-	v = log10(v) - 2;
-	c_ribs[a].push_back(mp(b, v));
-	c_ribs[b].push_back(mp(a, v));
-}
-
-void c_prepare()
-{
-	c_build();
-	c_dfs(0);
-	c_make_table();
-}
-
-bool c_answer(char * s)
-{
-	int a, b;
-	double v;
-
-	sscanf(s, "%d,%d,%lf", &a, &b, &v);
-	a--;
-	b--;
-
-	int la = c_left_position[a];
-	int lb = c_left_position[b];
-	if (la > lb)
-	{
-		swap(la, lb);
+		return this->pred[a];
 	}
 
-	int max_length = lb - la + 1;
-	int length = 1;
-	int p = 0;
-
-	while (length <= max_length)
+public:
+	csolve()
 	{
-		length *= 2;
-		p++;
-	}
-
-	p--;
-	length /= 2;
-
-	int c = c_sparse_table[p][la];
-	int d = c_sparse_table[p][lb - length + 1];
-
-	if (c_path_length[d] < c_path_length[c])
-	{
-		c = d;
-	}
-
-	return (c_prob[a] + c_prob[b] - 2 * c_prob[c] - v) >= C_PRECISION;
-}
-
-void smain() {
-	scanf("%d", &c_n);
-
-	int a, b;
-	double v;
-	forn(i, c_n - 1)
-	{
-		scanf("%d,%d,%lf", &a, &b, &v);
-		c_add_rib(a, b, v);
-	}
-
-	c_prepare();
-
-	char s[1000];
-	while (true)
-	{
-		scanf("%s", s);
-		if (!strcmp(s, "END"))
+		for (int i = 0; i < MAX_N; i++)
 		{
-			break;
+			this->pwr[i] = 0;
+			this->position[i] = 0;
+		}
+	}
+
+	void dfs()
+	{
+		stack<int> st;
+		st.push(0);
+		forn(i, MAX_STEPS)
+		{
+			this->steps[i][0] = 0;
 		}
 
-		cout << (c_answer(s) ? "YES\n" : "NO\n");
+		this->pred[0] = 0;
+
+		int from, to;
+		int time = 0;
+		double prob;
+
+		while (!st.empty())
+		{
+			from = st.top();
+
+			if (this->position[from] == 0)
+			{
+				this->tin[from] = time;
+				time++;
+			}
+
+			if (this->position[from] >= ribs[from].size())
+			{			
+				this->tout[from] = time;
+				time++;
+
+				st.pop();
+				continue;
+			}
+
+			to = this->ribs[from][this->position[from]].first;
+			prob = this->ribs[from][this->position[from]].second;
+			this->position[from]++;
+
+			if (to == this->pred[from])
+			{
+				continue;
+			}
+
+			pred[to] = from;
+			this->pwr[to] = this->pwr[from] + prob;
+			this->steps[0][to] = from;
+			for (int i = 1; i < MAX_STEPS; i++)
+			{
+				this->steps[i][to] = this->steps[i - 1][this->steps[i - 1][to]];
+			}
+
+			st.push(to);
+		}
+	}
+
+	void add_rib(int a, int b, double prob)
+	{
+		prob = log10(prob) - 2;
+		a--;
+		b--;
+
+		this->ribs[a].push_back(mp(b, prob));
+		this->ribs[b].push_back(mp(a, prob));
+	}
+
+	bool check_pair(int a, int b, double prob)
+	{
+		a--;
+		b--;
+		int c = this->find_lca(a, b);
+
+		double value = this->pwr[a] + this->pwr[b] - 2 * this->pwr[c];
+		return value - prob > COMPARE_PRECISION;
+	}
+};
+
+void smain() {
+	int n, a, b;
+	double d;
+	scanf("%d", &n);
+	
+	csolve solve;
+	forn(i, n - 1)
+	{
+		scanf("%d,%d,%lf", &a, &b, &d);
+		solve.add_rib(a, b, d);
+	}
+
+	solve.dfs();
+
+	char str[1000];
+	scanf("%s", str);
+	while (strcmp(str, "END"))
+	{
+		sscanf(str, "%d,%d,%lf", &a, &b, &d);
+		printf("%s", solve.check_pair(a, b, d) ? "YES\n" : "NO\n");
+
+		scanf("%s", str);
 	}
 }
