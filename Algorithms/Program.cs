@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
 using System.Text;
-
-//using Algorithms.Set_69;
+using Microsoft.VisualBasic.FileIO;
+using Algorithms.Set_29;
 
 public class Solution
 {
@@ -36,6 +37,16 @@ public class Solution
         public long NextLong()
         {
             return this.NextToken(long.Parse);
+        }
+        
+        public double NextDouble()
+        {
+            return this.NextToken(double.Parse);
+        }
+
+        public decimal NextDecimal()
+        {
+            return this.NextToken(decimal.Parse);
         }
 
         private string GetNextToken()
@@ -75,53 +86,11 @@ public class Solution
 
     public static void Main()
     {
-        //Console.SetIn(new StreamReader(File.OpenRead("input.txt")));
-        //StreamWriter writer = new StreamWriter(File.Create("output.txt"));
-        //Console.SetOut(writer);
+        StreamReader reader = new StreamReader(File.OpenRead("input.txt"));
+        Console.SetIn(reader);
 
-        Tokenizer tokenizer = new Tokenizer();
-        int n = tokenizer.NextInt();
+        //Tokenizer tokenizer = new Tokenizer();
 
-        string[] result = MelodiousPassword.Solve(n);
-        for (int i = 0; i < result.Length; i++)
-        {
-            Console.WriteLine(result[i]);
-        }
-
-        //writer.Close();
-    }
-
-    public class MelodiousPassword
-    {
-        private static readonly char[] vowels = { 'e', 'u', 'i', 'o', 'a' };
-        private static readonly char[] consonants = { 'q', 'w', 'r', 't', 'p', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm' };
-
-        public static string[] Solve(int n)
-        {
-            List<string> result = new List<string>();
-            StringBuilder sb = new StringBuilder();
-
-            FillList(n, false, sb, result);
-            FillList(n, true, sb, result);
-            return result.ToArray();
-        }
-
-        private static void FillList(int n, bool vowel, StringBuilder sb, List<string> result)
-        {
-            if (n == 0)
-            {
-                result.Add(sb.ToString());
-                return;
-            }
-
-            char[] letters = vowel ? vowels : consonants;
-
-            for (int i = 0; i < letters.Length; i++)
-            {
-                sb.Append(letters[i]);
-                FillList(n - 1, !vowel, sb, result);
-                sb.Remove(sb.Length - 1, 1);
-            }
-        }
-    }
+        Console.WriteLine(TurningString.Solve(Console.ReadLine()));
+   }
 }

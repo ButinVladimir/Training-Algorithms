@@ -85,6 +85,10 @@
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Set 29\Ancestor.cs" />
+    <Compile Include="Set 29\Digits.cs" />
+    <Compile Include="Set 29\Random200.cs" />
+    <Compile Include="Set 29\TurningString.cs" />
     <Compile Include="Set 30\Brackets.cs" />
     <Compile Include="Set 30\Directions.cs" />
     <Compile Include="Set 30\Inversions.cs" />
