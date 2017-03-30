@@ -62,10 +62,10 @@ namespace Algorithms.Set_28
             return this.front == null;
         }
 
-        private class QueueNode<T>
+        private class QueueNode<P>
         {
-            public T Value { get; set; }
-            public QueueNode<T> Next { get; set; }
+            public P Value { get; set; }
+            public QueueNode<P> Next { get; set; }
         }
     }
 }
