@@ -86,6 +86,10 @@
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Set 26\BuildTree.cs" />
+    <Compile Include="Set 26\Order.cs" />
+    <Compile Include="Set 26\Sum.cs" />
+    <Compile Include="Set 26\Tag.cs" />
     <Compile Include="Set 27\Balancing.cs" />
     <Compile Include="Set 27\Four.cs" />
     <Compile Include="Set 27\Gift.cs" />

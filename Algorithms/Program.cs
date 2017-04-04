@@ -5,7 +5,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-using Algorithms.Set_27;
+using Algorithms.Set_26;
 
 public class Solution
 {
@@ -86,9 +86,34 @@ public class Solution
 
     public static void Main()
     {
-        //StreamReader reader = new StreamReader(File.OpenRead("input.txt"));
-        //Console.SetIn(reader);
+        StreamReader reader = new StreamReader(File.OpenRead("input.txt"));
+        Console.SetIn(reader);
 
         Tokenizer tokenizer = new Tokenizer();
+
+        int n = tokenizer.NextInt();
+
+        int[] x = new int[n];
+        for (int i=0;i<n;i++)
+        {
+            x[i] = tokenizer.NextInt();
+        }
+
+        int[] y = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            y[i] = tokenizer.NextInt();
+        }
+
+        Sum sum = new Sum() { X = x, Y = y };
+
+        sum.Solve();
+        Console.WriteLine(sum.Result);
+        Console.WriteLine(string.Join(", ", sum.A.Select(val => val.ToString())));
+
+        sum.SolveBruteForce();
+        Console.WriteLine(sum.Result);
+        Console.WriteLine(string.Join(", ", sum.A.Select(val => val.ToString())));
+
     }
 }
