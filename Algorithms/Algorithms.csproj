@@ -61,7 +61,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fun 2\FunnyString.cs" />
     <Compile Include="Fun 2\Professor.cs" />
+    <Compile Include="Fun 2\SwapNodes.cs" />
     <Compile Include="Fun\Bigger.cs" />
     <Compile Include="Fun\BoatTrips.cs" />
     <Compile Include="Fun\Candies.cs" />
@@ -220,6 +222,9 @@
     <Compile Include="Set 69\CandyRobot.cs" />
     <Compile Include="Set 69\MelodiousPassword.cs" />
     <Compile Include="Set 69\Min.cs" />
+    <Compile Include="Set 70\Bathroom.cs" />
+    <Compile Include="Set 70\PancakeFlippin.cs" />
+    <Compile Include="Set 70\TidyNumbers.cs" />
     <Compile Include="Set54Lamps.cs" />
     <Compile Include="Set54Spiral.cs" />
     <Compile Include="Fun\Pond.cs" />
@@ -252,6 +257,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -5,7 +5,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-using Algorithms.Set_26;
+using Algorithms.Set_70;
 
 public class Solution
 {
@@ -89,31 +89,22 @@ public class Solution
         StreamReader reader = new StreamReader(File.OpenRead("input.txt"));
         Console.SetIn(reader);
 
+        StreamWriter writer = new StreamWriter(File.OpenWrite("output.txt"));
+        Console.SetOut(writer);
+
         Tokenizer tokenizer = new Tokenizer();
-
-        int n = tokenizer.NextInt();
-
-        int[] x = new int[n];
-        for (int i=0;i<n;i++)
+        int tests = tokenizer.NextInt();
+        int n, k;
+        for (int test = 1; test <= tests; test++)
         {
-            x[i] = tokenizer.NextInt();
+            n = tokenizer.NextInt();
+            k = tokenizer.NextInt();
+            //Tuple<int, int> resultBrute = Bathroom.Solve(n, k);
+            Tuple<int, int> result = Bathroom.SolveMed(n, k);
+
+            Console.WriteLine("Case #{0}: {1} {2}", test, result.Item1, result.Item2);
         }
 
-        int[] y = new int[n];
-        for (int i = 0; i < n; i++)
-        {
-            y[i] = tokenizer.NextInt();
-        }
-
-        Sum sum = new Sum() { X = x, Y = y };
-
-        sum.Solve();
-        Console.WriteLine(sum.Result);
-        Console.WriteLine(string.Join(", ", sum.A.Select(val => val.ToString())));
-
-        sum.SolveBruteForce();
-        Console.WriteLine(sum.Result);
-        Console.WriteLine(string.Join(", ", sum.A.Select(val => val.ToString())));
-
+        writer.Close();
     }
 }
