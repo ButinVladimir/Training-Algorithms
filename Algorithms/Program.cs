@@ -89,20 +89,22 @@ public class Solution
         StreamReader reader = new StreamReader(File.OpenRead("input.txt"));
         Console.SetIn(reader);
 
-        StreamWriter writer = new StreamWriter(File.OpenWrite("output.txt"));
+        StreamWriter writer = File.CreateText("output.txt");
         Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
         int tests = tokenizer.NextInt();
-        int n, k;
+        long n, k;
         for (int test = 1; test <= tests; test++)
         {
-            n = tokenizer.NextInt();
-            k = tokenizer.NextInt();
+            n = tokenizer.NextLong();
+            k = tokenizer.NextLong();
             //Tuple<int, int> resultBrute = Bathroom.Solve(n, k);
-            Tuple<int, int> result = Bathroom.SolveMed(n, k);
+            //Tuple<long, long> result = Bathroom.SolveMed(n, k);
+            Tuple<long, long> result = Bathroom.SolveHard(n, k);
 
             Console.WriteLine("Case #{0}: {1} {2}", test, result.Item1, result.Item2);
+            //Console.WriteLine("Case #{0}: {1}", test, result.Item1 == resultHard.Item1 && result.Item2 == resultHard.Item2);
         }
 
         writer.Close();

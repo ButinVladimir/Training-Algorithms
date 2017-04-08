@@ -8,23 +8,23 @@ namespace Algorithms.Set_70
 {
     public class Bathroom
     {
-        public static Tuple<int, int> Solve(int n, int k)
+        public static Tuple<long, long> Solve(long n, long k)
         {
             bool[] visited = new bool[n + 2];
             visited[0] = true;
             visited[n + 1] = true;
 
-            int nextP = -1;
-            int l, r;
-            int max, min;
+            long nextP = -1;
+            long l, r;
+            long max, min;
 
-            for (int visitor = 0; visitor < k; visitor++)
+            for (long visitor = 0; visitor < k; visitor++)
             {
-                int minLR = -1;
-                int maxLR = -1;
+                long minLR = -1;
+                long maxLR = -1;
                 nextP = -1;
 
-                for (int i = 1; i <= n; i++)
+                for (long i = 1; i <= n; i++)
                 {
                     if (visited[i])
                     {
@@ -76,17 +76,17 @@ namespace Algorithms.Set_70
             max = Math.Max(l, r);
             min = Math.Min(l, r);
 
-            return new Tuple<int, int>(max, min);
+            return new Tuple<long, long>(max, min);
         }
 
-        public static Tuple<int, int> SolveMed(int n, int k)
+        public static Tuple<long, long> SolveMed(long n, long k)
         {
             SortedSet<Segment> segments = new SortedSet<Segment>();
             segments.Add(new Segment() { Start = 0, Finish = n + 1 });
 
-            int min = 0, max = 0, mid;
-            int l, r;
-            for (int visitor = 0; visitor < k; visitor++)
+            long min = 0, max = 0, mid;
+            long l, r;
+            for (long visitor = 0; visitor < k; visitor++)
             {
                 Segment first = null;
                 foreach (var segment in segments)
@@ -114,18 +114,55 @@ namespace Algorithms.Set_70
                 segments.Remove(first);
             }
 
-            return new Tuple<int, int>(max, min);
+            return new Tuple<long, long>(max, min);
+        }
+
+        public static Tuple<long, long> SolveHard(long n, long k)
+        {
+            SortedDictionary<long, long> segments = new SortedDictionary<long, long>(new ReverseComparer());
+            segments.Add(n, 1);
+
+            while (k > 0)
+            {
+                foreach (var kvp in segments)
+                {
+                    if (kvp.Value >= k)
+                    {
+                        return new Tuple<long, long>(kvp.Key / 2, (kvp.Key - 1) / 2);
+                    }
+
+                    segments.Remove(kvp.Key);
+                    k -= kvp.Value;
+                    AddSegments(kvp.Key / 2, kvp.Value, segments);
+                    AddSegments((kvp.Key - 1) / 2, kvp.Value, segments);
+                    break;
+                }
+            }
+
+            return null;
+        }
+
+        private static void AddSegments(long key, long value, SortedDictionary<long, long> segments)
+        {
+            if (segments.ContainsKey(key))
+            {
+                segments[key] += value;
+            }
+            else
+            {
+                segments[key] = value;
+            }
         }
 
         private class Segment : IComparable<Segment>
         {
-            public int Start { get; set; }
-            public int Finish { get; set; }
+            public long Start { get; set; }
+            public long Finish { get; set; }
 
             int IComparable<Segment>.CompareTo(Segment other)
             {
-                int length = this.Finish - this.Start;
-                int otherLength = other.Finish - other.Start;
+                long length = this.Finish - this.Start;
+                long otherLength = other.Finish - other.Start;
 
                 if (length != otherLength)
                 {
@@ -133,6 +170,14 @@ namespace Algorithms.Set_70
                 }
 
                 return this.Start.CompareTo(other.Start);
+            }
+        }
+
+        private class ReverseComparer : IComparer<long>
+        {
+            int IComparer<long>.Compare(long x, long y)
+            {
+                return y.CompareTo(x);
             }
         }
     }
