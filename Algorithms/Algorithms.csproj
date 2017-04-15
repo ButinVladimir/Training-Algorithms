@@ -61,7 +61,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fun 2\Anagrams.cs" />
     <Compile Include="Fun 2\FunnyString.cs" />
+    <Compile Include="Fun 2\Gemstones.cs" />
     <Compile Include="Fun 2\Professor.cs" />
     <Compile Include="Fun 2\SwapNodes.cs" />
     <Compile Include="Fun\Bigger.cs" />
@@ -88,6 +90,11 @@
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Set 25\EvenDistance.cs" />
+    <Compile Include="Set 25\Frog.cs" />
+    <Compile Include="Set 25\Meeting.cs" />
+    <Compile Include="Set 25\Office.cs" />
+    <Compile Include="Set 25\Palindrome.cs" />
     <Compile Include="Set 26\BuildTree.cs" />
     <Compile Include="Set 26\Order.cs" />
     <Compile Include="Set 26\Sum.cs" />

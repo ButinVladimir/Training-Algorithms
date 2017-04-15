@@ -5,7 +5,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-using Algorithms.Set_70;
+//using Algorithms.Fun_2;
 
 public class Solution
 {
@@ -86,27 +86,45 @@ public class Solution
 
     public static void Main()
     {
-        StreamReader reader = new StreamReader(File.OpenRead("input.txt"));
-        Console.SetIn(reader);
+        //StreamReader reader = new StreamReader(File.OpenRead("input.txt"));
+        //Console.SetIn(reader);
 
-        StreamWriter writer = File.CreateText("output.txt");
-        Console.SetOut(writer);
+        //StreamWriter writer = File.CreateText("output.txt");
+        //Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
-        int tests = tokenizer.NextInt();
-        long n, k;
-        for (int test = 1; test <= tests; test++)
+
+        string a = tokenizer.NextToken();
+        string b = tokenizer.NextToken();
+
+        Console.WriteLine(Anagrams.Solve(a, b));
+
+        //writer.Close();
+    }
+
+    public class Anagrams
+    {
+        public static int Solve(string a, string b)
         {
-            n = tokenizer.NextLong();
-            k = tokenizer.NextLong();
-            //Tuple<int, int> resultBrute = Bathroom.Solve(n, k);
-            //Tuple<long, long> result = Bathroom.SolveMed(n, k);
-            Tuple<long, long> result = Bathroom.SolveHard(n, k);
+            int[] chars = new int[256];
 
-            Console.WriteLine("Case #{0}: {1} {2}", test, result.Item1, result.Item2);
-            //Console.WriteLine("Case #{0}: {1}", test, result.Item1 == resultHard.Item1 && result.Item2 == resultHard.Item2);
+            for (int i = 0; i < a.Length; i++)
+            {
+                chars[a[i]]++;
+            }
+
+            for (int i = 0; i < b.Length; i++)
+            {
+                chars[b[i]]--;
+            }
+
+            int result = 0;
+            for (int i = 0; i < 256; i++)
+            {
+                result += Math.Abs(chars[i]);
+            }
+
+            return result;
         }
-
-        writer.Close();
     }
 }
