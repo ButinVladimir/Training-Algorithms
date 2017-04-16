@@ -5,7 +5,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Fun_2;
+//using Algorithms.Set_24;
 
 public class Solution
 {
@@ -94,37 +94,98 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        string a = tokenizer.NextToken();
-        string b = tokenizer.NextToken();
+        int n = tokenizer.NextInt();
+        string[] input = new string[n];
+        for (int i = 0; i < n; i++)
+        {
+            input[i] = tokenizer.NextToken();
+        }
 
-        Console.WriteLine(Anagrams.Solve(a, b));
+        Console.WriteLine(Char2.Solve(input));
 
         //writer.Close();
     }
 
-    public class Anagrams
+    public static class Char2
     {
-        public static int Solve(string a, string b)
+        public const int Alp = 26;
+
+        public static int Solve(string[] input)
         {
-            int[] chars = new int[256];
+            int[] one = new int[Alp];
+            int[,] two = new int[Alp, Alp];
+            bool[] was = new bool[Alp];
+            int count, p1, p2;
 
-            for (int i = 0; i < a.Length; i++)
+            for (int i = 0; i < input.Length; i++)
             {
-                chars[a[i]]++;
+                for (int j = 0; j < Alp; j++)
+                {
+                    was[j] = false;
+                }
+                count = 0;
+
+                for (int j = 0; j < input[i].Length; j++)
+                {
+                    if (!was[input[i][j] - 'a'])
+                    {
+                        was[input[i][j] - 'a'] = true;
+                        count++;
+                    }
+
+                    if (count > 2)
+                    {
+                        break;
+                    }
+                }
+
+                if (count == 1)
+                {
+                    for (int j = 0; j < Alp; j++)
+                    {
+                        if (was[j])
+                        {
+                            one[j] += input[i].Length;
+                        }
+                    }
+                }
+
+                if (count == 2)
+                {
+                    p1 = 0;
+                    while (!was[p1])
+                    {
+                        p1++;
+                    }
+
+                    p2 = p1 + 1;
+                    while (!was[p2])
+                    {
+                        p2++;
+                    }
+
+                    two[p1, p2] += input[i].Length;
+                }
             }
 
-            for (int i = 0; i < b.Length; i++)
+            for (int i = 0; i < Alp; i++)
             {
-                chars[b[i]]--;
+                for (int j = i + 1; j < Alp; j++)
+                {
+                    two[i, j] += one[i] + one[j];
+                }
             }
 
-            int result = 0;
-            for (int i = 0; i < 256; i++)
+            int max = 0;
+            for (int i = 0; i < Alp; i++)
             {
-                result += Math.Abs(chars[i]);
+                for (int j = i + 1; j < Alp; j++)
+                {
+                    max = Math.Max(max, two[i, j]);
+                }
             }
 
-            return result;
+            return max;
         }
     }
 }
