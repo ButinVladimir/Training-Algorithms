@@ -90,6 +90,10 @@
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Set 23\Factorization.cs" />
+    <Compile Include="Set 23\Palindrome.cs" />
+    <Compile Include="Set 23\Submatrix.cs" />
+    <Compile Include="Set 23\Topological.cs" />
     <Compile Include="Set 24\Candy.cs" />
     <Compile Include="Set 24\Char2.cs" />
     <Compile Include="Set 24\NumberOf2.cs" />
