@@ -94,98 +94,36 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int n = tokenizer.NextInt();
-        string[] input = new string[n];
-        for (int i = 0; i < n; i++)
+        for (int tests = tokenizer.NextInt(); tests > 0; tests--)
         {
-            input[i] = tokenizer.NextToken();
-        }
+            string a = tokenizer.NextToken();
+            string b = tokenizer.NextToken();
 
-        Console.WriteLine(Char2.Solve(input));
+            int[] was = new int[256];
+            for (int i = 0; i < a.Length; i++)
+            {
+                was[a[i]] |= 1;
+            }
+
+            for (int i = 0; i < b.Length; i++)
+            {
+                was[b[i]] |= 2;
+            }
+
+            bool found = false;
+            for (int i = 0; i < 256; i++)
+            {
+                if (was[i] == 3)
+                {
+
+                    found = true;
+                    break;
+                }
+            }
+
+            Console.WriteLine(found ? "YES" : "NO");
+        }
 
         //writer.Close();
-    }
-
-    public static class Char2
-    {
-        public const int Alp = 26;
-
-        public static int Solve(string[] input)
-        {
-            int[] one = new int[Alp];
-            int[,] two = new int[Alp, Alp];
-            bool[] was = new bool[Alp];
-            int count, p1, p2;
-
-            for (int i = 0; i < input.Length; i++)
-            {
-                for (int j = 0; j < Alp; j++)
-                {
-                    was[j] = false;
-                }
-                count = 0;
-
-                for (int j = 0; j < input[i].Length; j++)
-                {
-                    if (!was[input[i][j] - 'a'])
-                    {
-                        was[input[i][j] - 'a'] = true;
-                        count++;
-                    }
-
-                    if (count > 2)
-                    {
-                        break;
-                    }
-                }
-
-                if (count == 1)
-                {
-                    for (int j = 0; j < Alp; j++)
-                    {
-                        if (was[j])
-                        {
-                            one[j] += input[i].Length;
-                        }
-                    }
-                }
-
-                if (count == 2)
-                {
-                    p1 = 0;
-                    while (!was[p1])
-                    {
-                        p1++;
-                    }
-
-                    p2 = p1 + 1;
-                    while (!was[p2])
-                    {
-                        p2++;
-                    }
-
-                    two[p1, p2] += input[i].Length;
-                }
-            }
-
-            for (int i = 0; i < Alp; i++)
-            {
-                for (int j = i + 1; j < Alp; j++)
-                {
-                    two[i, j] += one[i] + one[j];
-                }
-            }
-
-            int max = 0;
-            for (int i = 0; i < Alp; i++)
-            {
-                for (int j = i + 1; j < Alp; j++)
-                {
-                    max = Math.Max(max, two[i, j]);
-                }
-            }
-
-            return max;
-        }
     }
 }

@@ -90,6 +90,11 @@
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Set 22\ConsecutiveSum.cs" />
+    <Compile Include="Set 22\Employees.cs" />
+    <Compile Include="Set 22\Interval.cs" />
+    <Compile Include="Set 22\ReverseStack.cs" />
+    <Compile Include="Set 22\TransformWord.cs" />
     <Compile Include="Set 23\Factorization.cs" />
     <Compile Include="Set 23\Palindrome.cs" />
     <Compile Include="Set 23\Submatrix.cs" />
