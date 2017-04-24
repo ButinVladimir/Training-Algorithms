@@ -60,7 +60,7 @@ namespace Algorithms.Set_20
         [TestMethod]
         public void Test1()
         {
-            int[] values = { 1, 2, 3, 4, 5};
+            int[] values = { 1, 2, 3, 4, 5 };
 
             Test(values);
             Assert.AreEqual(15, MaximalSum.Solve(values));

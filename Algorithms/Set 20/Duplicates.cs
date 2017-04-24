@@ -13,9 +13,9 @@ namespace Algorithms.Set_20
         {
             Array.Sort(values);
 
-            for (int i=1;i<values.Length;i++)
+            for (int i = 1; i < values.Length; i++)
             {
-                if (values[i] == values[i-1])
+                if (values[i] == values[i - 1])
                 {
                     return values[i - 1];
                 }
