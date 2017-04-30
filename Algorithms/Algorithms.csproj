@@ -62,10 +62,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fun 2\Anagrams.cs" />
+    <Compile Include="Fun 2\DifferencePairs.cs" />
     <Compile Include="Fun 2\FunnyString.cs" />
     <Compile Include="Fun 2\Gemstones.cs" />
+    <Compile Include="Fun 2\GreedyFlorist.cs" />
     <Compile Include="Fun 2\MedianUpdates.cs" />
     <Compile Include="Fun 2\Professor.cs" />
+    <Compile Include="Fun 2\SherlockAnagrams.cs" />
+    <Compile Include="Fun 2\SimpleQueries.cs" />
     <Compile Include="Fun 2\SwapNodes.cs" />
     <Compile Include="Fun\Bigger.cs" />
     <Compile Include="Fun\BoatTrips.cs" />
@@ -98,6 +102,7 @@
     <Compile Include="Set 22\Employees.cs" />
     <Compile Include="Set 22\ImportantValue.cs" />
     <Compile Include="Set 22\Interval.cs" />
+    <Compile Include="Set 22\Pairs.cs" />
     <Compile Include="Set 22\ReverseStack.cs" />
     <Compile Include="Set 22\TransformWord.cs" />
     <Compile Include="Set 23\Factorization.cs" />
