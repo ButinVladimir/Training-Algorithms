@@ -5,7 +5,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Fun_2;
+//using Algorithms.Set_21;
 
 public class Solution
 {
@@ -98,53 +98,68 @@ public class Solution
         //Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
-
         int n = tokenizer.NextInt();
+        int[] a = new int[n];
+
         for (int i = 0; i < n; i++)
         {
-            Console.WriteLine(SherlockAnagrams.Solve(tokenizer.NextToken()));
+            a[i] = tokenizer.NextInt();
         }
+
+        Console.WriteLine(Fractions.Solve(a));
 
         //writer.Close();
     }
 
-    public static class SherlockAnagrams
+    public static class Fractions
     {
-        public static int Solve(string s)
+        public static int Solve(int[] a)
         {
-            int[] cnt = new int[256];
             int result = 0;
-            bool can = false;
+            int min = a[0];
 
-            for (int left1 = 0; left1 < s.Length; left1++)
+            for (int i = 0; i < a.Length; i++)
             {
-                for (int left2 = left1 + 1; left2 < s.Length; left2++)
+                result += a[i];
+                min = Math.Min(min, a[i]);
+            }
+
+            int currentResult;
+            bool can;
+
+            for (int divider = 1; divider <= min; divider++)
+            {
+                currentResult = 0;
+                can = true;
+
+                for (int i = 0; i < a.Length; i++)
                 {
-                    for (char c = 'a'; c <= 'z'; c++)
+                    int l = a[i] / divider;
+
+                    while (l > 0 && a[i] / l <= divider)
                     {
-                        cnt[c] = 0;
+                        l--;
                     }
 
-                    for (int length = 0; left2 + length < s.Length; length++)
+                    while (l == 0 || a[i] / l > divider)
                     {
-                        cnt[s[left1 + length]]++;
-                        cnt[s[left2 + length]]--;
-
-                        can = true;
-                        for (char c = 'a'; c <= 'z'; c++)
-                        {
-                            if (cnt[c] != 0)
-                            {
-                                can = false;
-                                break;
-                            }
-                        }
-
-                        if (can)
-                        {
-                            result++;
-                        }
+                        l++;
                     }
+
+                    if (a[i] / l == divider)
+                    {
+                        currentResult += l;
+                    }
+                    else
+                    {
+                        can = false;
+                        break;
+                    }
+                }
+
+                if (can)
+                {
+                    result = Math.Min(result, currentResult);
                 }
             }
 

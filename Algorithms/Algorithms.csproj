@@ -98,6 +98,9 @@
     <Compile Include="Set 20\Duplicates.cs" />
     <Compile Include="Set 20\MaximalSum.cs" />
     <Compile Include="Set 20\MoveZeros.cs" />
+    <Compile Include="Set 21\Fractions.cs" />
+    <Compile Include="Set 21\LongestSubarray.cs" />
+    <Compile Include="Set 21\Search.cs" />
     <Compile Include="Set 22\ConsecutiveSum.cs" />
     <Compile Include="Set 22\Employees.cs" />
     <Compile Include="Set 22\ImportantValue.cs" />
