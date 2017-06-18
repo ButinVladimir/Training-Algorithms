@@ -18,7 +18,7 @@
     <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="melodious_password.cpp">
+    <ClCompile Include="maximum_subarray_sum.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

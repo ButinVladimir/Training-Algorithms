@@ -5,7 +5,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Set_21;
+//using Algorithms.Set_71;
 
 public class Solution
 {
@@ -37,6 +37,11 @@ public class Solution
         public long NextLong()
         {
             return this.NextToken(long.Parse);
+        }
+
+        public ulong NextULong()
+        {
+            return this.NextToken(ulong.Parse);
         }
 
         public double NextDouble()
@@ -98,72 +103,54 @@ public class Solution
         //Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
-        int n = tokenizer.NextInt();
-        int[] a = new int[n];
 
-        for (int i = 0; i < n; i++)
+        int t = tokenizer.NextInt();
+
+        for (int test = 0; test < t; test++)
         {
-            a[i] = tokenizer.NextInt();
-        }
+            int n = tokenizer.NextInt();
+            string[] s = new string[n];
+            for (int i = 0; i < n; i++)
+            {
+                s[i] = tokenizer.NextToken();
+            }
 
-        Console.WriteLine(Fractions.Solve(a));
+            Console.WriteLine(GridChallenge.Solve(n, s) ? "YES" : "NO");
+        }
 
         //writer.Close();
     }
 
-    public static class Fractions
+    public static class GridChallenge
     {
-        public static int Solve(int[] a)
+        public static bool Solve(int n, string[] s)
         {
-            int result = 0;
-            int min = a[0];
-
-            for (int i = 0; i < a.Length; i++)
+            char[][] letters = new char[n][];
+            for (int i = 0; i < n; i++)
             {
-                result += a[i];
-                min = Math.Min(min, a[i]);
+                letters[i] = s[i].ToCharArray();
             }
 
-            int currentResult;
-            bool can;
-
-            for (int divider = 1; divider <= min; divider++)
+            for (int i = 0; i < n; i++)
             {
-                currentResult = 0;
-                can = true;
+                Array.Sort(letters[i]);
+            }
 
-                for (int i = 0; i < a.Length; i++)
+            bool valid = true;
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = 0; j < n - 1; j++)
                 {
-                    int l = a[i] / divider;
-
-                    while (l > 0 && a[i] / l <= divider)
-                    {
-                        l--;
-                    }
-
-                    while (l == 0 || a[i] / l > divider)
-                    {
-                        l++;
-                    }
-
-                    if (a[i] / l == divider)
-                    {
-                        currentResult += l;
-                    }
-                    else
-                    {
-                        can = false;
-                        break;
-                    }
-                }
-
-                if (can)
-                {
-                    result = Math.Min(result, currentResult);
+                    valid = valid && letters[i][j] <= letters[i][j + 1] && letters[i][j] <= letters[i + 1][j];
                 }
             }
 
-            return result;
+            for (int i = 0; i < n - 1; i++)
+            {
+                valid = valid && letters[n - 1][i] <= letters[n - 1][i + 1] && letters[i][n - 1] <= letters[i + 1][n - 1];
+            }
+
+            return valid;
         }
     }
 }
