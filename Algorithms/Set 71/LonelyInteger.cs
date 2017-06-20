@@ -12,7 +12,7 @@ namespace Algorithms.Set_71
         {
             int result = 0;
 
-            for (int i=0;i<a.Length;i++)
+            for (int i = 0; i < a.Length; i++)
             {
                 result ^= a[i];
             }

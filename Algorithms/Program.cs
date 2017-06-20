@@ -5,7 +5,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Set_71;
+//using Algorithms.Set_1;
 
 public class Solution
 {
@@ -104,53 +104,42 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int t = tokenizer.NextInt();
+        int n = tokenizer.NextInt();
+        long k = tokenizer.NextLong();
 
-        for (int test = 0; test < t; test++)
+        long[] a = new long[n];
+
+        for (int i = 0; i < n; i++)
         {
-            int n = tokenizer.NextInt();
-            string[] s = new string[n];
-            for (int i = 0; i < n; i++)
-            {
-                s[i] = tokenizer.NextToken();
-            }
-
-            Console.WriteLine(GridChallenge.Solve(n, s) ? "YES" : "NO");
+            a[i] = tokenizer.NextLong();
         }
+
+        Console.WriteLine(Pairs.Solve(a, k));
 
         //writer.Close();
     }
 
-    public static class GridChallenge
+    public static class Pairs
     {
-        public static bool Solve(int n, string[] s)
+        public static int Solve(long[] a, long k)
         {
-            char[][] letters = new char[n][];
-            for (int i = 0; i < n; i++)
+            SortedSet<long> set = new SortedSet<long>();
+
+            foreach (long value in a)
             {
-                letters[i] = s[i].ToCharArray();
+                set.Add(value);
             }
 
-            for (int i = 0; i < n; i++)
+            int result = 0;
+            foreach (long value in set)
             {
-                Array.Sort(letters[i]);
-            }
-
-            bool valid = true;
-            for (int i = 0; i < n - 1; i++)
-            {
-                for (int j = 0; j < n - 1; j++)
+                if (set.Contains(value - k))
                 {
-                    valid = valid && letters[i][j] <= letters[i][j + 1] && letters[i][j] <= letters[i + 1][j];
+                    result++;
                 }
             }
 
-            for (int i = 0; i < n - 1; i++)
-            {
-                valid = valid && letters[n - 1][i] <= letters[n - 1][i + 1] && letters[i][n - 1] <= letters[i + 1][n - 1];
-            }
-
-            return valid;
+            return result;
         }
     }
 }
