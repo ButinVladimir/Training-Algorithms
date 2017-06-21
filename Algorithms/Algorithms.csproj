@@ -152,6 +152,9 @@
     <Compile Include="Set 29\Digits.cs" />
     <Compile Include="Set 29\Random200.cs" />
     <Compile Include="Set 29\TurningString.cs" />
+    <Compile Include="Set 2\Ancestor.cs" />
+    <Compile Include="Set 2\TwoButtons.cs" />
+    <Compile Include="Set 2\TwoUnpaired.cs" />
     <Compile Include="Set 30\Brackets.cs" />
     <Compile Include="Set 30\Directions.cs" />
     <Compile Include="Set 30\Inversions.cs" />
@@ -183,6 +186,9 @@
     <Compile Include="Set 39\DNA.cs" />
     <Compile Include="Set 39\MediaPlayer.cs" />
     <Compile Include="Set 39\Subsequence.cs" />
+    <Compile Include="Set 3\IsBinarySearchTree.cs" />
+    <Compile Include="Set 3\LoopSize.cs" />
+    <Compile Include="Set 3\LuckBalance.cs" />
     <Compile Include="Set 40\Game.cs" />
     <Compile Include="Set 40\Toys.cs" />
     <Compile Include="Set 41\Jam.cs" />

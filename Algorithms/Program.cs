@@ -5,7 +5,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Set_1;
+//using Algorithms.Set_3;
 
 public class Solution
 {
@@ -105,37 +105,53 @@ public class Solution
         Tokenizer tokenizer = new Tokenizer();
 
         int n = tokenizer.NextInt();
-        long k = tokenizer.NextLong();
-
-        long[] a = new long[n];
+        int k = tokenizer.NextInt();
+        int[] l = new int[n];
+        int[] t = new int[n];
 
         for (int i = 0; i < n; i++)
         {
-            a[i] = tokenizer.NextLong();
+            l[i] = tokenizer.NextInt();
+            t[i] = tokenizer.NextInt();
         }
 
-        Console.WriteLine(Pairs.Solve(a, k));
+        Console.WriteLine(LuckBalance.Solve(n, k, l, t));
 
         //writer.Close();
     }
 
-    public static class Pairs
+    public static class LuckBalance
     {
-        public static int Solve(long[] a, long k)
+        public static int Solve(int n, int k, int[] l, int[] t)
         {
-            SortedSet<long> set = new SortedSet<long>();
+            int result = 0;
 
-            foreach (long value in a)
+            List<int> mandatoryList = new List<int>();
+
+            for (int i = 0; i < n; i++)
             {
-                set.Add(value);
+                if (t[i] == 0)
+                {
+                    result += l[i];
+                }
+                else
+                {
+                    mandatoryList.Add(l[i]);
+                }
             }
 
-            int result = 0;
-            foreach (long value in set)
+            int[] mandatoryArray = mandatoryList.ToArray();
+            Array.Sort(mandatoryArray);
+            for (int i = mandatoryArray.Length - 1; i >= 0; i--)
             {
-                if (set.Contains(value - k))
+                if (k > 0)
                 {
-                    result++;
+                    result += mandatoryArray[i];
+                    k--;
+                }
+                else
+                {
+                    result -= mandatoryArray[i];
                 }
             }
 
