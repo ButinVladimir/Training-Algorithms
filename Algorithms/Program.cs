@@ -106,53 +106,29 @@ public class Solution
 
         int n = tokenizer.NextInt();
         int k = tokenizer.NextInt();
-        int[] l = new int[n];
-        int[] t = new int[n];
 
+        int[] toys = new int[n];
         for (int i = 0; i < n; i++)
         {
-            l[i] = tokenizer.NextInt();
-            t[i] = tokenizer.NextInt();
+            toys[i] = tokenizer.NextInt();
         }
 
-        Console.WriteLine(LuckBalance.Solve(n, k, l, t));
+        Console.WriteLine(MarkToys.Solve(k, toys));
 
         //writer.Close();
     }
 
-    public static class LuckBalance
+    public static class MarkToys
     {
-        public static int Solve(int n, int k, int[] l, int[] t)
+        public static int Solve(int k, int[] toys)
         {
-            int result = 0;
+            Array.Sort(toys);
 
-            List<int> mandatoryList = new List<int>();
+            int result;
 
-            for (int i = 0; i < n; i++)
+            for (result = 0; result < toys.Length && k >= toys[result]; result++)
             {
-                if (t[i] == 0)
-                {
-                    result += l[i];
-                }
-                else
-                {
-                    mandatoryList.Add(l[i]);
-                }
-            }
-
-            int[] mandatoryArray = mandatoryList.ToArray();
-            Array.Sort(mandatoryArray);
-            for (int i = mandatoryArray.Length - 1; i >= 0; i--)
-            {
-                if (k > 0)
-                {
-                    result += mandatoryArray[i];
-                    k--;
-                }
-                else
-                {
-                    result -= mandatoryArray[i];
-                }
+                k -= toys[result];
             }
 
             return result;

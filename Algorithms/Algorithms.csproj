@@ -213,6 +213,12 @@
     <Compile Include="Set 48\Union.cs" />
     <Compile Include="Set 49\NPHard.cs" />
     <Compile Include="Set 49\Waiting.cs" />
+    <Compile Include="Set 4\DoubleCola.cs" />
+    <Compile Include="Set 4\Greed.cs" />
+    <Compile Include="Set 4\Hamming.cs" />
+    <Compile Include="Set 4\Intersect.cs" />
+    <Compile Include="Set 4\MaximumPerimiter.cs" />
+    <Compile Include="Set 4\SherlockBeast.cs" />
     <Compile Include="Set 51\KeyLogger.cs" />
     <Compile Include="Set 51\ZeroOne.cs" />
     <Compile Include="Set 52\PickASet.cs" />
