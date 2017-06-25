@@ -217,6 +217,7 @@
     <Compile Include="Set 4\Greed.cs" />
     <Compile Include="Set 4\Hamming.cs" />
     <Compile Include="Set 4\Intersect.cs" />
+    <Compile Include="Set 4\MarkToys.cs" />
     <Compile Include="Set 4\MaximumPerimiter.cs" />
     <Compile Include="Set 4\SherlockBeast.cs" />
     <Compile Include="Set 51\KeyLogger.cs" />
