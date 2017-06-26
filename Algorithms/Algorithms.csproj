@@ -241,6 +241,9 @@
     <Compile Include="Set 58\Potions.cs" />
     <Compile Include="Set 58\Traversal.cs" />
     <Compile Include="Set 59\Permutations.cs" />
+    <Compile Include="Set 5\BeautifulPairs.cs" />
+    <Compile Include="Set 5\ColoredBalls.cs" />
+    <Compile Include="Set 5\SansaXor.cs" />
     <Compile Include="Set 60\COINS.cs" />
     <Compile Include="Set 60\LASTDIG.cs" />
     <Compile Include="Set 60\MSTRMND.cs" />

@@ -5,7 +5,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Set_3;
+//using Algorithms.Set_5;
 
 public class Solution
 {
@@ -105,30 +105,79 @@ public class Solution
         Tokenizer tokenizer = new Tokenizer();
 
         int n = tokenizer.NextInt();
-        int k = tokenizer.NextInt();
+        int[] a = new int[n];
+        int[] b = new int[n];
 
-        int[] toys = new int[n];
         for (int i = 0; i < n; i++)
         {
-            toys[i] = tokenizer.NextInt();
+            a[i] = tokenizer.NextInt();
         }
 
-        Console.WriteLine(MarkToys.Solve(k, toys));
+        for (int i = 0; i < n; i++)
+        {
+            b[i] = tokenizer.NextInt();
+        }
+
+        Console.WriteLine(BeautifulPairs.Solve(a, b));
 
         //writer.Close();
     }
 
-    public static class MarkToys
+    public static class BeautifulPairs
     {
-        public static int Solve(int k, int[] toys)
+        private const int N = 1002;
+
+        public static int Solve(int[] a, int[] b)
         {
-            Array.Sort(toys);
+            int[] countA = new int[N];
+            int[] countB = new int[N];
 
-            int result;
-
-            for (result = 0; result < toys.Length && k >= toys[result]; result++)
+            for (int i = 0; i < a.Length; i++)
             {
-                k -= toys[result];
+                countA[a[i]]++;
+            }
+
+            for (int i = 0; i < b.Length; i++)
+            {
+                countB[b[i]]++;
+            }
+
+            int pairs = 0;
+            for (int i = 0; i < N; i++)
+            {
+                pairs += Math.Min(countA[i], countB[i]);
+            }
+
+            int p1, p2;
+            int result = 0;
+            for (int i = 0; i < N; i++)
+            {
+                if (countB[i] == 0)
+                {
+                    continue;
+                }
+
+                p1 = pairs;
+                if (countB[i] <= countA[i])
+                {
+                    p1--;
+                }
+
+                for (int j = 0; j < N; j++)
+                {
+                    if (i == j)
+                    {
+                        continue;
+                    }
+
+                    p2 = p1;
+                    if (countB[j] < countA[j])
+                    {
+                        p2++;
+                    }
+
+                    result = Math.Max(result, p2);
+                }
             }
 
             return result;
