@@ -275,6 +275,10 @@
     <Compile Include="Set 69\CandyRobot.cs" />
     <Compile Include="Set 69\MelodiousPassword.cs" />
     <Compile Include="Set 69\Min.cs" />
+    <Compile Include="Set 6\DisjointSubarrays.cs" />
+    <Compile Include="Set 6\Pots.cs" />
+    <Compile Include="Set 6\SortArray.cs" />
+    <Compile Include="Set 6\SortedIntegers.cs" />
     <Compile Include="Set 70\Bathroom.cs" />
     <Compile Include="Set 70\PancakeFlippin.cs" />
     <Compile Include="Set 70\TidyNumbers.cs" />
@@ -291,6 +295,10 @@
     <Compile Include="Set 71\MaximumSubarraySum.cs" />
     <Compile Include="Set 71\SherlockValidString.cs" />
     <Compile Include="Set 71\CountLuck.cs" />
+    <Compile Include="Set 72\Cipher.cs" />
+    <Compile Include="Set 72\LargestPermutation.cs" />
+    <Compile Include="Set 72\Permuting.cs" />
+    <Compile Include="Set 72\Xor.cs" />
     <Compile Include="Set54Lamps.cs" />
     <Compile Include="Set54Spiral.cs" />
     <Compile Include="Fun\Pond.cs" />

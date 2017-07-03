@@ -5,7 +5,7 @@ using System.IO.Pipes;
 using System.Linq;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Set_5;
+//using Algorithms.Set_72;
 
 public class Solution
 {
@@ -104,79 +104,56 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int n = tokenizer.NextInt();
-        int[] a = new int[n];
-        int[] b = new int[n];
-
-        for (int i = 0; i < n; i++)
+        int q = tokenizer.NextInt();
+        long l, r;
+        for (int i = 0; i < q; i++)
         {
-            a[i] = tokenizer.NextInt();
-        }
+            l = tokenizer.NextLong();
+            r = tokenizer.NextLong();
 
-        for (int i = 0; i < n; i++)
-        {
-            b[i] = tokenizer.NextInt();
+            Console.WriteLine(Xor.Solve(l, r));
         }
-
-        Console.WriteLine(BeautifulPairs.Solve(a, b));
 
         //writer.Close();
     }
 
-    public static class BeautifulPairs
+    public static class Xor
     {
-        private const int N = 1002;
-
-        public static int Solve(int[] a, int[] b)
+        public static long Solve(long l, long r)
         {
-            int[] countA = new int[N];
-            int[] countB = new int[N];
+            return Solve(r) ^ Solve(l - 1);
+        }
 
-            for (int i = 0; i < a.Length; i++)
+        private static long Solve(long n)
+        {
+            if (n == 0)
             {
-                countA[a[i]]++;
+                return 0;
             }
 
-            for (int i = 0; i < b.Length; i++)
+            long result = 0;
+            if (n % 4 == 1)
             {
-                countB[b[i]]++;
+                result ^= 1;
             }
 
-            int pairs = 0;
-            for (int i = 0; i < N; i++)
+            if (n % 8 >= 2 && n % 8 <= 5)
             {
-                pairs += Math.Min(countA[i], countB[i]);
+                result ^= 2;
             }
 
-            int p1, p2;
-            int result = 0;
-            for (int i = 0; i < N; i++)
+            long m = 2;
+            long m2;
+            long mod;
+            for (long i = 0; i < 50; i++)
             {
-                if (countB[i] == 0)
+                m *= 2;
+                m2 = m * 2;
+
+                mod = n % m2;
+                if (mod >= m && ((mod - m) / 2) % 2 == 0)
                 {
-                    continue;
-                }
-
-                p1 = pairs;
-                if (countB[i] <= countA[i])
-                {
-                    p1--;
-                }
-
-                for (int j = 0; j < N; j++)
-                {
-                    if (i == j)
-                    {
-                        continue;
-                    }
-
-                    p2 = p1;
-                    if (countB[j] < countA[j])
-                    {
-                        p2++;
-                    }
-
-                    result = Math.Max(result, p2);
+                    result ^= m;
                 }
             }
 
