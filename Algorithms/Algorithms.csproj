@@ -299,6 +299,12 @@
     <Compile Include="Set 72\LargestPermutation.cs" />
     <Compile Include="Set 72\Permuting.cs" />
     <Compile Include="Set 72\Xor.cs" />
+    <Compile Include="Set 73\CavityMap.cs" />
+    <Compile Include="Set 73\ChiefHopper.cs" />
+    <Compile Include="Set 73\SumXor.cs" />
+    <Compile Include="Set 7\Heights.cs" />
+    <Compile Include="Set 7\InspectArray.cs" />
+    <Compile Include="Set 7\TwoUnpaired.cs" />
     <Compile Include="Set54Lamps.cs" />
     <Compile Include="Set54Spiral.cs" />
     <Compile Include="Fun\Pond.cs" />

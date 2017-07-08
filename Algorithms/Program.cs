@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Pipes;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Set_72;
+//using Algorithms.Set_73;
 
 public class Solution
 {
@@ -104,60 +105,81 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int q = tokenizer.NextInt();
-        long l, r;
-        for (int i = 0; i < q; i++)
+        int n = tokenizer.NextInt();
+        long[] h = new long[n];
+        for (int i = 0; i < n; i++)
         {
-            l = tokenizer.NextLong();
-            r = tokenizer.NextLong();
-
-            Console.WriteLine(Xor.Solve(l, r));
+            h[i] = tokenizer.NextLong();
         }
+
+        Console.WriteLine(ChiefHopper.Solve(h));
 
         //writer.Close();
     }
 
-    public static class Xor
+    public static class ChiefHopper
     {
-        public static long Solve(long l, long r)
+        public static long Solve(long[] h)
         {
-            return Solve(r) ^ Solve(l - 1);
-        }
+            long current = -1;
+            long step = 100000;
+            long next;
+            int n = h.Length;
+            long energy;
+            bool can;
 
-        private static long Solve(long n)
-        {
-            if (n == 0)
+            long max = h[0];
+            for (int i = 0; i < n; i++)
             {
-                return 0;
+                max = Math.Max(max, h[i]);
             }
 
-            long result = 0;
-            if (n % 4 == 1)
+            while (step > 0)
             {
-                result ^= 1;
-            }
+                next = current + step;
+                energy = next;
+                can = true;
 
-            if (n % 8 >= 2 && n % 8 <= 5)
-            {
-                result ^= 2;
-            }
-
-            long m = 2;
-            long m2;
-            long mod;
-            for (long i = 0; i < 50; i++)
-            {
-                m *= 2;
-                m2 = m * 2;
-
-                mod = n % m2;
-                if (mod >= m && ((mod - m) / 2) % 2 == 0)
+                for (int i = 0; i < n; i++)
                 {
-                    result ^= m;
+                    if (energy >= max)
+                    {
+                        break;
+                    }
+
+                    if (energy < 0)
+                    {
+                        can = false;
+
+                        break;
+                    }
+
+                    if (energy >= h[i])
+                    {
+                        energy += energy - h[i];
+                    }
+                    else
+                    {
+                        energy -= h[i] - energy;
+                    }
+                }
+
+                if (energy < 0)
+                {
+                    can = false;
+                }
+
+                if (!can)
+                {
+                    current = next;
+                }
+                else
+                {
+                    step /= 2;
                 }
             }
 
-            return result;
+            return current + 1;
         }
     }
 }
