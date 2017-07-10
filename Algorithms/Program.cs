@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Set_73;
+//using Algorithms.Fun_2;
 
 public class Solution
 {
@@ -105,81 +105,49 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int n = tokenizer.NextInt();
-        long[] h = new long[n];
-        for (int i = 0; i < n; i++)
+        int tests = tokenizer.NextInt();
+        for (int test = 0; test < tests; test++)
         {
-            h[i] = tokenizer.NextLong();
-        }
+            int n = tokenizer.NextInt();
+            int a = tokenizer.NextInt();
+            int b = tokenizer.NextInt();
 
-        Console.WriteLine(ChiefHopper.Solve(h));
+            Console.WriteLine(String.Join(" ", ManasaStones.Solve(n, a, b)));
+        }
 
         //writer.Close();
     }
 
-    public static class ChiefHopper
+    public static class ManasaStones
     {
-        public static long Solve(long[] h)
+        public static List<int> Solve(int n, int a, int b)
         {
-            long current = -1;
-            long step = 100000;
-            long next;
-            int n = h.Length;
-            long energy;
-            bool can;
+            List<int> result = new List<int>();
 
-            long max = h[0];
-            for (int i = 0; i < n; i++)
+            if (n == 1)
             {
-                max = Math.Max(max, h[i]);
+                result.Add(0);
             }
-
-            while (step > 0)
+            else if (a == b)
             {
-                next = current + step;
-                energy = next;
-                can = true;
+                result.Add((n - 1) * a);
+            }
+            else
+            {
+                if (a > b)
+                {
+                    int buffer = a;
+                    a = b;
+                    b = buffer;
+                }
 
                 for (int i = 0; i < n; i++)
                 {
-                    if (energy >= max)
-                    {
-                        break;
-                    }
-
-                    if (energy < 0)
-                    {
-                        can = false;
-
-                        break;
-                    }
-
-                    if (energy >= h[i])
-                    {
-                        energy += energy - h[i];
-                    }
-                    else
-                    {
-                        energy -= h[i] - energy;
-                    }
-                }
-
-                if (energy < 0)
-                {
-                    can = false;
-                }
-
-                if (!can)
-                {
-                    current = next;
-                }
-                else
-                {
-                    step /= 2;
+                    result.Add((n - 1 - i) * a + i * b);
                 }
             }
 
-            return current + 1;
+            return result;
         }
     }
 }

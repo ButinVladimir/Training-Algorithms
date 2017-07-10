@@ -62,10 +62,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fun 2\Anagrams.cs" />
+    <Compile Include="Fun 2\CaesarCipher.cs" />
     <Compile Include="Fun 2\DifferencePairs.cs" />
     <Compile Include="Fun 2\FunnyString.cs" />
     <Compile Include="Fun 2\Gemstones.cs" />
     <Compile Include="Fun 2\GreedyFlorist.cs" />
+    <Compile Include="Fun 2\ManasaStones.cs" />
     <Compile Include="Fun 2\MedianUpdates.cs" />
     <Compile Include="Fun 2\Professor.cs" />
     <Compile Include="Fun 2\SherlockAnagrams.cs" />
@@ -305,6 +307,9 @@
     <Compile Include="Set 7\Heights.cs" />
     <Compile Include="Set 7\InspectArray.cs" />
     <Compile Include="Set 7\TwoUnpaired.cs" />
+    <Compile Include="Set 8\Island.cs" />
+    <Compile Include="Set 8\KPalindrome.cs" />
+    <Compile Include="Set 8\Triangles.cs" />
     <Compile Include="Set54Lamps.cs" />
     <Compile Include="Set54Spiral.cs" />
     <Compile Include="Fun\Pond.cs" />
