@@ -105,49 +105,51 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int tests = tokenizer.NextInt();
-        for (int test = 0; test < tests; test++)
+        int[] a = new int[6];
+        for (int i = 0; i < 6; i++)
         {
-            int n = tokenizer.NextInt();
-            int a = tokenizer.NextInt();
-            int b = tokenizer.NextInt();
-
-            Console.WriteLine(String.Join(" ", ManasaStones.Solve(n, a, b)));
+            a[i] = tokenizer.NextInt();
         }
+
+        Console.WriteLine(LibraryFine.Solve(a[0], a[1], a[2], a[3], a[4], a[5]));
 
         //writer.Close();
     }
 
-    public static class ManasaStones
+    public static class LibraryFine
     {
-        public static List<int> Solve(int n, int a, int b)
+        public static int Solve(
+            int returnDay,
+            int returnMonth,
+            int returnYear,
+            int expectedDay,
+            int expectedMonth,
+            int expectedYear)
         {
-            List<int> result = new List<int>();
-
-            if (n == 1)
+            if (returnYear > expectedYear)
             {
-                result.Add(0);
+                return 10000;
             }
-            else if (a == b)
+            if (returnYear < expectedYear)
             {
-                result.Add((n - 1) * a);
-            }
-            else
-            {
-                if (a > b)
-                {
-                    int buffer = a;
-                    a = b;
-                    b = buffer;
-                }
-
-                for (int i = 0; i < n; i++)
-                {
-                    result.Add((n - 1 - i) * a + i * b);
-                }
+                return 0;
             }
 
-            return result;
+            if (returnMonth > expectedMonth)
+            {
+                return 500 * (returnMonth - expectedMonth);
+            }
+            if (returnMonth < expectedMonth)
+            {
+                return 0;
+            }
+
+            if (returnDay > expectedDay)
+            {
+                return 15 * (returnDay - expectedDay);
+            }
+
+            return 0;
         }
     }
 }

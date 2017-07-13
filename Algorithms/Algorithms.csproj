@@ -61,12 +61,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fun 2\AcmIcpcTeam.cs" />
     <Compile Include="Fun 2\Anagrams.cs" />
     <Compile Include="Fun 2\CaesarCipher.cs" />
     <Compile Include="Fun 2\DifferencePairs.cs" />
     <Compile Include="Fun 2\FunnyString.cs" />
     <Compile Include="Fun 2\Gemstones.cs" />
     <Compile Include="Fun 2\GreedyFlorist.cs" />
+    <Compile Include="Fun 2\LibraryFine.cs" />
     <Compile Include="Fun 2\ManasaStones.cs" />
     <Compile Include="Fun 2\MedianUpdates.cs" />
     <Compile Include="Fun 2\Professor.cs" />
@@ -310,6 +312,7 @@
     <Compile Include="Set 8\Island.cs" />
     <Compile Include="Set 8\KPalindrome.cs" />
     <Compile Include="Set 8\Triangles.cs" />
+    <Compile Include="Set 9\AggregatedNumber.cs" />
     <Compile Include="Set54Lamps.cs" />
     <Compile Include="Set54Spiral.cs" />
     <Compile Include="Fun\Pond.cs" />
