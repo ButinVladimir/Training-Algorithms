@@ -75,6 +75,8 @@
     <Compile Include="Fun 2\SherlockAnagrams.cs" />
     <Compile Include="Fun 2\SimpleQueries.cs" />
     <Compile Include="Fun 2\SwapNodes.cs" />
+    <Compile Include="Fun 3\ExtraFactorials.cs" />
+    <Compile Include="Fun 3\TaumBDay.cs" />
     <Compile Include="Fun\Bigger.cs" />
     <Compile Include="Fun\BoatTrips.cs" />
     <Compile Include="Fun\Candies.cs" />
@@ -306,6 +308,9 @@
     <Compile Include="Set 73\CavityMap.cs" />
     <Compile Include="Set 73\ChiefHopper.cs" />
     <Compile Include="Set 73\SumXor.cs" />
+    <Compile Include="Set 74\AlmostSorted.cs" />
+    <Compile Include="Set 74\SherlockMinimax.cs" />
+    <Compile Include="Set 74\XoringNinja.cs" />
     <Compile Include="Set 7\Heights.cs" />
     <Compile Include="Set 7\InspectArray.cs" />
     <Compile Include="Set 7\TwoUnpaired.cs" />

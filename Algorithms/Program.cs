@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Fun_2;
+//using Algorithms.Set_74;
 
 public class Solution
 {
@@ -105,51 +105,75 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int[] a = new int[6];
-        for (int i = 0; i < 6; i++)
+        int n = tokenizer.NextInt();
+        int[] a = new int[n];
+
+        for (int i = 0; i < n; i++)
         {
             a[i] = tokenizer.NextInt();
         }
 
-        Console.WriteLine(LibraryFine.Solve(a[0], a[1], a[2], a[3], a[4], a[5]));
+        int p = tokenizer.NextInt();
+        int q = tokenizer.NextInt();
+
+        Console.WriteLine(SherlockMinimax.Solve(a, p, q));
 
         //writer.Close();
     }
 
-    public static class LibraryFine
+    public static class SherlockMinimax
     {
-        public static int Solve(
-            int returnDay,
-            int returnMonth,
-            int returnYear,
-            int expectedDay,
-            int expectedMonth,
-            int expectedYear)
+        public static long Solve(int[] a, int p, int q)
         {
-            if (returnYear > expectedYear)
+            int currentMin = p;
+            int currentDistance = Distance(a, p, p, q);
+
+            Update(a, q, p, q, ref currentMin, ref currentDistance);
+
+            Array.Sort(a);
+
+            for (int i = 0; i < a.Length - 1; i++)
             {
-                return 10000;
-            }
-            if (returnYear < expectedYear)
-            {
-                return 0;
+                int m = (a[i] + a[i + 1]) / 2;
+
+                for (int j = -2; j <= 2; j++)
+                {
+                    Update(a, m + j, p, q, ref currentMin, ref currentDistance);
+                }
             }
 
-            if (returnMonth > expectedMonth)
+            return currentMin;
+        }
+
+        private static void Update(int[] a, int v, int p, int q, ref int currentMin, ref int currentDistance)
+        {
+            int distance = Distance(a, v, p, q);
+            if (distance == -1)
             {
-                return 500 * (returnMonth - expectedMonth);
-            }
-            if (returnMonth < expectedMonth)
-            {
-                return 0;
+                return;
             }
 
-            if (returnDay > expectedDay)
+            if (distance > currentDistance || distance == currentDistance && v < currentMin)
             {
-                return 15 * (returnDay - expectedDay);
+                currentMin = v;
+                currentDistance = distance;
+            }
+        }
+
+        private static int Distance(int[] a, int v, int p, int q)
+        {
+            if (v < p || v > q)
+            {
+                return -1;
             }
 
-            return 0;
+            int distance = Math.Abs(a[0] - v);
+            for (int i = 0; i < a.Length; i++)
+            {
+                distance = Math.Min(Math.Abs(a[i] - v), distance);
+            }
+
+            return distance;
         }
     }
 }
