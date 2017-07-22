@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Set_74;
+//using Algorithms.Fun_3;
 
 public class Solution
 {
@@ -105,75 +105,54 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int n = tokenizer.NextInt();
-        int[] a = new int[n];
+        int t = tokenizer.NextInt();
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < t; i++)
         {
-            a[i] = tokenizer.NextInt();
+            int n = tokenizer.NextInt();
+            int k = tokenizer.NextInt();
+
+            Console.WriteLine(AbsolutePermutation.Solve(n, k));
         }
-
-        int p = tokenizer.NextInt();
-        int q = tokenizer.NextInt();
-
-        Console.WriteLine(SherlockMinimax.Solve(a, p, q));
 
         //writer.Close();
     }
 
-    public static class SherlockMinimax
+    public static class AbsolutePermutation
     {
-        public static long Solve(int[] a, int p, int q)
+        public static string Solve(int n, int k)
         {
-            int currentMin = p;
-            int currentDistance = Distance(a, p, p, q);
+            int[] a;
 
-            Update(a, q, p, q, ref currentMin, ref currentDistance);
-
-            Array.Sort(a);
-
-            for (int i = 0; i < a.Length - 1; i++)
+            if (k == 0)
             {
-                int m = (a[i] + a[i + 1]) / 2;
+                a = new int[n];
 
-                for (int j = -2; j <= 2; j++)
+                for (int i = 0; i < n; i++)
                 {
-                    Update(a, m + j, p, q, ref currentMin, ref currentDistance);
+                    a[i] = i + 1;
+                }
+
+                return string.Join(" ", a.Select(x => x.ToString()));
+            }
+
+            if (n % (2 * k) != 0)
+            {
+                return "-1";
+            }
+
+            a = new int[n];
+            int l = n / (2 * k);
+            for (int i = 0; i < l; i++)
+            {
+                for (int j = 0; j < k; j++)
+                {
+                    a[i * 2 * k + j] = i * 2 * k + j + k + 1;
+                    a[i * 2 * k + k + j] = i * 2 * k + j + 1;
                 }
             }
 
-            return currentMin;
-        }
-
-        private static void Update(int[] a, int v, int p, int q, ref int currentMin, ref int currentDistance)
-        {
-            int distance = Distance(a, v, p, q);
-            if (distance == -1)
-            {
-                return;
-            }
-
-            if (distance > currentDistance || distance == currentDistance && v < currentMin)
-            {
-                currentMin = v;
-                currentDistance = distance;
-            }
-        }
-
-        private static int Distance(int[] a, int v, int p, int q)
-        {
-            if (v < p || v > q)
-            {
-                return -1;
-            }
-
-            int distance = Math.Abs(a[0] - v);
-            for (int i = 0; i < a.Length; i++)
-            {
-                distance = Math.Min(Math.Abs(a[i] - v), distance);
-            }
-
-            return distance;
+            return string.Join(" ", a.Select(x => x.ToString()));
         }
     }
 }

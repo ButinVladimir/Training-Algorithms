@@ -75,7 +75,11 @@
     <Compile Include="Fun 2\SherlockAnagrams.cs" />
     <Compile Include="Fun 2\SimpleQueries.cs" />
     <Compile Include="Fun 2\SwapNodes.cs" />
+    <Compile Include="Fun 3\AbsolutePermutation.cs" />
     <Compile Include="Fun 3\ExtraFactorials.cs" />
+    <Compile Include="Fun 3\FillingJars.cs" />
+    <Compile Include="Fun 3\ServiceLane.cs" />
+    <Compile Include="Fun 3\SherlockPairs.cs" />
     <Compile Include="Fun 3\TaumBDay.cs" />
     <Compile Include="Fun\Bigger.cs" />
     <Compile Include="Fun\BoatTrips.cs" />
@@ -101,6 +105,9 @@
     <Compile Include="MustReverse.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Set 10\Servers.cs" />
+    <Compile Include="Set 10\Sum.cs" />
+    <Compile Include="Set 10\TwoThreeFiveSeven.cs" />
     <Compile Include="Set 1\Pairs.cs" />
     <Compile Include="Set 1\PointsNotOnLine.cs" />
     <Compile Include="Set 1\SherlockArray.cs" />
