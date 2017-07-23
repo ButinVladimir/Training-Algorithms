@@ -108,6 +108,8 @@
     <Compile Include="Set 10\Servers.cs" />
     <Compile Include="Set 10\Sum.cs" />
     <Compile Include="Set 10\TwoThreeFiveSeven.cs" />
+    <Compile Include="Set 11\Decoding.cs" />
+    <Compile Include="Set 11\Substring.cs" />
     <Compile Include="Set 1\Pairs.cs" />
     <Compile Include="Set 1\PointsNotOnLine.cs" />
     <Compile Include="Set 1\SherlockArray.cs" />

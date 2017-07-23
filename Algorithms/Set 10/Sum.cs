@@ -7,6 +7,40 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Algorithms.Set_10
 {
+    public class TreeNode
+    {
+        public int Value { get; set; }
+        public TreeNode Left { get; set; }
+        public TreeNode Right { get; set; }
+    }
+
+    public static class ConvertToTree
+    {
+        public static TreeNode Convert(int[] array)
+        {
+            Array.Sort(array);
+
+            return Convert(array, 0, array.Length - 1);
+        }
+
+        private static TreeNode Convert(int[] array, int left, int right)
+        {
+            if (left > right)
+            {
+                return null;
+            }
+
+            int m = (left + right) / 2;
+
+            return new TreeNode()
+            {
+                Value = array[m],
+                Left = Convert(array, left, m - 1),
+                Right = Convert(array, m + 1, right)
+            };
+        }
+    }
+
     public class Sum
     {
         private TreeNode rootNode;
@@ -16,7 +50,7 @@ namespace Algorithms.Set_10
 
         public Tuple<int, int> Solve()
         {
-            this.rootNode = ConvertToTree(Content);
+            this.rootNode = ConvertToTree.Convert(Content);
 
             Tuple<int, int> result = this.DFS(this.rootNode);
             if (result != null)
@@ -80,36 +114,169 @@ namespace Algorithms.Set_10
 
             return false;
         }
+    }
 
-        private static TreeNode ConvertToTree(int[] array)
+    public class Sum2
+    {
+        enum LastOperation { Left, Right };
+
+        private TreeNode rootNode;
+
+        public int[] Content { get; set; }
+        public int X { get; set; }
+
+        public Tuple<int, int> Solve()
         {
-            Array.Sort(array);
+            this.rootNode = ConvertToTree.Convert(Content);
 
-            return ConvertToTree(array, 0, array.Length - 1);
-        }
+            State leftState = new State() { Node = this.rootNode, Operation = LastOperation.Left };
+            Stack<State> leftStack = new Stack<State>();
+            leftStack.Push(leftState);
+            this.GoLeft(leftStack);
 
-        private static TreeNode ConvertToTree(int[] array, int left, int right)
-        {
-            if (left > right)
+            State rightState = new State() { Node = this.rootNode, Operation = LastOperation.Right };
+            Stack<State> rightStack = new Stack<State>();
+            rightStack.Push(rightState);
+            this.GoRight(rightStack);
+
+            while (leftStack.Count > 0 && rightStack.Count > 0)
             {
-                return null;
+                leftState = leftStack.Peek();
+                rightState = rightStack.Peek();
+
+                int value = leftState.Node.Value + rightState.Node.Value;
+                if (value > this.X)
+                {
+                    this.Prev(rightStack);
+                }
+                else if (value < this.X)
+                {
+                    this.Next(leftStack);
+                }
+                else
+                {
+                    if (leftState.Node != rightState.Node)
+                    {
+                        return new Tuple<int, int>(leftState.Node.Value, rightState.Node.Value);
+                    }
+
+                    return null;
+                }
             }
 
-            int m = (left + right) / 2;
-
-            return new TreeNode()
-            {
-                Value = array[m],
-                Left = ConvertToTree(array, left, m - 1),
-                Right = ConvertToTree(array, m + 1, right)
-            };
+            return null;
         }
 
-        private class TreeNode
+        private bool Prev(Stack<State> stack)
         {
-            public int Value { get; set; }
-            public TreeNode Left { get; set; }
-            public TreeNode Right { get; set; }
+            while (stack.Count > 0)
+            {
+                State currentState = stack.Peek();
+                if (currentState.Operation == LastOperation.Right)
+                {
+                    currentState.Operation = LastOperation.Left;
+
+                    if (currentState.Node.Left != null)
+                    {
+                        State newState = new State()
+                        {
+                            Node = currentState.Node.Left,
+                            Operation = LastOperation.Right
+                        };
+                        stack.Push(newState);
+
+                        this.GoRight(stack);
+
+                        return true;
+                    }
+                }
+                else
+                {
+                    stack.Pop();
+                }
+            }
+
+            return false;
+        }
+
+        private bool Next(Stack<State> stack)
+        {
+            while (stack.Count > 0)
+            {
+                State currentState = stack.Peek();
+                if (currentState.Operation == LastOperation.Left)
+                {
+                    currentState.Operation = LastOperation.Right;
+
+                    if (currentState.Node.Right != null)
+                    {
+                        State newState = new State()
+                        {
+                            Node = currentState.Node.Right,
+                            Operation = LastOperation.Left
+                        };
+                        stack.Push(newState);
+
+                        this.GoLeft(stack);
+
+                        return true;
+                    }
+                }
+                else
+                {
+                    stack.Pop();
+                }
+            }
+
+            return false;
+        }
+
+        private void GoRight(Stack<State> stack)
+        {
+            if (stack.Count == 0)
+            {
+                return;
+            }
+
+            State currentState = stack.Peek();
+            while (currentState.Node.Right != null)
+            {
+                State newState = new State()
+                {
+                    Node = currentState.Node.Right,
+                    Operation = LastOperation.Right
+                };
+
+                stack.Push(newState);
+                currentState = newState;
+            }
+        }
+
+        private void GoLeft(Stack<State> stack)
+        {
+            if (stack.Count == 0)
+            {
+                return;
+            }
+
+            State currentState = stack.Peek();
+            while (currentState.Node.Left != null)
+            {
+                State newState = new State()
+                {
+                    Node = currentState.Node.Left,
+                    Operation = LastOperation.Left
+                };
+
+                stack.Push(newState);
+                currentState = newState;
+            }
+        }
+
+        private class State
+        {
+            public TreeNode Node { get; set; }
+            public LastOperation Operation { get; set; }
         }
     }
 
@@ -121,10 +288,15 @@ namespace Algorithms.Set_10
         {
             int[] a = { 2, 3, 7, 4, 2, 9 };
             Sum sum = new Sum() { Content = a, X = 4 };
+            Sum2 sum2 = new Sum2() { Content = a, X = 4 };
+
             Tuple<int, int> result = sum.Solve();
+            Tuple<int, int> result2 = sum2.Solve();
 
             Assert.AreEqual(2, result.Item1);
-            Assert.AreEqual(2, result.Item2);
+            Assert.AreEqual(2, result2.Item1);
+            Assert.AreEqual(result.Item1, result2.Item1);
+            Assert.AreEqual(result.Item2, result2.Item2);
         }
 
         [TestMethod]
@@ -132,20 +304,29 @@ namespace Algorithms.Set_10
         {
             int[] a = { 2, 3, 5, 10, 11, 200 };
             Sum sum = new Sum() { Content = a, X = -1 };
+            Sum2 sum2 = new Sum2() { Content = a, X = -1 };
+
             Tuple<int, int> result = sum.Solve();
+            Tuple<int, int> result2 = sum2.Solve();
 
             Assert.IsNull(result);
+            Assert.IsNull(result2);
         }
 
         [TestMethod]
         public void Test3()
         {
-            int[] a = { 2, 3, 4, 10, 11 };
+            int[] a = { 2, 3, 5, 10, 11 };
             Sum sum = new Sum() { Content = a, X = 14 };
-            Tuple<int, int> result = sum.Solve();
+            Sum2 sum2 = new Sum2() { Content = a, X = 14 };
 
-            Assert.AreEqual(4, result.Item1);
-            Assert.AreEqual(10, result.Item2);
+            Tuple<int, int> result = sum.Solve();
+            Tuple<int, int> result2 = sum2.Solve();
+
+            Assert.AreEqual(3, result.Item1);
+            Assert.AreEqual(11, result.Item2);
+            Assert.AreEqual(result.Item1, result2.Item1);
+            Assert.AreEqual(result.Item2, result2.Item2);
         }
     }
 }
