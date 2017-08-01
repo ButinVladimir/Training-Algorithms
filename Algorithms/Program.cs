@@ -106,53 +106,35 @@ public class Solution
         Tokenizer tokenizer = new Tokenizer();
 
         int t = tokenizer.NextInt();
-
-        for (int i = 0; i < t; i++)
+        for (int test = 0; test < t; test++)
         {
-            int n = tokenizer.NextInt();
-            int k = tokenizer.NextInt();
+            long a = tokenizer.NextLong();
+            long b = tokenizer.NextLong();
 
-            Console.WriteLine(AbsolutePermutation.Solve(n, k));
+            Console.WriteLine(SherlockSquares.Solve(a, b));
         }
 
         //writer.Close();
     }
 
-    public static class AbsolutePermutation
+    public static class SherlockSquares
     {
-        public static string Solve(int n, int k)
+        public static long Solve(long a, long b)
         {
-            int[] a;
-
-            if (k == 0)
+            long rootA = 0;
+            while (rootA * rootA < a)
             {
-                a = new int[n];
-
-                for (int i = 0; i < n; i++)
-                {
-                    a[i] = i + 1;
-                }
-
-                return string.Join(" ", a.Select(x => x.ToString()));
+                rootA++;
             }
 
-            if (n % (2 * k) != 0)
+            long rootB = 0;
+            while (rootB * rootB <= b)
             {
-                return "-1";
+                rootB++;
             }
+            rootB--;
 
-            a = new int[n];
-            int l = n / (2 * k);
-            for (int i = 0; i < l; i++)
-            {
-                for (int j = 0; j < k; j++)
-                {
-                    a[i * 2 * k + j] = i * 2 * k + j + k + 1;
-                    a[i * 2 * k + k + j] = i * 2 * k + j + 1;
-                }
-            }
-
-            return string.Join(" ", a.Select(x => x.ToString()));
+            return rootA > rootB ? 0 : (rootB - rootA + 1);
         }
     }
 }
