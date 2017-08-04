@@ -81,9 +81,12 @@
     <Compile Include="Fun 3\FillingJars.cs" />
     <Compile Include="Fun 3\IsFibo.cs" />
     <Compile Include="Fun 3\ServiceLane.cs" />
+    <Compile Include="Fun 3\SherlockGCD.cs" />
     <Compile Include="Fun 3\SherlockPairs.cs" />
     <Compile Include="Fun 3\SherlockSquares.cs" />
+    <Compile Include="Fun 3\Sticks.cs" />
     <Compile Include="Fun 3\TaumBDay.cs" />
+    <Compile Include="Fun 3\Workbook.cs" />
     <Compile Include="Fun\Bigger.cs" />
     <Compile Include="Fun\BoatTrips.cs" />
     <Compile Include="Fun\Candies.cs" />
@@ -121,6 +124,9 @@
     <Compile Include="Set 13\Exam.cs" />
     <Compile Include="Set 13\NLists.cs" />
     <Compile Include="Set 13\Sum.cs" />
+    <Compile Include="Set 15\Castle.cs" />
+    <Compile Include="Set 15\IntervalGCD.cs" />
+    <Compile Include="Set 15\MatrixGcd.cs" />
     <Compile Include="Set 1\Pairs.cs" />
     <Compile Include="Set 1\PointsNotOnLine.cs" />
     <Compile Include="Set 1\SherlockArray.cs" />
