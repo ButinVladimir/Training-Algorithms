@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Set_15;
+using Algorithms.Set_14;
 
 public class Solution
 {
@@ -105,120 +105,18 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int n = tokenizer.NextInt();
-        int m = tokenizer.NextInt();
-        int[] a = new int[n];
+        int[] source = new int[] { 0, 1, 2, 3, 4, 5 };
+        int[] target = new int[] { 5, 4, 3, 2, 1, 0 };
 
-        for (int i = 0; i < n; i++)
+        List<Tuple<int, int>> result = Swap0.Solve(source, target);
+
+        Console.WriteLine(string.Join(" ", source));
+
+        foreach (Tuple<int, int> step in result)
         {
-            a[i] = tokenizer.NextInt();
-        }
-
-        IntervalGCD igcd = new IntervalGCD(a);
-
-        int left, right;
-
-        for (int i = 0; i < m; i++)
-        {
-            left = tokenizer.NextInt() - 1;
-            right = tokenizer.NextInt() - 1;
-
-            Console.WriteLine(igcd.Query(left, right));
+            Console.WriteLine("{0} - {1}", step.Item1, step.Item2);
         }
 
         //writer.Close();
-    }
-
-    public class IntervalGCD
-    {
-        private int blocksN;
-        private int blocksLength;
-        private int[] a;
-        private int[] blocks;
-
-        public IntervalGCD(int[] a)
-        {
-            this.a = a;
-            this.blocksLength = Sqrt(this.a.Length);
-            this.blocksN = this.a.Length / blocksLength;
-
-            if (this.a.Length % this.blocksLength > 0)
-            {
-                this.blocksN++;
-            }
-
-            this.blocks = new int[this.blocksN];
-
-            int left, right;
-
-            for (int block = 0; block < this.blocksN; block++)
-            {
-                left = block * this.blocksLength;
-                right = Math.Min(a.Length - 1, left + this.blocksLength - 1);
-
-                this.blocks[block] = this.a[left];
-                for (int i = left; i <= right; i++)
-                {
-                    this.blocks[block] = Gcd(this.blocks[block], this.a[i]);
-                }
-            }
-        }
-
-        public int Query(int l, int r)
-        {
-            int left, right;
-            int result = 0;
-
-            for (int block = 0; block < this.blocksN; block++)
-            {
-                left = block * this.blocksLength;
-                right = Math.Min(a.Length - 1, left + this.blocksLength - 1);
-
-                if (l <= left && r >= right)
-                {
-                    result = Gcd(result, this.blocks[block]);
-                }
-                else
-                {
-                    left = Math.Max(left, l);
-                    right = Math.Min(right, r);
-
-                    for (int i = left; i <= right; i++)
-                    {
-                        result = Gcd(result, this.a[i]);
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        private static int Sqrt(int a)
-        {
-            int r = 0;
-            while (r * r <= a)
-            {
-                r++;
-            }
-
-            return r - 1;
-        }
-
-        private static int Gcd(int a, int b)
-        {
-            while (a > 0 && b > 0)
-            {
-                if (a > b)
-                {
-                    a = a % b;
-                }
-                else
-                {
-                    b = b % a;
-                }
-            }
-
-            return a + b;
-        }
     }
 }

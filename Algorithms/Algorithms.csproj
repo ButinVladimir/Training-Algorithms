@@ -124,6 +124,10 @@
     <Compile Include="Set 13\Exam.cs" />
     <Compile Include="Set 13\NLists.cs" />
     <Compile Include="Set 13\Sum.cs" />
+    <Compile Include="Set 14\CheckArrays.cs" />
+    <Compile Include="Set 14\Matrix.cs" />
+    <Compile Include="Set 14\MedianTwoArrays.cs" />
+    <Compile Include="Set 14\Swap.cs" />
     <Compile Include="Set 15\Castle.cs" />
     <Compile Include="Set 15\IntervalGCD.cs" />
     <Compile Include="Set 15\MatrixGcd.cs" />
