@@ -84,6 +84,7 @@
     <Compile Include="Fun 3\SherlockGCD.cs" />
     <Compile Include="Fun 3\SherlockPairs.cs" />
     <Compile Include="Fun 3\SherlockSquares.cs" />
+    <Compile Include="Fun 3\SockMerchant.cs" />
     <Compile Include="Fun 3\Sticks.cs" />
     <Compile Include="Fun 3\TaumBDay.cs" />
     <Compile Include="Fun 3\Workbook.cs" />
@@ -131,6 +132,11 @@
     <Compile Include="Set 15\Castle.cs" />
     <Compile Include="Set 15\IntervalGCD.cs" />
     <Compile Include="Set 15\MatrixGcd.cs" />
+    <Compile Include="Set 16\SetEnumeration.cs" />
+    <Compile Include="Set 17\AvoidDuplicates.cs" />
+    <Compile Include="Set 17\MaximizeNumber.cs" />
+    <Compile Include="Set 17\SortArray.cs" />
+    <Compile Include="Set 17\StringPermutation.cs" />
     <Compile Include="Set 1\Pairs.cs" />
     <Compile Include="Set 1\PointsNotOnLine.cs" />
     <Compile Include="Set 1\SherlockArray.cs" />
