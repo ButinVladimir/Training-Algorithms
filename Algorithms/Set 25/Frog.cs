@@ -45,6 +45,7 @@ namespace Algorithms.Set_25
             {
                 return false;
             }
+            this.visited.Add(new Tuple<int, int>(0, initStep));
 
             Queue<Tuple<int, int>> queue = new Queue<Tuple<int, int>>();
             queue.Enqueue(new Tuple<int, int>(0, initStep));
@@ -150,7 +151,7 @@ namespace Algorithms.Set_25
 
             Assert.IsTrue(fs.Check());
             Assert.IsFalse(fi.Check());
-            Assert.IsFalse(fd.Check());
+            Assert.IsTrue(fd.Check());
         }
 
         [TestMethod]
