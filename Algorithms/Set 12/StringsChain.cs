@@ -15,7 +15,7 @@ namespace Algorithms.Set_12
         private Dictionary<char, int> countOut;
         private char? start;
         private char? finish;
-        private LinkedList<char> path;
+        private LinkedList<int> path;
 
         public string Solve()
         {
@@ -31,7 +31,7 @@ namespace Algorithms.Set_12
                 return null;
             }
 
-            return null;
+            return this.MakeOutput();
         }
 
         private void Prepare()
@@ -40,7 +40,7 @@ namespace Algorithms.Set_12
             this.ribsPos = new Dictionary<char, int>();
             this.countIn = new Dictionary<char, int>();
             this.countOut = new Dictionary<char, int>();
-            this.path = new LinkedList<char>();
+            this.path = new LinkedList<int>();
 
             for (int i = 0; i < this.Words.Length; i++)
             {
@@ -143,21 +143,30 @@ namespace Algorithms.Set_12
 
         private bool Travel()
         {
-            Stack<char> stack = new Stack<char>();
-            stack.Push(this.start.Value);
+            Stack<Tuple<int, char>> stack = new Stack<Tuple<int, char>>();
+            stack.Push(new Tuple<int, char>(-2, this.start.Value));
 
             while (stack.Count > 0)
             {
-                char current = stack.Peek();
-                if (this.ribsPos[current] == this.ribs[current].Count)
+                Tuple<int, char> current = stack.Peek();
+                if (this.ribsPos[current.Item2] == this.ribs[current.Item2].Count)
                 {
-                    this.path.AddFirst(current);
+                    this.path.AddFirst(current.Item1);
                     stack.Pop();
                 }
                 else
                 {
-                    stack.Push(this.Words[this.ribs[current][this.ribsPos[current]]].Last());
-                    this.ribsPos[current]++;
+                    int nextRib = this.ribs[current.Item2][this.ribsPos[current.Item2]];
+
+                    if (nextRib == -1)
+                    {
+                        stack.Push(new Tuple<int, char>(nextRib, this.start.Value));
+                    }
+                    else
+                    {
+                        stack.Push(new Tuple<int, char>(nextRib, this.Words[nextRib].Last()));
+                    }
+                    this.ribsPos[current.Item2]++;
                 }
             }
 
@@ -174,10 +183,32 @@ namespace Algorithms.Set_12
 
         private string MakeOutput()
         {
-            char[] pathArray = this.path.ToArray();
+            int[] pathArray = this.path.ToArray();
+            int startPos = 1;
+            while (pathArray[startPos] != -1)
+            {
+                startPos++;
+            }
 
-            int pos = 0;
-            while (pathArray[pos] != this.finish.Value || pathArray[pos+1] != this.start.Value)
+            int currentPos = startPos + 1;
+            if (currentPos == pathArray.Length)
+            {
+                currentPos = 1;
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.Append(this.Words[pathArray[currentPos]].First());
+            while (currentPos != startPos)
+            {
+                sb.Append(this.Words[pathArray[currentPos]].Substring(1));
+                currentPos++;
+
+                if (currentPos == pathArray.Length)
+                {
+                    currentPos = 1;
+                }
+            }
+
+            return sb.ToString();
         }
     }
 }

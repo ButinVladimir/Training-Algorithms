@@ -88,6 +88,9 @@
     <Compile Include="Fun 3\Sticks.cs" />
     <Compile Include="Fun 3\TaumBDay.cs" />
     <Compile Include="Fun 3\Workbook.cs" />
+    <Compile Include="Fun 4\DivisiblePairs.cs" />
+    <Compile Include="Fun 4\DrawingBook.cs" />
+    <Compile Include="Fun 4\RepeatedString.cs" />
     <Compile Include="Fun\Bigger.cs" />
     <Compile Include="Fun\BoatTrips.cs" />
     <Compile Include="Fun\Candies.cs" />
@@ -121,6 +124,7 @@
     <Compile Include="Set 12\Height.cs" />
     <Compile Include="Set 12\InfiniteBitStream.cs" />
     <Compile Include="Set 12\NoBranching.cs" />
+    <Compile Include="Set 12\StringsChain.cs" />
     <Compile Include="Set 13\Abc.cs" />
     <Compile Include="Set 13\Exam.cs" />
     <Compile Include="Set 13\NLists.cs" />
@@ -146,6 +150,7 @@
     <Compile Include="Set 18\CutList.cs" />
     <Compile Include="Set 18\Figure.cs" />
     <Compile Include="Set 18\FindString.cs" />
+    <Compile Include="Set 18\FlatBST.cs" />
     <Compile Include="Set 18\Shuffle.cs" />
     <Compile Include="Set 1\Pairs.cs" />
     <Compile Include="Set 1\PointsNotOnLine.cs" />
