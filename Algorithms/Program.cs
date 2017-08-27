@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Fun_4;
+using Algorithms.Set_19;
 
 public class Solution
 {
@@ -105,22 +105,8 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int n = tokenizer.NextInt();
-        int p = tokenizer.NextInt();
-
-        Console.WriteLine(DrawingBook.Solve(n, p));
+        Console.WriteLine(RearrangeArray.Solve("abcb"));
 
         //writer.Close();
-    }
-
-    public static class DrawingBook
-    {
-        public static int Solve(int n, int p)
-        {
-            int left = p / 2;
-            int right = n / 2 - p / 2;
-
-            return Math.Min(left, right);
-        }
     }
 }
