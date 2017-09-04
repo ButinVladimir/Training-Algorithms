@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-using Algorithms.Set_19;
+//using Algorithms.Fun_4;
 
 public class Solution
 {
@@ -105,8 +105,52 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        Console.WriteLine(RearrangeArray.Solve("abcb"));
+        int s = tokenizer.NextInt();
+        int n = tokenizer.NextInt();
+        int m = tokenizer.NextInt();
+
+        int[] a = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            a[i] = tokenizer.NextInt();
+        }
+
+        int[] b = new int[m];
+        for (int i = 0; i < m; i++)
+        {
+            b[i] = tokenizer.NextInt();
+        }
+
+        Console.WriteLine(ElectronicsShop.Solve(s, a, b));
 
         //writer.Close();
+    }
+
+    public static class ElectronicsShop
+    {
+        public static int Solve(int s, int[] a, int[] b)
+        {
+            Array.Sort(a);
+            Array.Sort(b);
+            Array.Reverse(b);
+
+            int posB = 0;
+            int result = -1;
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                while (posB < b.Length && a[i] + b[posB] > s)
+                {
+                    posB++;
+                }
+
+                if (posB < b.Length)
+                {
+                    result = Math.Max(result, a[i] + b[posB]);
+                }
+            }
+
+            return result;
+        }
     }
 }
