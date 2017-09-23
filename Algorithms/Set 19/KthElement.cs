@@ -169,7 +169,7 @@ namespace Algorithms.Set_19
             throw new ArgumentException("Invalid number");
         }
 
-        private class State:IComparable<State>
+        private class State : IComparable<State>
         {
             public int Value { get; set; }
             public bool Close { get; set; }

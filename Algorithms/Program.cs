@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Fun_4;
+//using Algorithms.Fun_5;
 
 public class Solution
 {
@@ -105,52 +105,30 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int s = tokenizer.NextInt();
-        int n = tokenizer.NextInt();
-        int m = tokenizer.NextInt();
-
-        int[] a = new int[n];
-        for (int i = 0; i < n; i++)
+        int[] h = new int[26];
+        for (int i = 0; i < 26; i++)
         {
-            a[i] = tokenizer.NextInt();
+            h[i] = tokenizer.NextInt();
         }
 
-        int[] b = new int[m];
-        for (int i = 0; i < m; i++)
-        {
-            b[i] = tokenizer.NextInt();
-        }
+        string word = tokenizer.NextToken();
 
-        Console.WriteLine(ElectronicsShop.Solve(s, a, b));
+        Console.WriteLine(PdfViewer.Solve(h, word));
 
         //writer.Close();
     }
 
-    public static class ElectronicsShop
+    public static class PdfViewer
     {
-        public static int Solve(int s, int[] a, int[] b)
+        public static int Solve(int[] a, string word)
         {
-            Array.Sort(a);
-            Array.Sort(b);
-            Array.Reverse(b);
-
-            int posB = 0;
-            int result = -1;
-
-            for (int i = 0; i < a.Length; i++)
+            int h = 0;
+            for (int i = 0; i < word.Length; i++)
             {
-                while (posB < b.Length && a[i] + b[posB] > s)
-                {
-                    posB++;
-                }
-
-                if (posB < b.Length)
-                {
-                    result = Math.Max(result, a[i] + b[posB]);
-                }
+                h = Math.Max(h, a[word[i] - 'a']);
             }
 
-            return result;
+            return h * word.Length;
         }
     }
 }
