@@ -105,30 +105,38 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int[] h = new int[26];
-        for (int i = 0; i < 26; i++)
+        int tests = tokenizer.NextInt();
+        for (int test = 0; test < tests; test++)
         {
-            h[i] = tokenizer.NextInt();
+            int n = tokenizer.NextInt();
+            int[] b = new int[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                b[i] = tokenizer.NextInt();
+            }
+
+            Console.WriteLine(SherlockCost.Solve(b));
         }
-
-        string word = tokenizer.NextToken();
-
-        Console.WriteLine(PdfViewer.Solve(h, word));
 
         //writer.Close();
     }
 
-    public static class PdfViewer
+    public static class SherlockCost
     {
-        public static int Solve(int[] a, string word)
+        public static int Solve(int[] b)
         {
-            int h = 0;
-            for (int i = 0; i < word.Length; i++)
+            int n = b.Length;
+            int[] aMin = new int[n];
+            int[] aMax = new int[n];
+
+            for (int i = n - 2; i >= 0; i--)
             {
-                h = Math.Max(h, a[word[i] - 'a']);
+                aMin[i] = Math.Max(aMin[i + 1], b[i + 1] - 1 + aMax[i + 1]);
+                aMax[i] = Math.Max(b[i] - 1 + aMin[i + 1], Math.Abs(b[i] - b[i + 1]) + aMax[i + 1]);
             }
 
-            return h * word.Length;
+            return Math.Max(aMin[0], aMax[0]);
         }
     }
 }
