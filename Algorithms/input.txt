@@ -1,4 +1,3 @@
-3
-sdfg
-dfgs
-ghjhk
+2 2 3
+1 1
+1 1

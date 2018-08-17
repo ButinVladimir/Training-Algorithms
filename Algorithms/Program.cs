@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Fun_5;
+//using Algorithms.Fun_9;
 
 public class Solution
 {
@@ -97,46 +97,98 @@ public class Solution
 
     public static void Main()
     {
-        //StreamReader reader = new StreamReader(File.OpenRead("input.txt"));
-        //Console.SetIn(reader);
+        //using (StreamReader reader = new StreamReader(File.OpenRead("input.txt")))
+        //{
+        //  Console.SetIn(reader);
 
         //StreamWriter writer = File.CreateText("output.txt");
         //Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int tests = tokenizer.NextInt();
-        for (int test = 0; test < tests; test++)
+        int n = tokenizer.NextInt();
+        int istart = tokenizer.NextInt();
+        int jstart = tokenizer.NextInt();
+        int iend = tokenizer.NextInt();        
+        int jend = tokenizer.NextInt();
+
+        string[] result = RedKnightShortestPath.Solve(n, istart, jstart, iend, jend);
+
+        if (result.Length == 0)
         {
-            int n = tokenizer.NextInt();
-            int[] b = new int[n];
-
-            for (int i = 0; i < n; i++)
-            {
-                b[i] = tokenizer.NextInt();
-            }
-
-            Console.WriteLine(SherlockCost.Solve(b));
+            Console.WriteLine("Impossible");
+        }
+        else
+        {
+            Console.WriteLine(result.Length);
+            Console.WriteLine(string.Join(" ", result));
         }
 
         //writer.Close();
+        //}
+        //}
     }
 
-    public static class SherlockCost
+    public static class RedKnightShortestPath
     {
-        public static int Solve(int[] b)
-        {
-            int n = b.Length;
-            int[] aMin = new int[n];
-            int[] aMax = new int[n];
+        private static readonly int[] dx = { -2, -2, 0, 2, 2, 0 };
+        private static readonly int[] dy = { -1, 1, 2, 1, -1, -2 };
+        private static readonly string[] labels = { "UL", "UR", "R", "LR", "LL", "L" };
 
-            for (int i = n - 2; i >= 0; i--)
+        public static string[] Solve(int n, int istart, int jstart, int iend, int jend)
+        {
+            int[,] distance = new int[n, n];
+            int[,] moves = new int[n, n];
+            for (int i = 0; i < n; i++)
             {
-                aMin[i] = Math.Max(aMin[i + 1], b[i + 1] - 1 + aMax[i + 1]);
-                aMax[i] = Math.Max(b[i] - 1 + aMin[i + 1], Math.Abs(b[i] - b[i + 1]) + aMax[i + 1]);
+                for (int j = 0; j < n; j++)
+                {
+                    distance[i, j] = -1;
+                }
             }
 
-            return Math.Max(aMin[0], aMax[0]);
+            Queue<Tuple<int, int>> queue = new Queue<Tuple<int, int>>();
+            queue.Enqueue(new Tuple<int, int>(istart, jstart));
+            distance[istart, jstart] = 0;
+
+            int x, y, nx, ny;
+            while (queue.Count > 0)
+            {
+                var p = queue.Dequeue();
+                x = p.Item1;
+                y = p.Item2;
+                for (int i = 0; i < 6; i++)
+                {
+                    nx = x + dx[i];
+                    ny = y + dy[i];
+
+                    if (nx >= 0 && nx < n && ny >= 0 && ny < n && distance[nx, ny] == -1)
+                    {
+                        distance[nx, ny] = distance[x, y] + 1;
+                        moves[nx, ny] = i;
+                        queue.Enqueue(new Tuple<int, int>(nx, ny));
+                    }
+                }
+            }
+
+            if (distance[iend, jend] == -1)
+            {
+                return new string[0];
+            }
+
+            int l = distance[iend, jend];
+            int m;
+            string[] result = new string[l];
+            while (l > 0)
+            {
+                m = moves[iend, jend];
+                result[l - 1] = labels[m];
+                iend -= dx[m];
+                jend -= dy[m];
+                l--;
+            }
+
+            return result;
         }
     }
 }

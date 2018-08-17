@@ -8,122 +8,49 @@ namespace Algorithms.Fun_4
 {
     public class GridSearch
     {
-        public const long P1 = 11;
-        public const long P2 = 13;
+        private HashComputers[] hashComputers;
 
-        public const long mod = 1000000000 + 9;
-
-        public string[] Haystack { get; set; }
-        public string[] Needle { get; set; }
-
-        private long[,] hash1;
-        private long[,] hash2;
-        private long v1;
-        private long v2;
-
-        public bool Solve()
+        public GridSearch()
         {
-            this.BuildHash();
-            this.FindValues();
-
-            return this.Scan();
+            this.hashComputers = new HashComputers[]
+            {
+                new HashComputers(1000000007, 11),
+                new HashComputers(1000000007, 13)
+            };
         }
 
-        private void BuildHash()
+        public bool Search(string[] pattern, string[] grid)
         {
-            int haystackRows = this.Haystack.Length;
-            int haystackCols = this.Haystack[0].Length;
+            int[,] patternConverted = ConvertToIntMatrix(pattern);
+            int[,] gridConverted = ConvertToIntMatrix(grid);
 
-            this.hash1 = new long[haystackRows, haystackCols];
-            this.hash2 = new long[haystackRows, haystackCols];
-            long m1 = 1;
-            long m2 = 1;
+            long[][,] patternHash = new long[this.hashComputers.Length][,];
+            long[][,] gridHash = new long[this.hashComputers.Length][,];
 
-            for (int i = 0; i < haystackRows; i++)
+            int patternRows = pattern.Length;
+            int patternColumns = pattern[0].Length;
+
+            for (int k = 0; k < this.hashComputers.Length; k++)
             {
-                for (int j = 0; j < haystackCols; j++)
-                {
-                    this.hash1[i, j] = (this.Haystack[i][j] - '0') * m1 % mod;
-                    this.hash2[i, j] = (this.Haystack[i][j] - '0') * m2 % mod;
-
-                    if (i > 0)
-                    {
-                        this.hash1[i, j] = (this.hash1[i, j] + this.hash1[i - 1, j]) % mod;
-                        this.hash2[i, j] = (this.hash2[i, j] + this.hash2[i - 1, j]) % mod;
-                    }
-
-                    if (j > 0)
-                    {
-                        this.hash1[i, j] = (this.hash1[i, j] + this.hash1[i, j - 1]) % mod;
-                        this.hash2[i, j] = (this.hash2[i, j] + this.hash2[i, j - 1]) % mod;
-                    }
-
-                    if (i > 0 && j > 0)
-                    {
-                        this.hash1[i, j] = (this.hash1[i, j] - this.hash1[i - 1, j - 1] + mod) % mod;
-                        this.hash2[i, j] = (this.hash2[i, j] - this.hash2[i - 1, j - 1] + mod) % mod;
-                    }
-
-                    m1 = m1 * P1 % mod;
-                    m2 = m2 * P2 % mod;
-                }
+                patternHash[k] = this.hashComputers[k].ComputeHash(patternConverted, patternColumns);
+                gridHash[k] = this.hashComputers[k].ComputeHash(gridConverted, patternColumns);
             }
-        }
 
-        private void FindValues()
-        {
-            this.v1 = 0;
-            this.v2 = 0;
-            long m1 = 1;
-            long m2 = 1;
-            long hl = this.Haystack[0].Length;
+            int gridRows = grid.Length;
+            int gridColumns = grid[0].Length;
+            bool same;
 
-            for (int i = 0; i < this.Needle.Length; i++)
+            for (int i = 0; i < gridRows; i++)
             {
-                for (int j = 0; j < this.Needle[i].Length; j++)
+                for (int j = 0; j < gridColumns; j++)
                 {
-                    this.v1 = (this.v1 + (this.Needle[i][j] - '0') * Power(m1, i * hl + j) % mod) % mod;
-                    this.v2 = (this.v2 + (this.Needle[i][j] - '0') * Power(m2, i * hl + j) % mod) % mod;
-                }
-            }
-        }
-
-        private bool Scan()
-        {
-            int haystackRows = this.Haystack.Length;
-            int haystackCols = this.Haystack[0].Length;
-            int needleRows = this.Needle.Length;
-            int needleCols = this.Needle[0].Length;
-
-            for (int i = needleRows - 1; i < haystackRows; i++)
-            {
-                for (int j = needleCols - 1; j < haystackCols; j++)
-                {
-                    long b1 = this.hash1[i, j];
-                    long b2 = this.hash2[i, j];
-
-                    if (i >= needleRows)
+                    same = true;
+                    for (int k = 0; k < this.hashComputers.Length && same; k++)
                     {
-                        b1 = (b1 - this.hash1[i - needleRows, j] + mod) % mod;
-                        b2 = (b2 - this.hash2[i - needleRows, j] + mod) % mod;
+                        same = same && this.hashComputers[k].Compare(patternHash[k], gridHash[k], i, j, patternRows, patternColumns);
                     }
 
-                    if (j >= needleCols)
-                    {
-                        b1 = (b1 - this.hash1[i, j - needleCols] + mod) % mod;
-                        b2 = (b2 - this.hash2[i, j - needleCols] + mod) % mod;
-                    }
-
-                    if (i >= needleRows && j >= needleCols)
-                    {
-                        b1 = (b1 + this.hash1[i - needleRows, j - needleRows]) % mod;
-                        b2 = (b2 + this.hash2[i - needleRows, j - needleRows]) % mod;
-                    }
-
-                    b1 = b1 * Power(P1, (i - needleRows + 1) * haystackCols + j - needleCols + 1) % mod;
-                    b2 = b2 * Power(P2, (i - needleRows + 1) * haystackCols + j - needleCols + 1) % mod;
-
-                    if (b1 == this.v1 && b2 == this.v2)
+                    if (same)
                     {
                         return true;
                     }
@@ -133,22 +60,98 @@ namespace Algorithms.Fun_4
             return false;
         }
 
-        private static long Power(long b, long p)
+        private int[,] ConvertToIntMatrix(string[] matrix)
         {
-            if (p == 0)
+            int[,] matrixConverted = new int[matrix.Length, matrix[0].Length];
+            for (int i = 0; i < matrix.Length; i++)
             {
-                return 1;
+                for (int j = 0; j < matrix[0].Length; j++)
+                {
+                    matrixConverted[i, j] = (int)matrix[i][j] - '0';
+                }
             }
 
-            long v = Power(b, p / 2);
-            v = (v * v) % mod;
+            return matrixConverted;
+        }
 
-            if (p % 2 == 1)
+        private class HashComputers
+        {
+            private const int powersLength = 1000001;
+
+            private long mod;
+            private long p;
+            private long[] powers;
+
+            public HashComputers(long mod, long p)
             {
-                v = (v * b) % mod;
+                this.mod = mod;
+                this.p = p;
+                this.powers = new long[powersLength];
+                this.powers[0] = 1;
+
+                for (int i = 1; i < powersLength; i++)
+                {
+                    this.powers[i] = (this.powers[i - 1] * this.p) % this.mod;
+                }
             }
 
-            return v;
+            public long[,] ComputeHash(int[,] matrix, int patternColumns)
+            {
+                int rows = matrix.GetLength(0);
+                int columns = matrix.GetLength(1);
+                long[,] hash = new long[rows, columns];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        hash[i, j] = this.powers[i * patternColumns + j] * matrix[i, j] % this.mod;
+
+                        if (i > 0)
+                        {
+                            hash[i, j] = (hash[i, j] + hash[i - 1, j]) % this.mod;
+                        }
+                        if (j > 0)
+                        {
+                            hash[i, j] = (hash[i, j] + hash[i, j - 1]) % this.mod;
+                        }
+                        if (i > 0 && j > 0)
+                        {
+                            hash[i, j] = (hash[i, j] + this.mod - hash[i - 1, j - 1]) % this.mod;
+                        }
+                    }
+                }
+
+                return hash;
+            }
+
+            public bool Compare(long[,] patternHash, long[,] gridHash, int startRow, int startColumn, int patternRows, int patternColumns)
+            {
+                int lastRow = startRow + patternRows - 1;
+                int lastColumn = startColumn + patternColumns - 1;
+                if (lastRow >= gridHash.GetLength(0) || lastColumn >= gridHash.GetLength(1))
+                {
+                    return false;
+                }
+
+                long patternHashValue = patternHash[patternRows - 1, patternColumns - 1] * this.powers[startRow * patternColumns + startColumn] % this.mod;
+
+                long gridHashValue = gridHash[lastRow, lastColumn];
+                if (startRow > 0)
+                {
+                    gridHashValue = (gridHashValue + this.mod - gridHash[startRow - 1, lastColumn]) % this.mod;
+                }
+                if (startColumn > 0)
+                {
+                    gridHashValue = (gridHashValue + this.mod - gridHash[lastRow, startColumn - 1]) % this.mod;
+                }
+                if (startRow > 0 && startColumn > 0)
+                {
+                    gridHashValue = (gridHashValue + gridHash[startRow - 1, startColumn - 1]) % this.mod;
+                }
+
+                return patternHashValue == gridHashValue;
+            }
         }
     }
 }
