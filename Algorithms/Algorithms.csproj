@@ -158,6 +158,7 @@
     <Compile Include="Fun 9\RedKnightShortestPath.cs" />
     <Compile Include="Fun 9\StringConstruction.cs" />
     <Compile Include="Fun 9\SuperReducedString.cs" />
+    <Compile Include="Fun 9\TwoCharacters.cs" />
     <Compile Include="Fun\Bigger.cs" />
     <Compile Include="Fun\BoatTrips.cs" />
     <Compile Include="Fun\Candies.cs" />
