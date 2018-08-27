@@ -148,6 +148,7 @@
     <Compile Include="Fun 8\SurfaceArea.cs" />
     <Compile Include="Fun 8\TheBombermanGame.cs" />
     <Compile Include="Fun 8\TheFullCountingSort.cs" />
+    <Compile Include="Fun 9\BeautifulBinaryString.cs" />
     <Compile Include="Fun 9\CamelCase.cs" />
     <Compile Include="Fun 9\GridlandMetro.cs" />
     <Compile Include="Fun 9\HackerlandRadioTransmitters.cs" />
