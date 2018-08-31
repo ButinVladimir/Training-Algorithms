@@ -107,41 +107,25 @@ public class Solution
         Tokenizer tokenizer = new Tokenizer();
 
         int n = tokenizer.NextInt();
-        string s = tokenizer.NextToken();
-        Console.WriteLine(BeautifulBinaryString.Solve(s));
+        int[] a = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            a[i] = tokenizer.NextInt();
+        }
+
+        Console.WriteLine(BirthdayCakeCandles.Solve(a));
 
         //writer.Close();
         //}
         //}
     }
 
-    public static class BeautifulBinaryString
+    public static class BirthdayCakeCandles
     {
-        public static int Solve(string s)
+        public static int Solve(int[] a)
         {
-            int l = 0;
-            int r;
-            int result = 0;
-            while (l < s.Length)
-            {
-                if (s[l] == '1')
-                {
-                    l++;
-                    continue;
-                }
-
-                if (l < s.Length - 2 && s.Substring(l, 3) == "010")
-                {
-                    result++;
-                    l += 3;
-                }
-                else
-                {
-                    l++;
-                }
-            }
-
-            return result;
+            int max = a.Max();
+            return a.Count(v => v == max);
         }
     }
 }
