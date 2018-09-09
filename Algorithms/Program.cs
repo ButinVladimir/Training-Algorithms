@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Fun_9;
+//using Algorithms.Fun_10;
 
 public class Solution
 {
@@ -106,14 +106,14 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int n = tokenizer.NextInt();
-        int[] a = new int[n];
-        for (int i = 0; i < n; i++)
+        long[] a = new long[5];
+        for (int i = 0; i < 5; i++)
         {
-            a[i] = tokenizer.NextInt();
+            a[i] = tokenizer.NextLong();
         }
 
-        Console.WriteLine(BirthdayCakeCandles.Solve(a));
+        Tuple<long, long> result = MiniMaxSum.Solve(a);
+        Console.WriteLine($"{result.Item1} {result.Item2}");
 
         //writer.Close();
         //}
@@ -126,6 +126,26 @@ public class Solution
         {
             int max = a.Max();
             return a.Count(v => v == max);
+        }
+    }
+
+    public static class MiniMaxSum
+    {
+        public static Tuple<long, long> Solve(long[] a)
+        {
+            long sum = a.Sum();
+            long min = sum - a[0];
+            long max = sum - a[0];
+            long buf;
+
+            for (int i = 0; i < a.Length; i++)
+            {
+                buf = sum - a[i];
+                min = Math.Min(min, buf);
+                max = Math.Max(max, buf);
+            }
+
+            return new Tuple<long, long>(min, max);
         }
     }
 }
