@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Fun_5;
+//using Algorithms.Fun_9;
 
 public class Solution
 {
@@ -97,46 +97,35 @@ public class Solution
 
     public static void Main()
     {
-        //StreamReader reader = new StreamReader(File.OpenRead("input.txt"));
-        //Console.SetIn(reader);
+        //using (StreamReader reader = new StreamReader(File.OpenRead("input.txt")))
+        //{
+        //  Console.SetIn(reader);
 
         //StreamWriter writer = File.CreateText("output.txt");
         //Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int tests = tokenizer.NextInt();
-        for (int test = 0; test < tests; test++)
+        int n = tokenizer.NextInt();
+        int[] a = new int[n];
+        for (int i = 0; i < n; i++)
         {
-            int n = tokenizer.NextInt();
-            int[] b = new int[n];
-
-            for (int i = 0; i < n; i++)
-            {
-                b[i] = tokenizer.NextInt();
-            }
-
-            Console.WriteLine(SherlockCost.Solve(b));
+            a[i] = tokenizer.NextInt();
         }
 
+        Console.WriteLine(BirthdayCakeCandles.Solve(a));
+
         //writer.Close();
+        //}
+        //}
     }
 
-    public static class SherlockCost
+    public static class BirthdayCakeCandles
     {
-        public static int Solve(int[] b)
+        public static int Solve(int[] a)
         {
-            int n = b.Length;
-            int[] aMin = new int[n];
-            int[] aMax = new int[n];
-
-            for (int i = n - 2; i >= 0; i--)
-            {
-                aMin[i] = Math.Max(aMin[i + 1], b[i + 1] - 1 + aMax[i + 1]);
-                aMax[i] = Math.Max(b[i] - 1 + aMin[i + 1], Math.Abs(b[i] - b[i + 1]) + aMax[i + 1]);
-            }
-
-            return Math.Max(aMin[0], aMax[0]);
+            int max = a.Max();
+            return a.Count(v => v == max);
         }
     }
 }

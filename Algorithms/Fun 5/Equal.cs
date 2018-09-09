@@ -8,7 +8,7 @@ namespace Algorithms.Fun_5
 {
     public static class Equal
     {
-        private const int MaxChocolates = 2000;
+        private const int MaxChocolates = 2000000;
         private static int[] actions;
 
         static Equal()
@@ -34,25 +34,33 @@ namespace Algorithms.Fun_5
 
         public static int Solve(int[] a)
         {
-            Array.Sort(a);
-            int min = a[0];
-
-            int result = 0;
-            for (int i = 0; i < a.Length; i++)
+            if (a.Length == 1)
             {
-                result += actions[a[i] - min];
+                return 0;
             }
 
-            int buffer;
-            for (int step = 1; step <= 30; step++)
+            int result = -1;
+            int n = a.Length;
+            int sum = a.Sum();
+            int d;
+            for (int q = Math.Max(a.Max(), sum / n); q <= MaxChocolates; q++)
             {
-                buffer = 0;
-                for (int i = 0; i < a.Length; i++)
+                d = n * q - sum;
+                if (d < 0 || d % (n - 1) != 0)
                 {
-                    buffer += actions[a[i] - min + step];
+                    continue;
+                }
+                if (d > MaxChocolates)
+                {
+                    break;
                 }
 
-                result = Math.Min(result, buffer);
+                d /= n - 1;
+
+                if (result == -1 || actions[d] < result)
+                {
+                    result = actions[d];
+                }
             }
 
             return result;
