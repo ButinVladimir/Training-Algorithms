@@ -121,6 +121,11 @@
     <Compile Include="Fun 5\SamSubStrings.cs" />
     <Compile Include="Fun 5\SherlockCost.cs" />
     <Compile Include="Fun 5\TimeInWords.cs" />
+    <Compile Include="Fun 6\Abbreviation.cs" />
+    <Compile Include="Fun 6\CakeWalk.cs" />
+    <Compile Include="Fun 6\MinimumAbsDiffInArray.cs" />
+    <Compile Include="Fun 6\NewYearChaos.cs" />
+    <Compile Include="Fun 6\PowerSum.cs" />
     <Compile Include="Fun\Bigger.cs" />
     <Compile Include="Fun\BoatTrips.cs" />
     <Compile Include="Fun\Candies.cs" />
