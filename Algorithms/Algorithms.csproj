@@ -61,6 +61,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fun 10\CountingSort2.cs" />
+    <Compile Include="Fun 10\CountingSort1.cs" />
+    <Compile Include="Fun 10\InsertionSortAdvancedAnalysis.cs" />
+    <Compile Include="Fun 10\MiniMaxSum.cs" />
     <Compile Include="Fun 2\AcmIcpcTeam.cs" />
     <Compile Include="Fun 2\Anagrams.cs" />
     <Compile Include="Fun 2\CaesarCipher.cs" />
@@ -121,6 +125,11 @@
     <Compile Include="Fun 5\SamSubStrings.cs" />
     <Compile Include="Fun 5\SherlockCost.cs" />
     <Compile Include="Fun 5\TimeInWords.cs" />
+    <Compile Include="Fun 6\Abbreviation.cs" />
+    <Compile Include="Fun 6\CakeWalk.cs" />
+    <Compile Include="Fun 6\MinimumAbsDiffInArray.cs" />
+    <Compile Include="Fun 6\NewYearChaos.cs" />
+    <Compile Include="Fun 6\PowerSum.cs" />
     <Compile Include="Fun 7\Anagram.cs" />
     <Compile Include="Fun 7\BalancedBracket.cs" />
     <Compile Include="Fun 7\BeautifulDaysAtTheMovies.cs" />
