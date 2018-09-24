@@ -10,55 +10,70 @@ namespace Algorithms.Fun_8
     {
         public static int Solve(int[] a)
         {
-            int n2 = a.Length / 2;
+            int n = a.Length;
             int l = 0;
-            int r = a.Length - 1;
-            int i, j, middle, buff;
+            int r = n - 1;
+            int buffer;
+            int barrier;
 
-            while (l + 1 < r)
+            while (r - l > 2)
             {
-                i = l;
-                j = r;
-                middle = a[(l + r) / 2];
+                int i = l;
+                int j = r;
+                barrier = a[(l + r) / 2];
+
                 while (i < j)
                 {
-                    while (i < j && a[i] < middle)
+                    while (a[i] < barrier)
                     {
                         i++;
                     }
-                    while (j > i && a[j] > middle)
+
+                    while (a[j] > barrier)
                     {
                         j--;
                     }
 
                     if (i < j)
                     {
-                        buff = a[i];
+                        buffer = a[i];
                         a[i] = a[j];
-                        a[j] = buff;
+                        a[j] = buffer;
                         i++;
                         j--;
                     }
                 }
 
-                if (i >= n2)
+                if (n / 2 <= j)
                 {
-                    r = i;
+                    r = j;
                 }
-                if (i <= n2)
+                else
+                if (n / 2 >= i)
                 {
                     l = i;
                 }
+                else
+                {
+                    l = j;
+                    r = i;
+                }
             }
 
-            if (l + 1 == r && a[l] > a[r])
+            for (int i = l; i < r; i++)
             {
-                buff = a[l];
-                a[l] = a[r];
-                a[r] = buff;
+                for (int j = i; j <= r; j++)
+                {
+                    if (a[i] > a[j])
+                    {
+                        buffer = a[i];
+                        a[i] = a[j];
+                        a[j] = buffer;
+                    }
+                }
             }
 
-            return a[n2];
+            return a[n / 2];
         }
     }
 }

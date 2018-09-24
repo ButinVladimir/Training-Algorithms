@@ -161,6 +161,7 @@
     <Compile Include="Fun 9\SeparateTheNumbers.cs" />
     <Compile Include="Fun 9\StringConstruction.cs" />
     <Compile Include="Fun 9\SuperReducedString.cs" />
+    <Compile Include="Fun 9\TimeConversion.cs" />
     <Compile Include="Fun 9\TwoCharacters.cs" />
     <Compile Include="Fun 9\WeightedUniformStrings.cs" />
     <Compile Include="Fun\Bigger.cs" />
