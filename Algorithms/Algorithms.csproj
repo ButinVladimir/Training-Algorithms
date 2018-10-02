@@ -64,6 +64,7 @@
     <Compile Include="Fun 10\CountingSort2.cs" />
     <Compile Include="Fun 10\CountingSort1.cs" />
     <Compile Include="Fun 10\FraudulentActivityNotifications.cs" />
+    <Compile Include="Fun 10\InsertionSort2.cs" />
     <Compile Include="Fun 10\InsertionSortAdvancedAnalysis.cs" />
     <Compile Include="Fun 10\MiniMaxSum.cs" />
     <Compile Include="Fun 10\QuickSort1.cs" />
