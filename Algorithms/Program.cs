@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Fun_10;
+//using Algorithms.Fun_11;
 
 public class Solution
 {
@@ -99,106 +99,122 @@ public class Solution
     {
         //using (StreamReader reader = new StreamReader(File.OpenRead("input.txt")))
         //{
-        //  Console.SetIn(reader);
+        //    Console.SetIn(reader);
 
-        //StreamWriter writer = File.CreateText("output.txt");
-        //Console.SetOut(writer);
+        //    using (StreamWriter writer = File.CreateText("output.txt"))
+        //    {
+        //        Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
-        int n = tokenizer.NextInt();
-        int q = tokenizer.NextInt();
-
-        int[] a = new int[n];
-
-        for (int i = 0; i < n; i++)
+        int tests = tokenizer.NextInt();
+        for (; tests > 0; tests--)
         {
-            a[i] = tokenizer.NextInt();
-        }
+            int n = tokenizer.NextInt();
+            int m = tokenizer.NextInt();
+            int x1, y1, z1, x2, y2, z2;
+            long w;
+            CubeSummation cs = new CubeSummation(n);
 
-        List<int> result = Waiter.Solve(a, q);
-        foreach (int v in result)
-        {
-            Console.WriteLine(v);
+            for (int i = 0; i < m; i++)
+            {
+                if (tokenizer.NextToken().Equals("UPDATE", StringComparison.OrdinalIgnoreCase))
+                {
+                    x1 = tokenizer.NextInt();
+                    y1 = tokenizer.NextInt();
+                    z1 = tokenizer.NextInt();
+                    w = tokenizer.NextLong();
+                    cs.Update(x1, y1, z1, w);
+                }
+                else
+                {
+                    x1 = tokenizer.NextInt();
+                    y1 = tokenizer.NextInt();
+                    z1 = tokenizer.NextInt();
+                    x2 = tokenizer.NextInt();
+                    y2 = tokenizer.NextInt();
+                    z2 = tokenizer.NextInt();
+                    Console.WriteLine(cs.Query(x1, y1, z1, x2, y2, z2));
+                }
+            }
         }
+        //    }
+        //}
     }
 
-    public static class Waiter
+    public class CubeSummation
     {
-        private const int N = 1000000;
-        public static List<int> Solve(int[] a, int q)
+        private int n;
+
+        private long[,,] values;
+        private FenvickTree fenvickTree;
+
+        public CubeSummation(int n)
         {
-            List<int> primes = new List<int>();
-            bool[] flagged = new bool[N];
-            for (int i = 2; i < N; i++)
+            this.n = n;
+            this.fenvickTree = new FenvickTree(this.n);
+            this.values = new long[n + 1, n + 1, n + 1];
+        }
+
+        public void Update(int x, int y, int z, long w)
+        {
+            this.fenvickTree.Update(x, y, z, w - this.values[x, y, z]);
+            this.values[x, y, z] = w;
+        }
+
+        public long Query(int x1, int y1, int z1, int x2, int y2, int z2)
+        {
+            return this.fenvickTree.Query(x2, y2, z2)
+                    - this.fenvickTree.Query(x1 - 1, y2, z2)
+                    - this.fenvickTree.Query(x2, y1 - 1, z2)
+                    - this.fenvickTree.Query(x2, y2, z1 - 1)
+                    + this.fenvickTree.Query(x1 - 1, y1 - 1, z2)
+                    + this.fenvickTree.Query(x1 - 1, y2, z1 - 1)
+                    + this.fenvickTree.Query(x2, y1 - 1, z1 - 1)
+                    - this.fenvickTree.Query(x1 - 1, y1 - 1, z1 - 1);
+        }
+
+        private class FenvickTree
+        {
+            private int n;
+            private long[,,] tree;
+
+            public FenvickTree(int n)
             {
-                if (!flagged[i])
-                {
-                    primes.Add(i);
-                }
-
-                foreach (int prime in primes)
-                {
-                    if (i * prime >= N)
-                    {
-                        break;
-                    }
-
-                    flagged[i * prime] = true;
-                }
+                this.n = n + 1;
+                this.tree = new long[this.n, this.n, this.n];
             }
 
-            Stack<int> sa = new Stack<int>();
-            for (int i = 0; i < a.Length; i++)
+            public void Update(int x, int y, int z, long w)
             {
-                sa.Push(a[i]);
-            }
-
-            Stack<int>[] sb = new Stack<int>[q + 1];
-            for (int i = 0; i < q; i++)
-            {
-                sb[i] = new Stack<int>();
-            }
-
-            Stack<int> nsa = new Stack<int>();
-            int[] primesArray = primes.ToArray();
-            int v;
-
-            for (int i = 0; i < q; i++)
-            {
-                while (sa.Count > 0)
+                for (int i = x; i < this.n; i = (i | (i + 1)))
                 {
-                    v = sa.Pop();
-                    if (v % primesArray[i] == 0)
+                    for (int j = y; j < this.n; j = (j | (j + 1)))
                     {
-                        sb[i].Push(v);
-                    }
-                    else
-                    {
-                        nsa.Push(v);
+                        for (int k = z; k < this.n; k = (k | (k + 1)))
+                        {
+                            tree[i, j, k] += w;
+                        }
                     }
                 }
-
-                sa = nsa;
-                nsa = new Stack<int>();
             }
 
-            List<int> result = new List<int>();
-            for (int i = 0; i < q; i++)
+            public long Query(int x, int y, int z)
             {
-                while (sb[i].Count > 0)
+                long result = 0;
+
+                for (int i = x; i >= 0; i = (i & (i + 1)) - 1)
                 {
-                    v = sb[i].Pop();
-                    result.Add(v);
+                    for (int j = y; j >= 0; j = (j & (j + 1)) - 1)
+                    {
+                        for (int k = z; k >= 0; k = (k & (k + 1)) - 1)
+                        {
+                            result += tree[i, j, k];
+                        }
+                    }
                 }
-            }
 
-            while (sa.Count > 0)
-            {
-                v = sa.Pop();
-                result.Add(v);
+                return result;
             }
-
-            return result;
         }
     }
 }
