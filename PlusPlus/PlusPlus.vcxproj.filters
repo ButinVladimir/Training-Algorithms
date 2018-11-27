@@ -18,7 +18,7 @@
     <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="super_maximum_cost_queries.cpp">
+    <ClCompile Include="balanced_forest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
