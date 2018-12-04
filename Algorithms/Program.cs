@@ -99,122 +99,40 @@ public class Solution
     {
         //using (StreamReader reader = new StreamReader(File.OpenRead("input.txt")))
         //{
-        //    Console.SetIn(reader);
+        // Console.SetIn(reader);
 
         //    using (StreamWriter writer = File.CreateText("output.txt"))
         //    {
         //        Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
-        int tests = tokenizer.NextInt();
-        for (; tests > 0; tests--)
-        {
-            int n = tokenizer.NextInt();
-            int m = tokenizer.NextInt();
-            int x1, y1, z1, x2, y2, z2;
-            long w;
-            CubeSummation cs = new CubeSummation(n);
+        int year = tokenizer.NextInt();
 
-            for (int i = 0; i < m; i++)
-            {
-                if (tokenizer.NextToken().Equals("UPDATE", StringComparison.OrdinalIgnoreCase))
-                {
-                    x1 = tokenizer.NextInt();
-                    y1 = tokenizer.NextInt();
-                    z1 = tokenizer.NextInt();
-                    w = tokenizer.NextLong();
-                    cs.Update(x1, y1, z1, w);
-                }
-                else
-                {
-                    x1 = tokenizer.NextInt();
-                    y1 = tokenizer.NextInt();
-                    z1 = tokenizer.NextInt();
-                    x2 = tokenizer.NextInt();
-                    y2 = tokenizer.NextInt();
-                    z2 = tokenizer.NextInt();
-                    Console.WriteLine(cs.Query(x1, y1, z1, x2, y2, z2));
-                }
-            }
-        }
+        Console.WriteLine(DayOfTheProgrammer.Solve(year));
         //    }
         //}
     }
 
-    public class CubeSummation
+    public static class DayOfTheProgrammer
     {
-        private int n;
-
-        private long[,,] values;
-        private FenvickTree fenvickTree;
-
-        public CubeSummation(int n)
+        public static string Solve(int year)
         {
-            this.n = n;
-            this.fenvickTree = new FenvickTree(this.n);
-            this.values = new long[n + 1, n + 1, n + 1];
-        }
-
-        public void Update(int x, int y, int z, long w)
-        {
-            this.fenvickTree.Update(x, y, z, w - this.values[x, y, z]);
-            this.values[x, y, z] = w;
-        }
-
-        public long Query(int x1, int y1, int z1, int x2, int y2, int z2)
-        {
-            return this.fenvickTree.Query(x2, y2, z2)
-                    - this.fenvickTree.Query(x1 - 1, y2, z2)
-                    - this.fenvickTree.Query(x2, y1 - 1, z2)
-                    - this.fenvickTree.Query(x2, y2, z1 - 1)
-                    + this.fenvickTree.Query(x1 - 1, y1 - 1, z2)
-                    + this.fenvickTree.Query(x1 - 1, y2, z1 - 1)
-                    + this.fenvickTree.Query(x2, y1 - 1, z1 - 1)
-                    - this.fenvickTree.Query(x1 - 1, y1 - 1, z1 - 1);
-        }
-
-        private class FenvickTree
-        {
-            private int n;
-            private long[,,] tree;
-
-            public FenvickTree(int n)
+            if (year == 1918)
             {
-                this.n = n + 1;
-                this.tree = new long[this.n, this.n, this.n];
+                return "26.09." + year;
             }
 
-            public void Update(int x, int y, int z, long w)
+            if (year < 1918 && year % 4 == 0)
             {
-                for (int i = x; i < this.n; i = (i | (i + 1)))
-                {
-                    for (int j = y; j < this.n; j = (j | (j + 1)))
-                    {
-                        for (int k = z; k < this.n; k = (k | (k + 1)))
-                        {
-                            tree[i, j, k] += w;
-                        }
-                    }
-                }
+                return "12.09." + year;
             }
 
-            public long Query(int x, int y, int z)
+            if (year >= 1918 && (year % 400 == 0) || (year % 100 != 0 && year % 4 == 0))
             {
-                long result = 0;
-
-                for (int i = x; i >= 0; i = (i & (i + 1)) - 1)
-                {
-                    for (int j = y; j >= 0; j = (j & (j + 1)) - 1)
-                    {
-                        for (int k = z; k >= 0; k = (k & (k + 1)) - 1)
-                        {
-                            result += tree[i, j, k];
-                        }
-                    }
-                }
-
-                return result;
+                return "12.09." + year;
             }
+
+            return "13.09." + year;
         }
     }
 }
