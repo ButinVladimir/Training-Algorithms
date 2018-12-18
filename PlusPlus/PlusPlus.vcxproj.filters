@@ -18,7 +18,7 @@
     <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="balanced_forest.cpp">
+    <ClCompile Include="synchronous_shopping.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

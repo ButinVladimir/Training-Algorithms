@@ -75,7 +75,10 @@
     <Compile Include="Fun 10\QuickSort1.cs" />
     <Compile Include="Fun 10\RunningTimeOfAlgorithms.cs" />
     <Compile Include="Fun 10\Waiter.cs" />
+    <Compile Include="Fun 11\AChessboardGame.cs" />
     <Compile Include="Fun 11\BearSteadyGene.cs" />
+    <Compile Include="Fun 11\BeautifulQuadruplets.cs" />
+    <Compile Include="Fun 11\BFSShortReach.cs" />
     <Compile Include="Fun 11\BirthdayChocolate.cs" />
     <Compile Include="Fun 11\CompareTheTriplets.cs" />
     <Compile Include="Fun 11\CubeSummation.cs" />
@@ -85,6 +88,10 @@
     <Compile Include="Fun 11\MigratoryBirds.cs" />
     <Compile Include="Fun 11\PlusMinus.cs" />
     <Compile Include="Fun 11\Staircase.cs" />
+    <Compile Include="Fun 11\TowerBreakers.cs" />
+    <Compile Include="Fun 12\MaximumPalindromes.cs" />
+    <Compile Include="Fun 12\MaxMin.cs" />
+    <Compile Include="Fun 12\MinimumLoss.cs" />
     <Compile Include="Fun 2\AcmIcpcTeam.cs" />
     <Compile Include="Fun 2\Anagrams.cs" />
     <Compile Include="Fun 2\CaesarCipher.cs" />
