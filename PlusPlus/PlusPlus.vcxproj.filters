@@ -18,7 +18,7 @@
     <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="synchronous_shopping.cpp">
+    <ClCompile Include="grid_walking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

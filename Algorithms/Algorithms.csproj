@@ -89,9 +89,14 @@
     <Compile Include="Fun 11\PlusMinus.cs" />
     <Compile Include="Fun 11\Staircase.cs" />
     <Compile Include="Fun 11\TowerBreakers.cs" />
+    <Compile Include="Fun 12\GoodlandElectricity.cs" />
+    <Compile Include="Fun 12\JackGoesToRapture.cs" />
+    <Compile Include="Fun 12\KingdomDivision.cs" />
     <Compile Include="Fun 12\MaximumPalindromes.cs" />
     <Compile Include="Fun 12\MaxMin.cs" />
     <Compile Include="Fun 12\MinimumLoss.cs" />
+    <Compile Include="Fun 12\PrimeXor.cs" />
+    <Compile Include="Fun 12\StockMaximize.cs" />
     <Compile Include="Fun 2\AcmIcpcTeam.cs" />
     <Compile Include="Fun 2\Anagrams.cs" />
     <Compile Include="Fun 2\CaesarCipher.cs" />
