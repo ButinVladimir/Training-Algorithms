@@ -102,9 +102,12 @@
     <Compile Include="Fun 12\StockMaximize.cs" />
     <Compile Include="Fun 12\TheQuickestWayUp.cs" />
     <Compile Include="Fun 12\VerticalSticks.cs" />
+    <Compile Include="Fun 13\Bonetrousle.cs" />
+    <Compile Include="Fun 13\ConstructTheArray.cs" />
     <Compile Include="Fun 13\GamingArray.cs" />
     <Compile Include="Fun 13\MinimumPenaltyPath.cs" />
     <Compile Include="Fun 13\RedJohnIsBack.cs" />
+    <Compile Include="Fun 13\StrangeEncounter.cs" />
     <Compile Include="Fun 13\TheIndianJob.cs" />
     <Compile Include="Fun 2\AcmIcpcTeam.cs" />
     <Compile Include="Fun 2\Anagrams.cs" />
