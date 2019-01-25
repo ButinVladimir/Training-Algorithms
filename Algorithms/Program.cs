@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Fun_13;
+//using Algorithms.Fun_14;
 
 public class Solution
 {
@@ -107,25 +107,27 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        long t = tokenizer.NextLong();
-        Console.WriteLine(StrangeEncounter.Solve(t));
+        int n = tokenizer.NextInt();
+        Console.WriteLine(FibonacciNumbers.Solve(n));
 
         //}
         //}
     }
 
-    public static class StrangeEncounter
+    public static class FibonacciNumbers
     {
-        public static long Solve(long t)
+        public static long Solve(int n)
         {
-            long initValue = 3;
-            while (t > initValue)
+            long a = 0;
+            long b = 1;
+            for (int i = 1; i < n; i++)
             {
-                t -= initValue;
-                initValue *= 2;
+                long c = a;
+                a = b;
+                b += c;
             }
 
-            return initValue - t + 1;
+            return a;
         }
     }
 }
