@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-//using Algorithms.Fun_14;
+using Algorithms.Fun_15;
 
 public class Solution
 {
@@ -107,27 +107,13 @@ public class Solution
 
         Tokenizer tokenizer = new Tokenizer();
 
-        int n = tokenizer.NextInt();
-        Console.WriteLine(FibonacciNumbers.Solve(n));
+        Console.WriteLine(ReversePolishNotation.Compute(new string[] { "2", "1", "+", "3", "*" }));
+        Console.WriteLine(ReversePolishNotation.Transform(new string[] { "2", "1", "+", "3", "*" }));
+
+        Console.WriteLine(ReversePolishNotation.Compute(new string[] { "4", "13", "5", "/", "+" }));
+        Console.WriteLine(ReversePolishNotation.Transform(new string[] { "4", "13", "5", "/", "+" }));
 
         //}
         //}
-    }
-
-    public static class FibonacciNumbers
-    {
-        public static long Solve(int n)
-        {
-            long a = 0;
-            long b = 1;
-            for (int i = 1; i < n; i++)
-            {
-                long c = a;
-                a = b;
-                b += c;
-            }
-
-            return a;
-        }
     }
 }
