@@ -127,6 +127,7 @@
     <Compile Include="Fun 14\RansomNote.cs" />
     <Compile Include="Fun 14\RecursiveDigitSum.cs" />
     <Compile Include="Fun 14\SpecialPalindrome.cs" />
+    <Compile Include="Fun 15\CrosswordPuzzle.cs" />
     <Compile Include="Fun 15\ReversePolishNotation.cs" />
     <Compile Include="Fun 2\AcmIcpcTeam.cs" />
     <Compile Include="Fun 2\Anagrams.cs" />

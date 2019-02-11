@@ -106,14 +106,6 @@ public class Solution
         //        Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
-
-        Console.WriteLine(ReversePolishNotation.Compute(new string[] { "2", "1", "+", "3", "*" }));
-        Console.WriteLine(ReversePolishNotation.Transform(new string[] { "2", "1", "+", "3", "*" }));
-
-        Console.WriteLine(ReversePolishNotation.Compute(new string[] { "4", "13", "5", "/", "+" }));
-        Console.WriteLine(ReversePolishNotation.Transform(new string[] { "4", "13", "5", "/", "+" }));
-
-        //}
         //}
     }
 }

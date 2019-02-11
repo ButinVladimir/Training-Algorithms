@@ -18,7 +18,7 @@
     <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="nikita_and_the_game.cpp">
+    <ClCompile Include="stone_division_revisited.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
