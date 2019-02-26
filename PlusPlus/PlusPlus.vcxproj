@@ -146,7 +146,8 @@
     <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stone_division_revisited.cpp" />
+    <ClCompile Include="interval_selection.cpp" />
+    <ClCompile Include="string_reduction.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

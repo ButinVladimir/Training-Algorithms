@@ -6,7 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 //using Microsoft.VisualBasic.FileIO;
-using Algorithms.Fun_15;
+//using Algorithms.Fun_15;
 
 public class Solution
 {
@@ -106,6 +106,22 @@ public class Solution
         //        Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
+        int tests = tokenizer.NextInt();
+        for (int test = 0; test < tests; test++)
+        {
+            long a = tokenizer.NextLong();
+
+            Console.WriteLine(Handshakes.Solve(a));
+        }
+
         //}
+    }
+
+    public static class Handshakes
+    {
+        public static long Solve(long a)
+        {
+            return a * (a - 1) / 2L;
+        }
     }
 }

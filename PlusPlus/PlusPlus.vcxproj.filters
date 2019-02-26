@@ -18,7 +18,10 @@
     <Text Include="input.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stone_division_revisited.cpp">
+    <ClCompile Include="interval_selection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="string_reduction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
