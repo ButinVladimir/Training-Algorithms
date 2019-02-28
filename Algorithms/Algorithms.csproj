@@ -127,6 +127,8 @@
     <Compile Include="Fun 14\RansomNote.cs" />
     <Compile Include="Fun 14\RecursiveDigitSum.cs" />
     <Compile Include="Fun 14\SpecialPalindrome.cs" />
+    <Compile Include="Fun 15\AliceAndBobSillyGame.cs" />
+    <Compile Include="Fun 15\AngryChildren2.cs" />
     <Compile Include="Fun 15\CrosswordPuzzle.cs" />
     <Compile Include="Fun 15\Fibonacci.cs" />
     <Compile Include="Fun 15\Handshakes.cs" />

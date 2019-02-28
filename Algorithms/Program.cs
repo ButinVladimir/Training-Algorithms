@@ -106,22 +106,64 @@ public class Solution
         //        Console.SetOut(writer);
 
         Tokenizer tokenizer = new Tokenizer();
-        int tests = tokenizer.NextInt();
-        for (int test = 0; test < tests; test++)
-        {
-            long a = tokenizer.NextLong();
+        int n = tokenizer.NextInt();
+        int k = tokenizer.NextInt();
+        long[] a = new long[n];
 
-            Console.WriteLine(Handshakes.Solve(a));
+        for (int i = 0; i < n; i++)
+        {
+            a[i] = tokenizer.NextLong();
         }
+
+        Console.WriteLine(AngryChildren2.Solve(k, a));
 
         //}
     }
 
-    public static class Handshakes
+    public static class AngryChildren2
     {
-        public static long Solve(long a)
+        public static long Solve(int k, long[] a)
         {
-            return a * (a - 1) / 2L;
+            Array.Sort(a);
+            long[] sum = new long[a.Length];
+
+            sum[0] = a[0];
+            for (int i = 1; i < a.Length; i++)
+            {
+                sum[i] = sum[i - 1] + a[i];
+            }
+
+            long accumulatedSum = 0;
+            for (int i = 0; i < k; i++)
+            {
+                accumulatedSum += i * a[i] - GetSum(0, i - 1, sum);
+            }
+
+            long result = accumulatedSum;
+            for (int i = k; i < a.Length; i++)
+            {
+                accumulatedSum += k * a[i] - GetSum(i - k, i - 1, sum);
+                accumulatedSum -= GetSum(i - k + 1, i, sum) - k * a[i - k];
+
+                result = Math.Min(result, accumulatedSum);
+            }
+
+            return result;
+        }
+
+        private static long GetSum(int left, int right, long[] sum)
+        {
+            if (right < 0)
+            {
+                return 0;
+            }
+
+            if (left > 0)
+            {
+                return sum[right] - sum[left - 1];
+            }
+
+            return sum[right];
         }
     }
 }
